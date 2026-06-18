@@ -1,44 +1,15 @@
 {
-  "name": "AK FPV SIM LINK",
-  "version": "1.1.0",
-  "builds": [
+  "latest": "1.1.0",
+  "firmwares": [
     {
-      "chipFamily": "ESP32-S3",
-      "parts": [
-        {
-          "path": "Firmware/akfpv-sim-link-v1.1.0.bin",
-          "offset": 0
-        }
-      ]
+      "version": "1.1.0",
+      "file": "akfpv-sim-link-v1.1.0.json",
+      "notes": "Stable release - fixed USB disconnect + improved ELRS response"
+    },
+    {
+      "version": "1.0.2",
+      "file": "akfpv-sim-link-v1.0.2.json",
+      "notes": "Initial release"
     }
   ]
 }
-
-async function loadFirmwareList() {
-    const res = await fetch("./Firmware/manifest.json");
-    const data = await res.json();
-
-    const latest = data.latest;
-    const list = data.firmwares;
-
-    document.getElementById("latestVersion").innerText = latest;
-
-    const container = document.getElementById("firmwareList");
-
-    list.forEach(fw => {
-        const div = document.createElement("div");
-
-        div.innerHTML = `
-            <h3>Version ${fw.version}</h3>
-            <p>${fw.notes}</p>
-            <esp-web-install-button manifest="./Firmware/${fw.file}">
-            </esp-web-install-button>
-            <hr>
-        `;
-
-        container.appendChild(div);
-    });
-}
-
-loadFirmwareList();
-
