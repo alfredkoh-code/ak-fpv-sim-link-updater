@@ -40,7 +40,7 @@
 
 <script>
 async function loadFirmwareList() {
-    const res = await fetch("./Firmware/manifest.json");
+    const res = await fetch("./manifest.json");
     const data = await res.json();
 
     document.getElementById("latestVersion").innerText = data.latest;
