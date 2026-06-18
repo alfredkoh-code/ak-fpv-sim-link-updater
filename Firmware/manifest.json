@@ -7,7 +7,7 @@
       "notes": "Stable release - fixed USB disconnect + improved ELRS response"
     },
     {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "file": "akfpv-sim-link-v1.0.2.json",
       "notes": "Initial release"
     }
