@@ -42,18 +42,3 @@ async function loadFirmwareList() {
 
 loadFirmwareList();
 
-{
-  "latest": "1.1.0",
-  "firmwares": [
-    {
-      "version": "1.1.0",
-      "file": "akfpv-sim-link-v1.1.0.json",
-      "notes": "Stable release - fixed USB disconnect + improved ELRS response"
-    },
-    {
-      "version": "1.0.2",
-      "file": "akfpv-sim-link-v1.0.2.json",
-      "notes": "Initial release"
-    }
-  ]
-}
