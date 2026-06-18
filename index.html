@@ -4,8 +4,7 @@
   <meta charset="utf-8">
   <title>AK FPV SIM LINK</title>
 
-  <script
-    type="module"
+  <script type="module"
     src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js">
   </script>
 
@@ -33,17 +32,44 @@
 
 <p>ELRS Simulator Dongle</p>
 
-<p>Firmware Version 1.1.0</p>
+<p>Latest Firmware: <span id="latestVersion"></span></p>
 
+<!-- ESP WEB TOOLS BUTTON (IMPORTANT FIX) -->
 <esp-web-install-button
-manifest="manifest.json">
+  manifest="./Firmware/akfpv-sim-link-v1.1.0.json">
 </esp-web-install-button>
 
 </div>
 
+<div id="firmwareList"></div>
+
+<script>
+async function loadFirmwareList() {
+    const res = await fetch("./Firmware/manifest.json");
+    const data = await res.json();
+
+    document.getElementById("latestVersion").innerText = data.latest;
+
+    const container = document.getElementById("firmwareList");
+
+    data.firmwares.forEach(fw => {
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <h3>Version ${fw.version}</h3>
+            <p>${fw.notes}</p>
+            <esp-web-install-button
+                manifest="./Firmware/${fw.file}">
+            </esp-web-install-button>
+            <hr>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+loadFirmwareList();
+</script>
+
 </body>
 </html>
-
-<h2>Latest Version: <span id="latestVersion"></span></h2>
-
-<div id="firmwareList"></div>
