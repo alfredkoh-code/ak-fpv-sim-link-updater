@@ -6,7 +6,7 @@
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "firmware/akfpv-sim-link-v1.1.0.bin",
+          "path": "Firmware/akfpv-sim-link-v1.1.0.bin",
           "offset": 0
         }
       ]
