@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>AK FPV SIM LINK</title>
+  <meta charset="utf-8">
+  <title>AK FPV SIM LINK</title>
+
+  <script
+    type="module"
+    src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js">
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 50px auto;
+      text-align: center;
+    }
+
+    .box {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 30px;
+    }
+  </style>
 </head>
+
 <body>
+
+<div class="box">
 
 <h1>AK FPV SIM LINK</h1>
 
-<p>Firmware updater coming soon.</p>
+<p>ELRS Simulator Dongle</p>
+
+<p>Firmware Version 1.1.0</p>
+
+<esp-web-install-button
+manifest="manifest.json">
+</esp-web-install-button>
+
+</div>
 
 </body>
 </html>
