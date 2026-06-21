@@ -13,53 +13,51 @@
   --muted: #8b98a5;
   --green: #00ff9d;
   --orange: #ff9f1c;
+  --btn: #1f2a36;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: var(--bg);
   color: var(--text);
   transition: 0.3s;
 }
 
-/* DARK MODE (REAL EFFECTS) */
-body.dark {
-  --bg: #f5f6f8;
+/* DARK MODE SYSTEM (REAL FIX) */
+body.light {
+  --bg: #f4f6f8;
   --card: #ffffff;
   --text: #111;
-  --muted: #555;
+  --muted: #444;
+  --btn: #e9eef3;
 }
 
-/* HEADER */
+.banner {
+  height: 180px;
+  background: url("simlink.png") center/cover no-repeat;
+}
+
 .header {
   text-align: center;
-  padding: 25px;
+  padding: 20px;
 }
 
 .header h1 {
-  font-size: 36px;
   margin: 0;
+  font-size: 36px;
 }
 
 .header span {
   color: var(--green);
 }
 
-/* BANNER */
-.banner {
-  height: 180px;
-  background: url("simlink.png") center/cover no-repeat;
-}
-
-/* CONTAINER */
 .container {
   max-width: 900px;
   margin: auto;
   padding: 20px;
 }
 
-/* CARD */
 .card {
   background: var(--card);
   padding: 15px;
@@ -68,7 +66,20 @@ body.dark {
   transition: 0.3s;
 }
 
-/* GRID */
+button {
+  background: var(--btn);
+  border: 1px solid #2c3b4d;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+button:hover {
+  border-color: var(--green);
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -79,32 +90,14 @@ body.dark {
   .grid { grid-template-columns: 1fr; }
 }
 
-/* BUTTONS */
-button {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid #2c3b4d;
-  background: #1f2a36;
-  color: var(--text);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  border-color: var(--green);
-  transform: translateY(-1px);
-}
-
-/* BADGES */
 .badge {
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: 20px;
   font-weight: bold;
-  display: inline-block;
 }
 
-.up { background: rgba(0,255,157,0.15); color: var(--green); }
-.down { background: rgba(255,159,28,0.15); color: var(--orange); }
+.up { color: var(--green); background: rgba(0,255,157,0.15); }
+.down { color: var(--orange); background: rgba(255,159,28,0.15); }
 </style>
 </head>
 
@@ -119,13 +112,13 @@ button:hover {
 <div class="container">
 
   <div class="card">
-    <h3>Device Status</h3>
+    <h3>Device</h3>
 
     <p>Version: <span id="deviceVersion">---</span></p>
     <p>Status: <span id="statusBadge" class="badge">UNKNOWN</span></p>
 
-    <button onclick="connectSerial()">Connect Device</button>
-    <button onclick="toggleDark()">Toggle Dark</button>
+    <button onclick="connectSerial()">Connect</button>
+    <button onclick="toggleTheme()">Dark/Light</button>
   </div>
 
   <div class="grid">
@@ -145,78 +138,87 @@ button:hover {
 </div>
 
 <script>
-let latestFirmware = "1.5.0";
-let port = null;
-let reader = null;
+let state = {
+  latestFirmware: "1.5.0",
+  deviceVersion: null,
+  port: null,
+  reader: null
+};
 
-/* DARK MODE (FIXED) */
-function toggleDark() {
-  document.body.classList.toggle("dark");
+/* THEME (FIXED PROPERLY) */
+function toggleTheme() {
+  document.body.classList.toggle("light");
 }
 
-/* FIRMWARE SELECT (NOW WORKS) */
+/* FIRMWARE SELECTION (REAL EFFECT) */
 function selectFirmware(v) {
-  latestFirmware = v;
-  alert("Selected: " + v);
+  state.latestFirmware = v;
 
-  const badge = document.getElementById("statusBadge");
-  badge.innerText = "READY (" + v + ")";
+  updateStatus();
+
+  alert("Firmware selected: " + v);
 }
 
-/* CONNECT SERIAL (FIXED STREAM LOOP) */
+/* SERIAL CONNECT */
 async function connectSerial() {
   try {
-    port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200 });
+    state.port = await navigator.serial.requestPort();
+    await state.port.open({ baudRate: 115200 });
 
-    listenSerial();
+    readLoop();
 
   } catch (err) {
     console.error(err);
-    alert("Connection failed");
+    alert("Serial failed");
   }
 }
 
-/* CONTINUOUS READ (IMPORTANT FIX) */
-async function listenSerial() {
+/* CONTINUOUS SERIAL STREAM */
+async function readLoop() {
   const decoder = new TextDecoder();
 
-  while (port && port.readable) {
+  while (state.port && state.port.readable) {
     try {
-      reader = port.readable.getReader();
+      const reader = state.port.readable.getReader();
       const { value, done } = await reader.read();
 
       if (done) break;
 
-      const text = decoder.decode(value);
+      const text = decoder.decode(value || new Uint8Array());
 
       console.log("RX:", text);
 
       const match = /VERSION:([0-9.]+)/.exec(text);
 
       if (match) {
-        const v = match[1];
+        state.deviceVersion = match[1];
 
-        document.getElementById("deviceVersion").innerText = v;
+        document.getElementById("deviceVersion").innerText = state.deviceVersion;
 
-        compare(v, latestFirmware);
+        updateStatus();
       }
 
       reader.releaseLock();
 
     } catch (e) {
-      console.error("Serial loop error:", e);
+      console.error("Loop error:", e);
       break;
     }
   }
 }
 
-/* COMPARE */
-function compare(device, latest) {
+/* STATUS ENGINE (REAL LOGIC) */
+function updateStatus() {
   const badge = document.getElementById("statusBadge");
+  if (!badge) return;
 
-  const d = toNum(device);
-  const l = toNum(latest);
+  if (!state.deviceVersion) {
+    badge.innerText = "NO DATA";
+    return;
+  }
+
+  const d = toNum(state.deviceVersion);
+  const l = toNum(state.latestFirmware);
 
   if (d >= l) {
     badge.innerText = "UP TO DATE";
