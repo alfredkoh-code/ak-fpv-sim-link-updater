@@ -4,7 +4,12 @@
   <meta charset="utf-8">
   <title>AK FPV SIM LINK</title>
 
+  <script type="module"
+    src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js">
+  </script>
+
   <style>
+    /* ================= THEME SYSTEM ================= */
     :root {
       --bg: #0b0f14;
       --card: #141a22;
@@ -19,135 +24,146 @@
       --bg: #f4f6f8;
       --card: #ffffff;
       --text: #111;
+      --muted: #555;
       --border: #ddd;
     }
 
     body {
-      font-family: Arial;
-      background: var(--bg);
-      color: var(--text);
+      font-family: Arial, sans-serif;
       max-width: 850px;
       margin: 40px auto;
       text-align: center;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s;
     }
 
+    /* ================= BANNER ================= */
     .banner {
+      width: 100%;
       height: 180px;
-      background: url("simlink.png") center/cover no-repeat;
       border-radius: 12px;
+      background: url("simlink.png") center/cover no-repeat;
+      border: 1px solid var(--border);
       margin-bottom: 20px;
     }
 
+    /* ================= BOX ================= */
     .box {
       background: var(--card);
       border: 1px solid var(--border);
-      padding: 20px;
       border-radius: 12px;
+      padding: 25px;
+      transition: 0.3s;
     }
 
+    /* ================= BUTTONS ================= */
     button {
       padding: 10px 14px;
-      margin: 6px;
+      margin: 8px;
       border-radius: 8px;
       border: 1px solid var(--border);
       background: transparent;
       color: var(--text);
       cursor: pointer;
+      transition: 0.2s;
     }
 
-    .fw {
-      margin-top: 15px;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--card);
+    button:hover {
+      border-color: var(--accent);
     }
 
+    /* ================= STATUS ================= */
     .ok { color: var(--accent); }
     .bad { color: var(--warn); }
+
+    /* ================= FIRMWARE CARD ================= */
+    .fw {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
   </style>
 </head>
 
 <body>
 
+<!-- BANNER -->
 <div class="banner"></div>
 
 <div class="box">
 
   <h1>AK FPV SIM LINK</h1>
+  <p style="color:var(--muted)">ELRS Simulator Dongle</p>
 
-  <p>Latest: <span id="latestVersion">---</span></p>
-  <p>Device: <span id="deviceVersion">---</span></p>
-  <p>Status: <span id="status">UNKNOWN</span></p>
+  <p>Latest Firmware:
+    <span id="latestVersion">---</span>
+  </p>
 
-  <button onclick="readVersion()">Read Device</button>
-  <button onclick="toggleTheme()">Theme</button>
+  <p>Device Version:
+    <span id="deviceVersion">Not Connected</span>
+  </p>
+
+  <p>Status:
+    <span id="status">UNKNOWN</span>
+  </p>
+
+  <button onclick="readVersion()">Read Device Version</button>
+  <button onclick="toggleTheme()">Dark / Light</button>
 
 </div>
 
+<!-- FIRMWARE LIST -->
 <div id="firmwareList"></div>
 
 <script>
 let latestGlobal = "";
 
-/* THEME */
+/* ================= THEME TOGGLE (FIXED) ================= */
 function toggleTheme() {
   document.body.classList.toggle("light");
 }
 
-/* LOAD FIRMWARE */
+/* ================= LOAD FIRMWARE LIST ================= */
 async function loadFirmwareList() {
-  const res = await fetch("./manifest.json");
-  const data = await res.json();
-
-  latestGlobal = data.latest;
-  document.getElementById("latestVersion").innerText = data.latest;
-
-  const container = document.getElementById("firmwareList");
-
-  data.firmwares.forEach(fw => {
-    const div = document.createElement("div");
-    div.className = "fw";
-
-    div.innerHTML = `
-      <h3>${fw.version}</h3>
-      <p>${fw.notes || ""}</p>
-
-      <button onclick="installFirmware('${fw.file}', '${fw.version}')">
-        INSTALL
-      </button>
-    `;
-
-    container.appendChild(div);
-  });
-}
-
-/* 🚀 CUSTOM INSTALL (NO ESP DASHBOARD) */
-async function installFirmware(file, version) {
   try {
-    const response = await fetch("./Firmware/" + file);
-    const firmware = await response.arrayBuffer();
+    const res = await fetch("./manifest.json");
+    const data = await res.json();
 
-    const port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200 });
+    latestGlobal = data.latest;
 
-    const writer = port.writable.getWriter();
+    document.getElementById("latestVersion").innerText = data.latest;
 
-    // simple raw flash trigger (depends on your ESP firmware bootloader)
-    await writer.write(firmware);
+    const container = document.getElementById("firmwareList");
 
-    writer.releaseLock();
-    await port.close();
+    data.firmwares.forEach(fw => {
+      const div = document.createElement("div");
+      div.className = "fw";
 
-    alert("Firmware " + version + " installed ✔");
+      div.innerHTML = `
+        <h3>${fw.version}</h3>
+        <p style="color:var(--muted)">${fw.notes || ""}</p>
 
-  } catch (err) {
-    console.error(err);
-    alert("Install failed");
+        <esp-web-install-button
+          manifest="./Firmware/${fw.file}">
+        </esp-web-install-button>
+
+        <p style="font-size:12px;color:var(--muted)">
+          Click install → Flash ESP32
+        </p>
+      `;
+
+      container.appendChild(div);
+    });
+
+  } catch (e) {
+    console.error("Manifest load failed", e);
   }
 }
 
-/* READ VERSION */
+/* ================= READ DEVICE VERSION ================= */
 async function readVersion() {
   try {
     const port = await navigator.serial.requestPort();
@@ -160,31 +176,42 @@ async function readVersion() {
     const reader = port.readable.getReader();
     const { value } = await reader.read();
 
-    const text = new TextDecoder().decode(value || new Uint8Array());
+    const response = new TextDecoder().decode(value || new Uint8Array());
 
     reader.releaseLock();
     await port.close();
 
-    const match = /([0-9.]+)/.exec(text);
+    const match = /([0-9.]+)/.exec(response);
+
+    const deviceEl = document.getElementById("deviceVersion");
+    const statusEl = document.getElementById("status");
 
     if (match) {
-      document.getElementById("deviceVersion").innerText = match[1];
-      compare(match[1], latestGlobal);
+      const v = match[1];
+
+      deviceEl.innerText = v;
+      compare(v, latestGlobal);
+
+    } else {
+      deviceEl.innerText = "Unknown";
+      statusEl.innerText = "NO RESPONSE";
+      statusEl.className = "bad";
     }
 
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
+    document.getElementById("deviceVersion").innerText = "Read Failed";
   }
 }
 
-/* COMPARE */
-function compare(d, l) {
+/* ================= COMPARE ================= */
+function compare(device, latest) {
   const status = document.getElementById("status");
 
-  const dv = d.split(".").reduce((a,b)=>a*100+parseInt(b),0);
-  const lv = l.split(".").reduce((a,b)=>a*100+parseInt(b),0);
+  const d = toNum(device);
+  const l = toNum(latest);
 
-  if (dv >= lv) {
+  if (d >= l) {
     status.innerText = "UP TO DATE";
     status.className = "ok";
   } else {
@@ -193,6 +220,26 @@ function compare(d, l) {
   }
 }
 
+/* ================= VERSION PARSER ================= */
+function toNum(v) {
+  return v.split(".").reduce((a,b)=>a*100+parseInt(b||0),0);
+}
+
+/* ================= CLEAN INSTALL FLOW FIX ================= */
+/* This prevents ESP Web Tools from trapping user in extra UI screens */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("esp-web-install-button").forEach(btn => {
+    btn.addEventListener("finished", () => {
+      console.log("Install complete");
+
+      setTimeout(() => {
+        alert("Installation Complete ✔");
+      }, 300);
+    });
+  });
+});
+
+/* INIT */
 loadFirmwareList();
 </script>
 
