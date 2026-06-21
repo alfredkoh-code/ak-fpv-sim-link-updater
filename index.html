@@ -156,66 +156,38 @@ new TextDecoder().decode(value);
 reader.releaseLock();
 await port.close();
 const match =
-response.match(
-/VERSION:([0-9.]+)/
-);
-if(match)
-5
-{
-const deviceVersion =
-match[1];
-document.getElementById(
-"deviceVersion"
-).innerText =
-deviceVersion;
-compareVersion(
-deviceVersion,
-latestVersionGlobal
-);
+const match = /VERSION:([0-9.]+)/.exec(data);
+
+try {
+  if (match) {
+    const deviceVersion = match[1];
+
+    document.getElementById("deviceVersion").innerText = deviceVersion;
+
+    compareVersion(deviceVersion, latestVersionGlobal);
+  } else {
+    document.getElementById("deviceVersion").innerText = "Unknown";
+  }
+} catch (err) {
+  console.error(err);
+  document.getElementById("deviceVersion").innerText = "Read Failed";
 }
-else
-{
-document.getElementById(
-"deviceVersion"
-).innerText =
-"Unknown";
+
+function compareVersion(deviceVersion, latestVersion) {
+  const badge = document.getElementById("statusBadge");
+
+  if (
+    versionToNumber(deviceVersion) >=
+    versionToNumber(latestVersion)
+  ) {
+    badge.innerText = "UP TO DATE";
+    badge.style.color = "lime";
+  } else {
+    badge.innerText = "UPDATE AVAILABLE";
+    badge.style.color = "orange";
+  }
 }
-catch(err)
-}
-{
-console.error(err);
-document.getElementById(
-"deviceVersion"
-).innerText =
-"Read Failed";
-}
-}
-function compareVersion( deviceVersion, latestVersion ) { const badge =
-document.getElementById( "statusBadge" );
-if(
-versionToNumber(deviceVersion)
->=
-versionToNumber(latestVersion)
-)
-{
-badge.innerHTML =
-`
-<div class="badge success">
-✓ Firmware Up To Date
-</div>
-`;
-}
-6
-else
-{
-badge.innerHTML =
-`
-<div class="badge warning">
-⚠ Update Available
-</div>
-`;
-}
-}
+
 function toggleTheme() { document.body.classList.toggle( "light" );
 const dark =
 document.body.classList.contains(
