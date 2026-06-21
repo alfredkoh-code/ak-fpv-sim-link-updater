@@ -1,57 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AK FPV SIM LINK Updater</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AK FPV SIM LINK Updater</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      transition: 0.3s;
-    }
+<style>
+:root {
+  --bg: #0b0f14;
+  --card: #141a22;
+  --accent: #00ff9d;
+  --orange: #ff9f1c;
+  --text: #e6e6e6;
+  --muted: #8b98a5;
+}
 
-    .dark {
-      background: #111;
-      color: #eee;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
 
-    button {
-      padding: 10px 15px;
-      margin: 5px;
-      cursor: pointer;
-    }
+/* HEADER */
+.header {
+  text-align: center;
+  padding: 30px 10px 10px;
+}
 
-    .badge {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 6px;
-      background: #333;
-      color: white;
-    }
-  </style>
+.header h1 {
+  font-size: 34px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.header span {
+  color: var(--accent);
+}
+
+/* BANNER */
+.banner {
+  width: 100%;
+  height: 180px;
+  background: url("simlink.png") center/cover no-repeat;
+  border-bottom: 2px solid #1f2a36;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* CARD */
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* STATUS BADGE */
+.badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.up-to-date {
+  background: rgba(0,255,157,0.15);
+  color: var(--accent);
+}
+
+.update {
+  background: rgba(255,159,28,0.15);
+  color: var(--orange);
+}
+
+/* BUTTONS */
+button {
+  background: #1f2a36;
+  border: 1px solid #2c3b4d;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: 0.2s;
+}
+
+button:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<h2>AK FPV SIM LINK Updater</h2>
+<div class="banner"></div>
 
-<p>Device Version: <span id="deviceVersion">---</span></p>
-<p>Status: <span id="statusBadge" class="badge">UNKNOWN</span></p>
+<div class="header">
+  <h1>AK <span>FPV SIM LINK</span></h1>
+</div>
 
-<button onclick="connectSerial()">Connect & Read</button>
-<button onclick="toggleDarkMode()">Dark Mode</button>
+<div class="container">
+
+  <!-- STATUS CARD -->
+  <div class="card">
+    <h3>Device Status</h3>
+    <p>Device Version: <span id="deviceVersion">---</span></p>
+    <p>Status:
+      <span id="statusBadge" class="badge">UNKNOWN</span>
+    </p>
+
+    <button onclick="connectSerial()">Connect Device</button>
+    <button onclick="toggleDark()">Toggle Dark</button>
+  </div>
+
+  <!-- FIRMWARE CARDS -->
+  <div class="grid">
+
+    <div class="card">
+      <h3>Firmware v1.5.0</h3>
+      <p class="muted">Latest stable release</p>
+      <button onclick="setLatest('1.5.0')">Select</button>
+    </div>
+
+    <div class="card">
+      <h3>Firmware v1.4.1</h3>
+      <p class="muted">Previous stable</p>
+      <button onclick="setLatest('1.4.1')">Select</button>
+    </div>
+
+  </div>
+
+</div>
 
 <script>
-let latestVersionGlobal = "1.0.0";
+let latestVersionGlobal = "1.5.0";
 
-/* ---------------- DARK MODE ---------------- */
-function toggleDarkMode() {
+/* DARK MODE */
+function toggleDark() {
   document.body.classList.toggle("dark");
 }
 
-/* ---------------- SERIAL ---------------- */
+/* SET FIRMWARE */
+function setLatest(v) {
+  latestVersionGlobal = v;
+  alert("Selected firmware " + v);
+}
+
+/* SERIAL CONNECT */
 async function connectSerial() {
   try {
     const port = await navigator.serial.requestPort();
@@ -61,11 +178,11 @@ async function connectSerial() {
 
   } catch (err) {
     console.error(err);
-    alert("Serial connection failed");
+    alert("Connection failed");
   }
 }
 
-/* ---------------- READ VERSION ---------------- */
+/* READ VERSION */
 async function readVersion(port) {
   try {
     const reader = port.readable.getReader();
@@ -76,52 +193,53 @@ async function readVersion(port) {
     reader.releaseLock();
     await port.close();
 
-    console.log("RESPONSE:", response);
+    console.log("RX:", response);
 
     const match = /VERSION:([0-9.]+)/.exec(response);
 
-    const deviceEl = document.getElementById("deviceVersion");
+    const el = document.getElementById("deviceVersion");
+    const badge = document.getElementById("statusBadge");
+
+    if (!el || !badge) return;
 
     if (match) {
       const deviceVersion = match[1];
-
-      if (deviceEl) deviceEl.innerText = deviceVersion;
-
-      compareVersion(deviceVersion, latestVersionGlobal);
-
+      el.innerText = deviceVersion;
+      compare(deviceVersion, latestVersionGlobal);
     } else {
-      if (deviceEl) deviceEl.innerText = "Unknown";
+      el.innerText = "Unknown";
+      badge.innerText = "NO DATA";
     }
 
   } catch (err) {
     console.error(err);
 
-    const deviceEl = document.getElementById("deviceVersion");
-    if (deviceEl) deviceEl.innerText = "Read Failed";
+    const el = document.getElementById("deviceVersion");
+    if (el) el.innerText = "Read Failed";
   }
 }
 
-/* ---------------- COMPARE VERSION ---------------- */
-function compareVersion(deviceVersion, latestVersion) {
+/* COMPARE */
+function compare(device, latest) {
   const badge = document.getElementById("statusBadge");
   if (!badge) return;
 
-  const device = versionToNumber(deviceVersion);
-  const latest = versionToNumber(latestVersion);
+  const d = toNum(device);
+  const l = toNum(latest);
 
-  if (device >= latest) {
+  if (d >= l) {
     badge.innerText = "UP TO DATE";
-    badge.style.color = "lime";
+    badge.className = "badge up-to-date";
   } else {
     badge.innerText = "UPDATE AVAILABLE";
-    badge.style.color = "orange";
+    badge.className = "badge update";
   }
 }
 
-/* ---------------- VERSION PARSER ---------------- */
-function versionToNumber(v) {
+/* VERSION PARSER */
+function toNum(v) {
   if (!v) return 0;
-  return v.split(".").reduce((a, b) => a * 100 + parseInt(b || 0), 0);
+  return v.split(".").reduce((a,b)=>a*100+parseInt(b||0),0);
 }
 </script>
 
