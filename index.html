@@ -1,184 +1,115 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-<title>AK FPV SIM LINK Updater</title>
-<script type="module" src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js"> </script>
-<style> :root{ --bg:#0f1117; --card:#1a1f2b; --card2:#222838; --text:#f1f5f9; --sub:#9ca3af; --
-accent:#00d26a; --warning:#ff9800; --border:#2c3447; }
-body.light{ --bg:#f4f7fb; --card:#ffffff; --card2:#ffffff; --text:#1f2937; --sub:#6b7280; --accent:#16a34a; --
-warning:#f59e0b; --border:#dbe4ee; }
-*{ box-sizing:border-box; }
-body{ margin:0; padding:20px; background:var(--bg); color:var(--text); font-family:Arial,Helvetica,sans-
-serif; transition:.25s; }
-.container{ max-width:1000px; margin:auto; }
-.header{ background:var(--card); border:1px solid var(--border); border-radius:20px; padding:30px; text-
-align:center; box-shadow:0 10px 30px rgba(0,0,0,.15); }
-.logo{ max-width:320px; width:100%; border-radius:16px; margin-bottom:20px; }
-h1{ margin:0; font-size:38px; }
-.subtitle{ color:var(--sub); margin-top:10px; }
-.topbar{ display:flex; justify-content:flex-end; margin-bottom:15px; }
-.themeBtn{ border:none; border-radius:12px; padding:10px 18px; cursor:pointer; font-weight:bold;
-background:var(--accent); color:white; }
-.statusGrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; margin-
-top:25px; }
-.card{ background:var(--card2); border:1px solid var(--border); border-radius:18px; padding:20px; }
-.cardTitle{ color:var(--sub); font-size:14px; margin-bottom:10px; }
-.cardValue{ font-size:28px; font-weight:bold; }
-.readBtn{ margin-top:20px; border:none; border-radius:14px; padding:14px 24px; background:var(--
-accent); color:white; cursor:pointer; font-size:16px; font-weight:bold; transition:.2s; }
-.readBtn:hover{ transform:translateY(-2px); }
-1
-.badge{ margin-top:15px; display:inline-block; padding:10px 18px; border-radius:999px; font-
-weight:bold; }
-.success{ background:rgba(0,210,106,.15); color:#00d26a; }
-.warning{ background:rgba(255,152,0,.15); color:#ff9800; }
-.features{ margin-top:20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:12px; }
-.feature{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px; text-
-align:center; }
-.section{ margin-top:30px; }
-.latestCard{ background:linear-gradient(135deg,#00d26a,#00a653); color:white; border-radius:20px;
-padding:25px; }
-.latestCard h2{ margin-top:0; }
-.firmwareCard{ background:var(--card); border:1px solid var(--border); border-radius:18px; padding:
-20px; margin-bottom:15px; transition:.2s; }
-.firmwareCard:hover{ transform:translateY(-2px); }
-.versionTitle{ font-size:22px; font-weight:bold; }
-.releaseNote{ color:var(--sub); margin-top:10px; margin-bottom:15px; }
-footer{ text-align:center; margin-top:40px; color:var(--sub); font-size:13px; }
-hr{ border:none; border-top:1px solid var(--border); margin:20px 0; } </style> </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AK FPV SIM LINK Updater</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      transition: 0.3s;
+    }
+
+    .dark {
+      background: #111;
+      color: #eee;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: #333;
+      color: white;
+    }
+  </style>
+</head>
+
 <body>
-<div class="container">
-<div class="topbar"> <button class="themeBtn" onclick="toggleTheme()" id="themeBtn"> 🌙 Dark Mode
-</button> </div>
-<div class="header">
-<img src="simlink.png" class="logo">
-<h1>AK FPV SIM LINK</h1>
-<div class="subtitle"> ELRS Simulator Dongle Firmware Center </div>
-<div class="statusGrid">
-2
-<div class="card"> <div class="cardTitle">Device Version</div> <div class="cardValue"
-id="deviceVersion"> Not Connected </div> </div>
-<div class="card"> <div class="cardTitle">Latest Firmware</div> <div class="cardValue"
-id="latestVersion">
-- </div> </div>
-</div>
-<button class="readBtn" onclick="readVersion()"> Read Device Version </button>
-<br>
-<div id="statusBadge"></div>
-</div>
-<div class="features">
-<div class="feature">✓ ELRS Compatible</div> <div class="feature">✓ 16 Channels</div> <div
-class="feature">✓ Plug & Play</div> <div class="feature">✓ Liftoff Ready</div> <div class="feature">✓
-Velocidrone Ready</div> <div class="feature">✓ Uncrashed Ready</div>
-</div>
-<div class="section">
-<div id="latestFirmwareCard"></div>
-</div>
-<div class="section">
-<h2>Firmware History</h2>
-<div id="firmwareList"></div>
-</div>
-<footer> AK FPV SIM LINK Firmware Updater </footer>
-</div>
+
+<h2>AK FPV SIM LINK Updater</h2>
+
+<p>Device Version: <span id="deviceVersion">---</span></p>
+<p>Status: <span id="statusBadge" class="badge">UNKNOWN</span></p>
+
+<button onclick="connectSerial()">Connect & Read</button>
+<button onclick="toggleDarkMode()">Dark Mode</button>
+
 <script>
-let latestVersionGlobal = "";
-function versionToNumber(v) { return v.split('.') .map(Number) .reduce((acc,num)=>acc*1000+num,0); }
-3
-async function loadFirmwareList() { const res = await fetch("./manifest.json"); const data = await
-res.json();
-latestVersionGlobal = data.latest;
-document.getElementById("latestVersion").innerText =
-data.latest;
-const latestFw =
-data.firmwares.find(
-fw => fw.version === data.latest
-);
-if(latestFw)
-{
-document.getElementById(
-"latestFirmwareCard"
-).innerHTML =
-`
-<div class="latestCard">
-<h2>Latest Release v${latestFw.version}</h2>
-<p>${latestFw.notes}</p>
-<esp-web-install-button
-manifest="./Firmware/${latestFw.file}">
-</esp-web-install-button>
-</div>
-`;
+let latestVersionGlobal = "1.0.0";
+
+/* ---------------- DARK MODE ---------------- */
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
 }
-const container =
-document.getElementById("firmwareList");
-container.innerHTML = "";
-data.firmwares.forEach(fw =>
-{
-const div =
-document.createElement("div");
-div.className = "firmwareCard";
-div.innerHTML =
-`
-<div class="versionTitle">
-Version ${fw.version}
-</div>
-<div class="releaseNote">
-${fw.notes}
-</div>
-4
-<esp-web-install-button
-manifest="./Firmware/${fw.file}">
-</esp-web-install-button>
-`;
-container.appendChild(div);
-});
-}
-async function readVersion() { try { const port = await navigator.serial.requestPort();
-await port.open({
-baudRate:115200
-});
-await new Promise(resolve =>
-setTimeout(resolve,1500)
-);
-const writer =
-port.writable.getWriter();
-await writer.write(
-new TextEncoder().encode(
-"VERSION?\n"
-)
-);
-writer.releaseLock();
-const reader = port.readable.getReader();
 
-const { value } = await reader.read();
-const response = new TextDecoder().decode(value);
+/* ---------------- SERIAL ---------------- */
+async function connectSerial() {
+  try {
+    const port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200 });
 
-reader.releaseLock();
-await port.close();
+    readVersion(port);
 
-const match = /VERSION:([0-9.]+)/.exec(response);
-
-try {
-  if (match) {
-    const deviceVersion = match[1];
-
-    document.getElementById("deviceVersion").innerText = deviceVersion;
-
-    compareVersion(deviceVersion, latestVersionGlobal);
-  } else {
-    document.getElementById("deviceVersion").innerText = "Unknown";
+  } catch (err) {
+    console.error(err);
+    alert("Serial connection failed");
   }
-} catch (err) {
-  console.error(err);
-  document.getElementById("deviceVersion").innerText = "Read Failed";
 }
 
+/* ---------------- READ VERSION ---------------- */
+async function readVersion(port) {
+  try {
+    const reader = port.readable.getReader();
+
+    const { value } = await reader.read();
+    const response = new TextDecoder().decode(value || new Uint8Array());
+
+    reader.releaseLock();
+    await port.close();
+
+    console.log("RESPONSE:", response);
+
+    const match = /VERSION:([0-9.]+)/.exec(response);
+
+    const deviceEl = document.getElementById("deviceVersion");
+
+    if (match) {
+      const deviceVersion = match[1];
+
+      if (deviceEl) deviceEl.innerText = deviceVersion;
+
+      compareVersion(deviceVersion, latestVersionGlobal);
+
+    } else {
+      if (deviceEl) deviceEl.innerText = "Unknown";
+    }
+
+  } catch (err) {
+    console.error(err);
+
+    const deviceEl = document.getElementById("deviceVersion");
+    if (deviceEl) deviceEl.innerText = "Read Failed";
+  }
+}
+
+/* ---------------- COMPARE VERSION ---------------- */
 function compareVersion(deviceVersion, latestVersion) {
   const badge = document.getElementById("statusBadge");
+  if (!badge) return;
 
-  if (
-    versionToNumber(deviceVersion) >=
-    versionToNumber(latestVersion)
-  ) {
+  const device = versionToNumber(deviceVersion);
+  const latest = versionToNumber(latestVersion);
+
+  if (device >= latest) {
     badge.innerText = "UP TO DATE";
     badge.style.color = "lime";
   } else {
@@ -187,38 +118,12 @@ function compareVersion(deviceVersion, latestVersion) {
   }
 }
 
-function toggleTheme() { document.body.classList.toggle( "light" );
-const dark =
-document.body.classList.contains(
-"light"
-);
-localStorage.setItem(
-"theme",
-dark ? "light":"dark"
-);
-updateThemeButton();
+/* ---------------- VERSION PARSER ---------------- */
+function versionToNumber(v) {
+  if (!v) return 0;
+  return v.split(".").reduce((a, b) => a * 100 + parseInt(b || 0), 0);
 }
-function updateThemeButton() { const btn = document.getElementById( "themeBtn" );
-if(
-document.body.classList.contains(
-"light"
-)
-)
-{
-btn.innerText =
-"
-☀️ Light Mode";
-}
-else
-{
-btn.innerText =
-"
-🌙 Dark Mode";
-}
-}
-if( localStorage.getItem("theme") === "light" ) { document.body.classList.add( "light" ); }
-7
-updateThemeButton(); loadFirmwareList();
 </script>
-</body> </html>
-8
+
+</body>
+</html>
