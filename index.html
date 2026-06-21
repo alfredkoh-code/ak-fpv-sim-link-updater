@@ -9,54 +9,90 @@
   </script>
 
   <style>
+    /* ===== THEME SYSTEM (FIXED PROPERLY) ===== */
+    :root {
+      --bg: #0b0f14;
+      --card: #141a22;
+      --text: #e6e6e6;
+      --muted: #9aa4ad;
+      --accent: #00ff9d;
+      --warn: #ff9f1c;
+      --border: #222;
+    }
+
+    body.light {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #ddd;
+    }
+
     body {
       font-family: Arial, sans-serif;
       max-width: 800px;
       margin: 40px auto;
       text-align: center;
-      background: #0b0f14;
-      color: #e6e6e6;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s;
     }
 
     .box {
-      border: 1px solid #222;
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 25px;
-      background: #141a22;
+      background: var(--card);
+      transition: 0.3s;
     }
 
     button {
       padding: 10px 14px;
       margin: 8px;
       border-radius: 8px;
-      border: 1px solid #333;
-      background: #1f2a36;
-      color: white;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
       cursor: pointer;
+      transition: 0.2s;
     }
 
     button:hover {
-      border-color: #00ff9d;
+      border-color: var(--accent);
     }
 
-    .ok { color: #00ff9d; }
-    .bad { color: #ff9f1c; }
+    .ok { color: var(--accent); }
+    .bad { color: var(--warn); }
 
     .fw {
       margin-top: 20px;
       padding: 15px;
       border-radius: 10px;
-      background: #111722;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    /* ===== BANNER IMAGE ===== */
+    .banner {
+      width: 100%;
+      height: 180px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      background: url("simlink.png") center/cover no-repeat;
+      border: 1px solid var(--border);
     }
   </style>
 </head>
 
 <body>
 
+<!-- IMAGE BANNER -->
+<div class="banner"></div>
+
 <div class="box">
 
 <h1>AK FPV SIM LINK</h1>
-<p>ELRS Simulator Dongle</p>
+<p style="color:var(--muted)">ELRS Simulator Dongle</p>
 
 <p>Latest Firmware:
   <span id="latestVersion">---</span>
@@ -71,7 +107,7 @@
 </p>
 
 <button onclick="readVersion()">Read Device Version</button>
-<button onclick="toggleTheme()">Toggle Theme</button>
+<button onclick="toggleTheme()">Toggle Dark/Light</button>
 
 </div>
 
@@ -80,16 +116,9 @@
 <script>
 let latestGlobal = "";
 
+/* ===== FIXED THEME TOGGLE ===== */
 function toggleTheme() {
   document.body.classList.toggle("light");
-
-  if (document.body.classList.contains("light")) {
-    document.body.style.background = "#f4f6f8";
-    document.body.style.color = "#111";
-  } else {
-    document.body.style.background = "#0b0f14";
-    document.body.style.color = "#e6e6e6";
-  }
 }
 
 /* LOAD FIRMWARE LIST */
@@ -111,15 +140,11 @@ async function loadFirmwareList() {
 
       div.innerHTML = `
         <h3>${fw.version}</h3>
-        <p>${fw.notes || ""}</p>
+        <p style="color:var(--muted)">${fw.notes || ""}</p>
 
         <esp-web-install-button
           manifest="./Firmware/${fw.file}">
         </esp-web-install-button>
-
-        <p style="font-size:12px;opacity:0.6">
-          Click install button to flash ESP32
-        </p>
       `;
 
       container.appendChild(div);
@@ -130,7 +155,7 @@ async function loadFirmwareList() {
   }
 }
 
-/* READ DEVICE VERSION (FIXED + STABLE) */
+/* READ DEVICE VERSION */
 async function readVersion() {
   try {
     const port = await navigator.serial.requestPort();
@@ -157,7 +182,6 @@ async function readVersion() {
       const v = match[1];
 
       deviceEl.innerText = v;
-
       compare(v, latestGlobal);
 
     } else {
@@ -168,7 +192,6 @@ async function readVersion() {
 
   } catch (err) {
     console.error(err);
-
     document.getElementById("deviceVersion").innerText = "Read Failed";
   }
 }
