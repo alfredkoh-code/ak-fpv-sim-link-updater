@@ -1,231 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AK FPV SIM LINK Updater</title>
+  <meta charset="utf-8">
+  <title>AK FPV SIM LINK</title>
 
-<style>
-:root {
-  --bg: #0b0f14;
-  --card: #141a22;
-  --text: #e6e6e6;
-  --muted: #8b98a5;
-  --green: #00ff9d;
-  --orange: #ff9f1c;
-  --btn: #1f2a36;
-}
+  <script type="module"
+    src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js">
+  </script>
 
-body {
-  margin: 0;
-  font-family: Arial;
-  background: var(--bg);
-  color: var(--text);
-  transition: 0.3s;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      text-align: center;
+      background: #0b0f14;
+      color: #e6e6e6;
+    }
 
-/* DARK MODE SYSTEM (REAL FIX) */
-body.light {
-  --bg: #f4f6f8;
-  --card: #ffffff;
-  --text: #111;
-  --muted: #444;
-  --btn: #e9eef3;
-}
+    .box {
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 25px;
+      background: #141a22;
+    }
 
-.banner {
-  height: 180px;
-  background: url("simlink.png") center/cover no-repeat;
-}
+    button {
+      padding: 10px 14px;
+      margin: 8px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #1f2a36;
+      color: white;
+      cursor: pointer;
+    }
 
-.header {
-  text-align: center;
-  padding: 20px;
-}
+    button:hover {
+      border-color: #00ff9d;
+    }
 
-.header h1 {
-  margin: 0;
-  font-size: 36px;
-}
+    .ok { color: #00ff9d; }
+    .bad { color: #ff9f1c; }
 
-.header span {
-  color: var(--green);
-}
-
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-}
-
-.card {
-  background: var(--card);
-  padding: 15px;
-  border-radius: 14px;
-  margin-bottom: 15px;
-  transition: 0.3s;
-}
-
-button {
-  background: var(--btn);
-  border: 1px solid #2c3b4d;
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-right: 6px;
-}
-
-button:hover {
-  border-color: var(--green);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-@media (max-width: 600px) {
-  .grid { grid-template-columns: 1fr; }
-}
-
-.badge {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-}
-
-.up { color: var(--green); background: rgba(0,255,157,0.15); }
-.down { color: var(--orange); background: rgba(255,159,28,0.15); }
-</style>
+    .fw {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #111722;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="banner"></div>
+<div class="box">
 
-<div class="header">
-  <h1>AK <span>FPV SIM LINK</span></h1>
-</div>
+<h1>AK FPV SIM LINK</h1>
+<p>ELRS Simulator Dongle</p>
 
-<div class="container">
+<p>Latest Firmware:
+  <span id="latestVersion">---</span>
+</p>
 
-  <div class="card">
-    <h3>Device</h3>
+<p>Device Version:
+  <span id="deviceVersion">Not Connected</span>
+</p>
 
-    <p>Version: <span id="deviceVersion">---</span></p>
-    <p>Status: <span id="statusBadge" class="badge">UNKNOWN</span></p>
+<p>Status:
+  <span id="status">UNKNOWN</span>
+</p>
 
-    <button onclick="connectSerial()">Connect</button>
-    <button onclick="toggleTheme()">Dark/Light</button>
-  </div>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>Firmware 1.5.0</h3>
-      <button onclick="selectFirmware('1.5.0')">Select</button>
-    </div>
-
-    <div class="card">
-      <h3>Firmware 1.4.1</h3>
-      <button onclick="selectFirmware('1.4.1')">Select</button>
-    </div>
-
-  </div>
+<button onclick="readVersion()">Read Device Version</button>
+<button onclick="toggleTheme()">Toggle Theme</button>
 
 </div>
+
+<div id="firmwareList"></div>
 
 <script>
-let state = {
-  latestFirmware: "1.5.0",
-  deviceVersion: null,
-  port: null,
-  reader: null
-};
+let latestGlobal = "";
 
-/* THEME (FIXED PROPERLY) */
 function toggleTheme() {
   document.body.classList.toggle("light");
+
+  if (document.body.classList.contains("light")) {
+    document.body.style.background = "#f4f6f8";
+    document.body.style.color = "#111";
+  } else {
+    document.body.style.background = "#0b0f14";
+    document.body.style.color = "#e6e6e6";
+  }
 }
 
-/* FIRMWARE SELECTION (REAL EFFECT) */
-function selectFirmware(v) {
-  state.latestFirmware = v;
-
-  updateStatus();
-
-  alert("Firmware selected: " + v);
-}
-
-/* SERIAL CONNECT */
-async function connectSerial() {
+/* LOAD FIRMWARE LIST */
+async function loadFirmwareList() {
   try {
-    state.port = await navigator.serial.requestPort();
-    await state.port.open({ baudRate: 115200 });
+    const res = await fetch("./manifest.json");
+    const data = await res.json();
 
-    readLoop();
+    latestGlobal = data.latest;
+
+    document.getElementById("latestVersion").innerText = data.latest;
+
+    const container = document.getElementById("firmwareList");
+
+    data.firmwares.forEach(fw => {
+      const div = document.createElement("div");
+
+      div.className = "fw";
+
+      div.innerHTML = `
+        <h3>${fw.version}</h3>
+        <p>${fw.notes || ""}</p>
+
+        <esp-web-install-button
+          manifest="./Firmware/${fw.file}">
+        </esp-web-install-button>
+
+        <p style="font-size:12px;opacity:0.6">
+          Click install button to flash ESP32
+        </p>
+      `;
+
+      container.appendChild(div);
+    });
+
+  } catch (e) {
+    console.error("Manifest load failed", e);
+  }
+}
+
+/* READ DEVICE VERSION (FIXED + STABLE) */
+async function readVersion() {
+  try {
+    const port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200 });
+
+    const writer = port.writable.getWriter();
+    await writer.write(new TextEncoder().encode("VERSION?\n"));
+    writer.releaseLock();
+
+    const reader = port.readable.getReader();
+    const { value } = await reader.read();
+
+    const response = new TextDecoder().decode(value || new Uint8Array());
+
+    reader.releaseLock();
+    await port.close();
+
+    const match = /([0-9.]+)/.exec(response);
+
+    const deviceEl = document.getElementById("deviceVersion");
+    const statusEl = document.getElementById("status");
+
+    if (match) {
+      const v = match[1];
+
+      deviceEl.innerText = v;
+
+      compare(v, latestGlobal);
+
+    } else {
+      deviceEl.innerText = "Unknown";
+      statusEl.innerText = "NO RESPONSE";
+      statusEl.className = "bad";
+    }
 
   } catch (err) {
     console.error(err);
-    alert("Serial failed");
+
+    document.getElementById("deviceVersion").innerText = "Read Failed";
   }
 }
 
-/* CONTINUOUS SERIAL STREAM */
-async function readLoop() {
-  const decoder = new TextDecoder();
+/* COMPARE */
+function compare(device, latest) {
+  const status = document.getElementById("status");
 
-  while (state.port && state.port.readable) {
-    try {
-      const reader = state.port.readable.getReader();
-      const { value, done } = await reader.read();
-
-      if (done) break;
-
-      const text = decoder.decode(value || new Uint8Array());
-
-      console.log("RX:", text);
-
-      const match = /VERSION:([0-9.]+)/.exec(text);
-
-      if (match) {
-        state.deviceVersion = match[1];
-
-        document.getElementById("deviceVersion").innerText = state.deviceVersion;
-
-        updateStatus();
-      }
-
-      reader.releaseLock();
-
-    } catch (e) {
-      console.error("Loop error:", e);
-      break;
-    }
-  }
-}
-
-/* STATUS ENGINE (REAL LOGIC) */
-function updateStatus() {
-  const badge = document.getElementById("statusBadge");
-  if (!badge) return;
-
-  if (!state.deviceVersion) {
-    badge.innerText = "NO DATA";
-    return;
-  }
-
-  const d = toNum(state.deviceVersion);
-  const l = toNum(state.latestFirmware);
+  const d = toNum(device);
+  const l = toNum(latest);
 
   if (d >= l) {
-    badge.innerText = "UP TO DATE";
-    badge.className = "badge up";
+    status.innerText = "UP TO DATE";
+    status.className = "ok";
   } else {
-    badge.innerText = "UPDATE AVAILABLE";
-    badge.className = "badge down";
+    status.innerText = "UPDATE AVAILABLE";
+    status.className = "bad";
   }
 }
 
@@ -233,6 +193,8 @@ function updateStatus() {
 function toNum(v) {
   return v.split(".").reduce((a,b)=>a*100+parseInt(b||0),0);
 }
+
+loadFirmwareList();
 </script>
 
 </body>
