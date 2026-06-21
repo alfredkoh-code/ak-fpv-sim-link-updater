@@ -9,10 +9,10 @@
 :root {
   --bg: #0b0f14;
   --card: #141a22;
-  --accent: #00ff9d;
-  --orange: #ff9f1c;
   --text: #e6e6e6;
   --muted: #8b98a5;
+  --green: #00ff9d;
+  --orange: #ff9f1c;
 }
 
 body {
@@ -25,17 +25,17 @@ body {
 /* HEADER */
 .header {
   text-align: center;
-  padding: 30px 10px 10px;
+  padding: 25px 10px 10px;
 }
 
 .header h1 {
-  font-size: 34px;
-  letter-spacing: 2px;
+  font-size: 36px;
   margin: 0;
+  letter-spacing: 2px;
 }
 
 .header span {
-  color: var(--accent);
+  color: var(--green);
 }
 
 /* BANNER */
@@ -62,22 +62,17 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-/* STATUS BADGE */
-.badge {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  display: inline-block;
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.up-to-date {
-  background: rgba(0,255,157,0.15);
-  color: var(--accent);
-}
-
-.update {
-  background: rgba(255,159,28,0.15);
-  color: var(--orange);
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* BUTTONS */
@@ -93,22 +88,26 @@ button {
 }
 
 button:hover {
-  border-color: var(--accent);
+  border-color: var(--green);
   transform: translateY(-1px);
 }
 
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+/* BADGES */
+.badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
 }
 
-/* MOBILE */
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.up {
+  background: rgba(0,255,157,0.15);
+  color: var(--green);
+}
+
+.down {
+  background: rgba(255,159,28,0.15);
+  color: var(--orange);
 }
 </style>
 </head>
@@ -123,31 +122,33 @@ button:hover {
 
 <div class="container">
 
-  <!-- STATUS CARD -->
+  <!-- DEVICE CARD -->
   <div class="card">
     <h3>Device Status</h3>
+
     <p>Device Version: <span id="deviceVersion">---</span></p>
+
     <p>Status:
       <span id="statusBadge" class="badge">UNKNOWN</span>
     </p>
 
     <button onclick="connectSerial()">Connect Device</button>
-    <button onclick="toggleDark()">Toggle Dark</button>
+    <button onclick="toggleDark()">Dark Mode</button>
   </div>
 
-  <!-- FIRMWARE CARDS -->
+  <!-- FIRMWARE -->
   <div class="grid">
 
     <div class="card">
-      <h3>Firmware v1.5.0</h3>
+      <h3>Firmware 1.5.0</h3>
       <p class="muted">Latest stable release</p>
-      <button onclick="setLatest('1.5.0')">Select</button>
+      <button onclick="setFirmware('1.5.0')">Select</button>
     </div>
 
     <div class="card">
-      <h3>Firmware v1.4.1</h3>
+      <h3>Firmware 1.4.1</h3>
       <p class="muted">Previous stable</p>
-      <button onclick="setLatest('1.4.1')">Select</button>
+      <button onclick="setFirmware('1.4.1')">Select</button>
     </div>
 
   </div>
@@ -156,6 +157,8 @@ button:hover {
 
 <script>
 let latestVersionGlobal = "1.5.0";
+let currentPort = null;
+let isConnecting = false;
 
 /* DARK MODE */
 function toggleDark() {
@@ -163,35 +166,53 @@ function toggleDark() {
 }
 
 /* SET FIRMWARE */
-function setLatest(v) {
+function setFirmware(v) {
   latestVersionGlobal = v;
-  alert("Selected firmware " + v);
+  alert("Firmware selected: " + v);
 }
 
-/* SERIAL CONNECT */
+/* CONNECT SERIAL (SAFE) */
 async function connectSerial() {
-  try {
-    const port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200 });
+  if (isConnecting) return;
+  isConnecting = true;
 
-    readVersion(port);
+  try {
+    if (currentPort && currentPort.readable) {
+      try { await currentPort.close(); } catch (e) {}
+      currentPort = null;
+    }
+
+    currentPort = await navigator.serial.requestPort();
+
+    try {
+      await currentPort.open({ baudRate: 115200 });
+    } catch (e) {
+      console.warn("Port open warning:", e);
+    }
+
+    await readVersion(currentPort);
 
   } catch (err) {
     console.error(err);
-    alert("Connection failed");
+    alert("Serial connection failed");
   }
+
+  isConnecting = false;
 }
 
 /* READ VERSION */
 async function readVersion(port) {
   try {
+    if (!port || !port.readable) return;
+
     const reader = port.readable.getReader();
 
     const { value } = await reader.read();
     const response = new TextDecoder().decode(value || new Uint8Array());
 
     reader.releaseLock();
-    await port.close();
+
+    try { await port.close(); } catch (e) {}
 
     console.log("RX:", response);
 
@@ -204,8 +225,10 @@ async function readVersion(port) {
 
     if (match) {
       const deviceVersion = match[1];
+
       el.innerText = deviceVersion;
-      compare(deviceVersion, latestVersionGlobal);
+      compareVersion(deviceVersion, latestVersionGlobal);
+
     } else {
       el.innerText = "Unknown";
       badge.innerText = "NO DATA";
@@ -219,8 +242,8 @@ async function readVersion(port) {
   }
 }
 
-/* COMPARE */
-function compare(device, latest) {
+/* COMPARE VERSION */
+function compareVersion(device, latest) {
   const badge = document.getElementById("statusBadge");
   if (!badge) return;
 
@@ -229,10 +252,10 @@ function compare(device, latest) {
 
   if (d >= l) {
     badge.innerText = "UP TO DATE";
-    badge.className = "badge up-to-date";
+    badge.className = "badge up";
   } else {
     badge.innerText = "UPDATE AVAILABLE";
-    badge.className = "badge update";
+    badge.className = "badge down";
   }
 }
 
