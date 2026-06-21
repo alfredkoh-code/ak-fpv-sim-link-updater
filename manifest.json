@@ -3,6 +3,18 @@
   "firmwares": [
 
 {
+      "version": "1.5.0",
+      "file": "akfpv-sim-link-v1.5.0.json",
+      "notes": "Release note:Firmware version check "
+    },
+
+{
+      "version": "1.4.1",
+      "file": "akfpv-sim-link-v1.4.1.json",
+      "notes": "Release note:Add LQ health led status "
+    },
+
+{
       "version": "1.3.2",
       "file": "akfpv-sim-link-v1.3.2.json",
       "notes": "Release note: improve led light curve"

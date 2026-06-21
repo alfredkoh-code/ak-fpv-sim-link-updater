@@ -1,0 +1,15 @@
+{
+  "name": "AK FPV SIM LINK",
+  "version": "1.4.1",
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "akfpv-sim-link-v1.4.1.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

@@ -34,6 +34,12 @@
 
 <p>Latest Firmware: <span id="latestVersion"></span></p>
 
+<p>Device Version: <span id="deviceVersion">Not Connected</span></p>
+
+<button onclick="readVersion()">
+    Read Device Version
+</button>
+
 </div>
 
 <div id="firmwareList"></div>
@@ -61,6 +67,44 @@ async function loadFirmwareList() {
 
         container.appendChild(div);
     });
+}
+
+async function readVersion()
+{
+    try
+    {
+        const port = await navigator.serial.requestPort();
+
+        await port.open({ baudRate: 115200 });
+
+        const writer = port.writable.getWriter();
+
+        await writer.write(
+            new TextEncoder().encode("VERSION?\n")
+        );
+
+        writer.releaseLock();
+
+        const reader = port.readable.getReader();
+
+        const { value } = await reader.read();
+
+        const response = new TextDecoder().decode(value);
+
+        document.getElementById("deviceVersion").innerText =
+            response.trim();
+
+        reader.releaseLock();
+
+        await port.close();
+    }
+    catch(err)
+    {
+        document.getElementById("deviceVersion").innerText =
+            "Read Failed";
+
+        console.error(err);
+    }
 }
 
 loadFirmwareList();
