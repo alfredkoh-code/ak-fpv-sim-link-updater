@@ -147,16 +147,15 @@ new TextEncoder().encode(
 )
 );
 writer.releaseLock();
-const reader =
-port.readable.getReader();
-const {value} =
-await reader.read();
-const response =
-new TextDecoder().decode(value);
+const reader = port.readable.getReader();
+
+const { value } = await reader.read();
+const response = new TextDecoder().decode(value);
+
 reader.releaseLock();
 await port.close();
-const match =
-const match = /VERSION:([0-9.]+)/.exec(data);
+
+const match = /VERSION:([0-9.]+)/.exec(response);
 
 try {
   if (match) {
