@@ -20,18 +20,26 @@ body {
   font-family: Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
+  transition: 0.3s;
+}
+
+/* DARK MODE (REAL EFFECTS) */
+body.dark {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #111;
+  --muted: #555;
 }
 
 /* HEADER */
 .header {
   text-align: center;
-  padding: 25px 10px 10px;
+  padding: 25px;
 }
 
 .header h1 {
   font-size: 36px;
   margin: 0;
-  letter-spacing: 2px;
 }
 
 .header span {
@@ -40,10 +48,8 @@ body {
 
 /* BANNER */
 .banner {
-  width: 100%;
   height: 180px;
   background: url("simlink.png") center/cover no-repeat;
-  border-bottom: 2px solid #1f2a36;
 }
 
 /* CONTAINER */
@@ -56,10 +62,10 @@ body {
 /* CARD */
 .card {
   background: var(--card);
-  border-radius: 14px;
   padding: 15px;
+  border-radius: 14px;
   margin-bottom: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transition: 0.3s;
 }
 
 /* GRID */
@@ -70,20 +76,17 @@ body {
 }
 
 @media (max-width: 600px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+  .grid { grid-template-columns: 1fr; }
 }
 
 /* BUTTONS */
 button {
-  background: #1f2a36;
-  border: 1px solid #2c3b4d;
-  color: var(--text);
   padding: 10px 14px;
   border-radius: 10px;
+  border: 1px solid #2c3b4d;
+  background: #1f2a36;
+  color: var(--text);
   cursor: pointer;
-  margin-right: 8px;
   transition: 0.2s;
 }
 
@@ -94,21 +97,14 @@ button:hover {
 
 /* BADGES */
 .badge {
-  padding: 5px 12px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-weight: bold;
   display: inline-block;
 }
 
-.up {
-  background: rgba(0,255,157,0.15);
-  color: var(--green);
-}
-
-.down {
-  background: rgba(255,159,28,0.15);
-  color: var(--orange);
-}
+.up { background: rgba(0,255,157,0.15); color: var(--green); }
+.down { background: rgba(255,159,28,0.15); color: var(--orange); }
 </style>
 </head>
 
@@ -122,33 +118,26 @@ button:hover {
 
 <div class="container">
 
-  <!-- DEVICE CARD -->
   <div class="card">
     <h3>Device Status</h3>
 
-    <p>Device Version: <span id="deviceVersion">---</span></p>
-
-    <p>Status:
-      <span id="statusBadge" class="badge">UNKNOWN</span>
-    </p>
+    <p>Version: <span id="deviceVersion">---</span></p>
+    <p>Status: <span id="statusBadge" class="badge">UNKNOWN</span></p>
 
     <button onclick="connectSerial()">Connect Device</button>
-    <button onclick="toggleDark()">Dark Mode</button>
+    <button onclick="toggleDark()">Toggle Dark</button>
   </div>
 
-  <!-- FIRMWARE -->
   <div class="grid">
 
     <div class="card">
       <h3>Firmware 1.5.0</h3>
-      <p class="muted">Latest stable release</p>
-      <button onclick="setFirmware('1.5.0')">Select</button>
+      <button onclick="selectFirmware('1.5.0')">Select</button>
     </div>
 
     <div class="card">
       <h3>Firmware 1.4.1</h3>
-      <p class="muted">Previous stable</p>
-      <button onclick="setFirmware('1.4.1')">Select</button>
+      <button onclick="selectFirmware('1.4.1')">Select</button>
     </div>
 
   </div>
@@ -156,96 +145,75 @@ button:hover {
 </div>
 
 <script>
-let latestVersionGlobal = "1.5.0";
-let currentPort = null;
-let isConnecting = false;
+let latestFirmware = "1.5.0";
+let port = null;
+let reader = null;
 
-/* DARK MODE */
+/* DARK MODE (FIXED) */
 function toggleDark() {
   document.body.classList.toggle("dark");
 }
 
-/* SET FIRMWARE */
-function setFirmware(v) {
-  latestVersionGlobal = v;
-  alert("Firmware selected: " + v);
-}
+/* FIRMWARE SELECT (NOW WORKS) */
+function selectFirmware(v) {
+  latestFirmware = v;
+  alert("Selected: " + v);
 
-/* CONNECT SERIAL (SAFE) */
-async function connectSerial() {
-  if (isConnecting) return;
-  isConnecting = true;
-
-  try {
-    if (currentPort && currentPort.readable) {
-      try { await currentPort.close(); } catch (e) {}
-      currentPort = null;
-    }
-
-    currentPort = await navigator.serial.requestPort();
-
-    try {
-      await currentPort.open({ baudRate: 115200 });
-    } catch (e) {
-      console.warn("Port open warning:", e);
-    }
-
-    await readVersion(currentPort);
-
-  } catch (err) {
-    console.error(err);
-    alert("Serial connection failed");
-  }
-
-  isConnecting = false;
-}
-
-/* READ VERSION */
-async function readVersion(port) {
-  try {
-    if (!port || !port.readable) return;
-
-    const reader = port.readable.getReader();
-
-    const { value } = await reader.read();
-    const response = new TextDecoder().decode(value || new Uint8Array());
-
-    reader.releaseLock();
-
-    try { await port.close(); } catch (e) {}
-
-    console.log("RX:", response);
-
-    const match = /VERSION:([0-9.]+)/.exec(response);
-
-    const el = document.getElementById("deviceVersion");
-    const badge = document.getElementById("statusBadge");
-
-    if (!el || !badge) return;
-
-    if (match) {
-      const deviceVersion = match[1];
-
-      el.innerText = deviceVersion;
-      compareVersion(deviceVersion, latestVersionGlobal);
-
-    } else {
-      el.innerText = "Unknown";
-      badge.innerText = "NO DATA";
-    }
-
-  } catch (err) {
-    console.error(err);
-
-    const el = document.getElementById("deviceVersion");
-    if (el) el.innerText = "Read Failed";
-  }
-}
-
-/* COMPARE VERSION */
-function compareVersion(device, latest) {
   const badge = document.getElementById("statusBadge");
-  if (!badge) return;
+  badge.innerText = "READY (" + v + ")";
+}
+
+/* CONNECT SERIAL (FIXED STREAM LOOP) */
+async function connectSerial() {
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200 });
+
+    listenSerial();
+
+  } catch (err) {
+    console.error(err);
+    alert("Connection failed");
+  }
+}
+
+/* CONTINUOUS READ (IMPORTANT FIX) */
+async function listenSerial() {
+  const decoder = new TextDecoder();
+
+  while (port && port.readable) {
+    try {
+      reader = port.readable.getReader();
+      const { value, done } = await reader.read();
+
+      if (done) break;
+
+      const text = decoder.decode(value);
+
+      console.log("RX:", text);
+
+      const match = /VERSION:([0-9.]+)/.exec(text);
+
+      if (match) {
+        const v = match[1];
+
+        document.getElementById("deviceVersion").innerText = v;
+
+        compare(v, latestFirmware);
+      }
+
+      reader.releaseLock();
+
+    } catch (e) {
+      console.error("Serial loop error:", e);
+      break;
+    }
+  }
+}
+
+/* COMPARE */
+function compare(device, latest) {
+  const badge = document.getElementById("statusBadge");
 
   const d = toNum(device);
   const l = toNum(latest);
@@ -261,7 +229,6 @@ function compareVersion(device, latest) {
 
 /* VERSION PARSER */
 function toNum(v) {
-  if (!v) return 0;
   return v.split(".").reduce((a,b)=>a*100+parseInt(b||0),0);
 }
 </script>
