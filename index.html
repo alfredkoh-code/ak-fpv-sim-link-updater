@@ -174,14 +174,31 @@ async function readVersion() {
     writer.releaseLock();
 
     const reader = port.readable.getReader();
-    const { value } = await reader.read();
 
-    const response = new TextDecoder().decode(value || new Uint8Array());
+    let buffer = "";
+    const decoder = new TextDecoder();
 
-    reader.releaseLock();
+    const timeout = setTimeout(async () => {
+      await reader.cancel();
+    }, 800);
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value || new Uint8Array());
+
+      if (buffer.includes("VERSION:")) break;
+    }
+
+    clearTimeout(timeout);
+
+    await reader.releaseLock();
     await port.close();
 
-    const match = /([0-9.]+)/.exec(response);
+    console.log("RAW:", buffer);
+
+    const match = buffer.match(/VERSION:([0-9.]+)/);
 
     const deviceEl = document.getElementById("deviceVersion");
     const statusEl = document.getElementById("status");
@@ -191,7 +208,6 @@ async function readVersion() {
 
       deviceEl.innerText = v;
       compare(v, latestGlobal);
-
     } else {
       deviceEl.innerText = "Unknown";
       statusEl.innerText = "NO RESPONSE";
@@ -203,7 +219,6 @@ async function readVersion() {
     document.getElementById("deviceVersion").innerText = "Read Failed";
   }
 }
-
 /* ================= COMPARE ================= */
 function compare(device, latest) {
   const status = document.getElementById("status");
