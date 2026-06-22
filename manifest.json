@@ -3,7 +3,7 @@
   "firmwares": [
 {
       "version": "1.5.1",
-      "file": "akfpv-sim-link-v1.5.0.json",
+      "file": "akfpv-sim-link-v1.5.1.json",
       "notes": "Release note:Improve LED Status "
     },
 
