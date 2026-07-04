@@ -1,262 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AK FPV SIM LINK</title>
-
-  <script type="module"
-    src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js">
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AK SimLink Updater</title>
 
   <style>
-    /* ================= THEME SYSTEM ================= */
-    :root {
-      --bg: #0b0f14;
-      --card: #141a22;
-      --text: #e6e6e6;
-      --muted: #9aa4ad;
-      --accent: #00ff9d;
-      --warn: #ff9f1c;
-      --border: #222;
-    }
-
-    body.light {
-      --bg: #f4f6f8;
-      --card: #ffffff;
-      --text: #111;
-      --muted: #555;
-      --border: #ddd;
-    }
-
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      max-width: 850px;
-      margin: 40px auto;
-      text-align: center;
-      background: var(--bg);
-      color: var(--text);
-      transition: 0.3s;
+      background: #0b0b0b;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* ================= BANNER ================= */
-    .banner {
-      width: 100%;
-      height: 180px;
-      border-radius: 12px;
-      background: url("simlink.png") center/cover no-repeat;
-      border: 1px solid var(--border);
+    .container {
+      width: 90%;
+      max-width: 520px;
+      text-align: center;
+    }
+
+    img {
+      width: 120px;
       margin-bottom: 20px;
     }
 
-    /* ================= BOX ================= */
-    .box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 25px;
-      transition: 0.3s;
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      color: #ffffff;
     }
 
-    /* ================= BUTTONS ================= */
-    button {
-      padding: 10px 14px;
-      margin: 8px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
+    p {
+      color: #bbbbbb;
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+
+    .card {
+      display: block;
+      text-decoration: none;
+      color: white;
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 16px;
       transition: 0.2s;
     }
 
-    button:hover {
-      border-color: var(--accent);
+    .card:hover {
+      background: #222;
+      border-color: #f5c542;
+      transform: translateY(-2px);
     }
 
-    /* ================= STATUS ================= */
-    .ok { color: var(--accent); }
-    .bad { color: var(--warn); }
+    .card h2 {
+      margin: 0 0 8px;
+      color: #f5c542;
+      font-size: 24px;
+    }
 
-    /* ================= FIRMWARE CARD ================= */
-    .fw {
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--card);
+    .card span {
+      color: #aaaaaa;
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #666;
     }
   </style>
 </head>
 
 <body>
+  <div class="container">
+    <img src="simlink.png" alt="AK SimLink Logo">
 
-<!-- BANNER -->
-<div class="banner"></div>
+    <h1>AK SimLink Updater</h1>
+    <p>Please select your device model before updating firmware.</p>
 
-<div class="box">
+    <a class="card" href="pro.html">
+      <h2>AK SimLink Pro</h2>
+      <span>For Pro version with screen and multi-receiver support</span>
+    </a>
 
-  <h1>AK FPV SIMLINK PRO</h1>
-  <p style="color:var(--muted)">ELRS Simulator Dongle</p>
+    <a class="card" href="lite.html">
+      <h2>AK SimLink Lite</h2>
+      <span>For Lite version firmware updater</span>
+    </a>
 
-  <p>Latest Firmware:
-    <span id="latestVersion">---</span>
-  </p>
-
-  <p>Device Version:
-    <span id="deviceVersion">Not Connected</span>
-  </p>
-
-  <p>Status:
-    <span id="status">UNKNOWN</span>
-  </p>
-
-  <button onclick="readVersion()">Read Device Version</button>
-  <button onclick="toggleTheme()">Dark / Light</button>
-
-</div>
-
-<!-- FIRMWARE LIST -->
-<div id="firmwareList"></div>
-
-<script>
-let latestGlobal = "";
-
-/* ================= THEME TOGGLE (FIXED) ================= */
-function toggleTheme() {
-  document.body.classList.toggle("light");
-}
-
-/* ================= LOAD FIRMWARE LIST ================= */
-async function loadFirmwareList() {
-  try {
-    const res = await fetch("./manifest.json");
-    const data = await res.json();
-
-    latestGlobal = data.latest;
-
-    document.getElementById("latestVersion").innerText = data.latest;
-
-    const container = document.getElementById("firmwareList");
-
-    data.firmwares.forEach(fw => {
-      const div = document.createElement("div");
-      div.className = "fw";
-
-      div.innerHTML = `
-        <h3>${fw.version}</h3>
-        <p style="color:var(--muted)">${fw.notes || ""}</p>
-
-        <esp-web-install-button
-          manifest="./Firmware/${fw.file}">
-        </esp-web-install-button>
-
-        <p style="font-size:12px;color:var(--muted)">
-          Click install → Flash ESP32
-        </p>
-      `;
-
-      container.appendChild(div);
-    });
-
-  } catch (e) {
-    console.error("Manifest load failed", e);
-  }
-}
-
-/* ================= READ DEVICE VERSION ================= */
-async function readVersion() {
-  try {
-    const port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200 });
-
-    const writer = port.writable.getWriter();
-    await writer.write(new TextEncoder().encode("VERSION?\n"));
-    writer.releaseLock();
-
-    const reader = port.readable.getReader();
-
-    let buffer = "";
-    const decoder = new TextDecoder();
-
-    const timeout = setTimeout(async () => {
-      await reader.cancel();
-    }, 800);
-
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-
-      buffer += decoder.decode(value || new Uint8Array());
-
-      if (buffer.includes("VERSION:")) break;
-    }
-
-    clearTimeout(timeout);
-
-    await reader.releaseLock();
-    await port.close();
-
-    console.log("RAW:", buffer);
-
-    const match = buffer.match(/VERSION:([0-9.]+)/);
-
-    const deviceEl = document.getElementById("deviceVersion");
-    const statusEl = document.getElementById("status");
-
-    if (match) {
-      const v = match[1];
-
-      deviceEl.innerText = v;
-      compare(v, latestGlobal);
-    } else {
-      deviceEl.innerText = "Unknown";
-      statusEl.innerText = "NO RESPONSE";
-      statusEl.className = "bad";
-    }
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("deviceVersion").innerText = "Read Failed";
-  }
-}
-/* ================= COMPARE ================= */
-function compare(device, latest) {
-  const status = document.getElementById("status");
-
-  const d = toNum(device);
-  const l = toNum(latest);
-
-  if (d >= l) {
-    status.innerText = "UP TO DATE";
-    status.className = "ok";
-  } else {
-    status.innerText = "UPDATE AVAILABLE";
-    status.className = "bad";
-  }
-}
-
-/* ================= VERSION PARSER ================= */
-function toNum(v) {
-  return v.split(".").reduce((a,b)=>a*100+parseInt(b||0),0);
-}
-
-/* ================= CLEAN INSTALL FLOW FIX ================= */
-/* This prevents ESP Web Tools from trapping user in extra UI screens */
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("esp-web-install-button").forEach(btn => {
-    btn.addEventListener("finished", () => {
-      console.log("Install complete");
-
-      setTimeout(() => {
-        alert("Installation Complete ✔");
-      }, 300);
-    });
-  });
-});
-
-/* INIT */
-loadFirmwareList();
-</script>
-
+    <div class="footer">
+      Make sure you select the correct model before flashing.
+    </div>
+  </div>
 </body>
 </html>
