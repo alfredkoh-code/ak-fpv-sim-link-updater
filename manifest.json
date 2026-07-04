@@ -3,20 +3,20 @@
   "firmwares": [
 {
       "version": "2.1.4",
-      "file": "Firmware/Pro/akfpv-sim-link-v2.1.4.json",
+      "file": "Pro/akfpv-sim-link-v2.1.4.json",
       "notes": "Release note: Frsky Disconnection UI "
     },
 
 
     {
       "version": "2.1.3",
-      "file": "Firmware/Pro/akfpv-sim-link-v2.1.3.json",
+      "file": "Pro/akfpv-sim-link-v2.1.3.json",
       "notes": "Releace note: Frsky Compatibility"
     },
 
 {
       "version": "2.1.2",
-      "file": "Firmware/Pro/akfpv-sim-link-v2.1.2.json",
+      "file": "Pro/akfpv-sim-link-v2.1.2.json",
       "notes": "Release note: Crossfire connection UI"
     }
    
