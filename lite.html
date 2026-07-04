@@ -85,6 +85,66 @@
       border: 1px solid var(--border);
       background: var(--card);
     }
+
+/* ================= UPDATE GUIDE ================= */
+
+.guide {
+  margin-top: 25px;
+  text-align: left;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.guide summary {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--warn);
+  outline: none;
+}
+
+.guide summary:hover {
+  color: var(--accent);
+}
+
+.guide h3 {
+  margin-top: 20px;
+  color: var(--accent);
+}
+
+.guide ol {
+  line-height: 1.8;
+  padding-left: 22px;
+}
+
+.guide li {
+  margin-bottom: 14px;
+}
+
+.guide code {
+  background: rgba(255,255,255,0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.note {
+  margin-top: 15px;
+  padding: 12px;
+  border-left: 4px solid var(--warn);
+  background: rgba(255,159,28,0.08);
+  border-radius: 8px;
+}
+
+.success {
+  margin-top: 18px;
+  padding: 12px;
+  border-left: 4px solid var(--accent);
+  background: rgba(0,255,157,0.08);
+  border-radius: 8px;
+}
+
   </style>
 </head>
 
@@ -112,6 +172,104 @@
 
   <button onclick="readVersion()">Read Device Version</button>
   <button onclick="toggleTheme()">Dark / Light</button>
+
+<details class="guide">
+
+<summary>📖 First Time Updating? Click Here</summary>
+
+<div class="note">
+
+<b>⚠ IMPORTANT</b><br><br>
+
+AK SimLink Lite cannot automatically detect the installed firmware version.
+
+Please check your current firmware version before updating.
+
+</div>
+
+<h3>Step 1 — Check Your Current Firmware Version</h3>
+
+<ol>
+
+<li>
+Plug your <b>AK SimLink Lite</b> into your PC normally.
+</li>
+
+<li>
+Press <code>Win + R</code>, type <code>joy.cpl</code>, then press Enter.
+</li>
+
+<li>
+Open the controller properties.
+</li>
+
+<li>
+The firmware version is shown in the controller name.<br><br>
+
+Example:
+
+<br><br>
+
+<b>AK SimLink Lite v1.5.1</b>
+
+</li>
+
+<li>
+Compare your current version with the firmware versions listed below.
+Only update if a newer version is available.
+</li>
+
+</ol>
+
+<h3>Step 2 — Enter Bootloader Mode</h3>
+
+<ol>
+
+<li>Disconnect the USB cable.</li>
+
+<li><b>Press and hold the BOOT button.</b></li>
+
+<li>While holding the button, plug the USB cable into your PC.</li>
+
+</ol>
+
+<h3>Step 3 — Release the BOOT Button</h3>
+
+<p>
+
+Once the USB is connected, release the BOOT button.
+
+The device is now ready for firmware flashing.
+
+</p>
+
+<h3>Step 4 — Install Firmware</h3>
+
+<ol>
+
+<li>Select the firmware version below.</li>
+
+<li>Click the <b>INSTALL</b> button.</li>
+
+<li>Select the COM port.</li>
+
+<li>Wait until the installation finishes.</li>
+
+<li>Do not disconnect the USB cable during the update.</li>
+
+</ol>
+
+<div class="success">
+
+<b>✔ Update Complete</b>
+
+<br><br>
+
+Reconnect your AK SimLink Lite normally and open <code>joy.cpl</code> again to verify that the firmware version has been updated successfully.
+
+</div>
+
+</details>
 
 </div>
 
