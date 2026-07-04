@@ -85,6 +85,66 @@
       border: 1px solid var(--border);
       background: var(--card);
     }
+
+/* ================= UPDATE GUIDE ================= */
+
+.guide {
+  margin-top: 25px;
+  text-align: left;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.guide summary {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--warn);
+  outline: none;
+}
+
+.guide summary:hover {
+  color: var(--accent);
+}
+
+.guide h3 {
+  margin-top: 20px;
+  color: var(--accent);
+}
+
+.guide ol {
+  line-height: 1.8;
+  padding-left: 22px;
+}
+
+.guide li {
+  margin-bottom: 14px;
+}
+
+.guide code {
+  background: rgba(255,255,255,0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.note {
+  margin-top: 15px;
+  padding: 12px;
+  border-left: 4px solid var(--warn);
+  background: rgba(255,159,28,0.08);
+  border-radius: 8px;
+}
+
+.success {
+  margin-top: 18px;
+  padding: 12px;
+  border-left: 4px solid var(--accent);
+  background: rgba(0,255,157,0.08);
+  border-radius: 8px;
+}
+
   </style>
 </head>
 
@@ -112,6 +172,129 @@
 
   <button onclick="readVersion()">Read Device Version</button>
   <button onclick="toggleTheme()">Dark / Light</button>
+
+<details class="guide" open>
+
+<summary>📖 AK SimLink Pro Firmware Update Guide</summary>
+
+<div class="note">
+
+<b>⚠ IMPORTANT</b><br><br>
+
+For AK SimLink Pro, please use the <b>Read Device Version</b> button first if the device is already running firmware that supports version reading.
+
+If the version cannot be read, you can still enter bootloader mode manually and flash the latest firmware.
+
+</div>
+
+<h3>Step 1 — Check Current Firmware Version</h3>
+
+<ol>
+
+<li>
+Plug your <b>AK SimLink Pro</b> into your PC normally.
+</li>
+
+<li>
+Click <b>Read Device Version</b> on this page.
+</li>
+
+<li>
+Select the correct COM port when the browser asks.
+</li>
+
+<li>
+If successful, the page will show your current device version and compare it with the latest firmware.
+</li>
+
+<li>
+If it shows <b>Read Failed</b> or <b>NO RESPONSE</b>, continue with manual bootloader update below.
+</li>
+
+</ol>
+
+<h3>Step 2 — Enter Bootloader Mode</h3>
+
+<ol>
+
+<li>Disconnect the USB cable from AK SimLink Pro.</li>
+
+<li><b>Press and hold the ENTER button.</b></li>
+
+<li>While holding the ENTER button, plug the USB cable into your PC.</li>
+
+<li>Release the ENTER button after the USB is connected.</li>
+
+</ol>
+
+<h3>Step 3 — Install Firmware</h3>
+
+<ol>
+
+<li>Select the firmware version below.</li>
+
+<li>Click the <b>INSTALL</b> button.</li>
+
+<li>Select the correct COM port.</li>
+
+<li>Follow the browser flashing instructions.</li>
+
+<li>Do not disconnect the USB cable during flashing.</li>
+
+</ol>
+
+<h3>Step 4 — Restart and Verify</h3>
+
+<ol>
+
+<li>After flashing is complete, unplug and reconnect AK SimLink Pro normally.</li>
+
+<li>Wait for the screen to boot into the main interface.</li>
+
+<li>Click <b>Read Device Version</b> again to confirm the update.</li>
+
+<li>You can also check the version on the Pro device screen if your firmware displays it in Device Info.</li>
+
+</ol>
+
+<div class="success">
+
+<b>✔ Update Complete</b>
+
+<br><br>
+
+Your AK SimLink Pro is now updated. If the device does not start normally after flashing, unplug it, wait a few seconds, and reconnect it without holding any button.
+
+</div>
+
+<h3>Useful Tips</h3>
+
+<ol>
+
+<li>
+Use a direct USB port on the PC. Avoid USB hubs during firmware updates.
+</li>
+
+<li>
+Use a data-capable USB cable. Some charging cables cannot flash firmware.
+</li>
+
+<li>
+If no COM port appears, try another cable or another USB port.
+</li>
+
+<li>
+If flashing fails halfway, repeat bootloader mode and install again.
+</li>
+
+<li>
+Make sure you are on the <b>Pro updater page</b>, not the Lite updater page.
+</li>
+
+</ol>
+
+</details>
+
 
 </div>
 
