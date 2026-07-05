@@ -354,6 +354,60 @@
   line-height: 1.5;
 }
 
+/* //des FULL WIDTH PRODUCT GALLERY ROW */
+.gallery-row {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+/* //des Gallery image card */
+.gallery-item {
+  background: rgba(20,26,34,0.86);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: 0.25s;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--red);
+}
+
+/* //des Gallery image */
+.gallery-item img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  display: block;
+}
+
+/* //des Gallery text */
+.gallery-item div {
+  padding: 14px;
+}
+
+.gallery-item h4 {
+  margin: 0 0 6px;
+  color: var(--yellow);
+}
+
+.gallery-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* //des Mobile gallery fix */
+@media (max-width: 800px) {
+  .gallery-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* //des Mobile layout fix */
 @media (max-width: 800px) {
   .visual-grid {
@@ -567,6 +621,43 @@
     </div>
 
   </div>
+
+<!-- //des Extra product gallery row -->
+<div class="gallery-row">
+
+  <div class="gallery-item">
+    <img src="ak-simlink-hero.png" alt="AK SimLink front view">
+    <div>
+      <h4>Front View</h4>
+      <p>Clean product face with premium AK SimLink styling.</p>
+    </div>
+  </div>
+
+  <div class="gallery-item">
+    <img src="ak-simlink-hero.png" alt="AK SimLink desktop setup">
+    <div>
+      <h4>Desktop Setup</h4>
+      <p>Built for simulator practice on your PC training station.</p>
+    </div>
+  </div>
+
+  <div class="gallery-item">
+    <img src="ak-simlink-hero.png" alt="AK SimLink OLED interface">
+    <div>
+      <h4>OLED Interface</h4>
+      <p>Pro version includes onboard screen and menu navigation.</p>
+    </div>
+  </div>
+
+  <div class="gallery-item">
+    <img src="ak-simlink-hero.png" alt="AK SimLink packaging concept">
+    <div>
+      <h4>Packaging Concept</h4>
+      <p>Designed as a complete product experience from box to firmware.</p>
+    </div>
+  </div>
+
+</div>
 </section>
   <section id="compare">
     <h2 class="section-title">Lite vs Pro</h2>
