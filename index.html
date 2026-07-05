@@ -282,6 +282,44 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* //des SIMULATOR COMPATIBILITY SECTION */
+.sim-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.sim-card {
+  background: rgba(20,26,34,0.86);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  transition: 0.25s;
+}
+
+.sim-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--red);
+}
+
+.sim-card h3 {
+  margin: 0 0 8px;
+  color: var(--yellow);
+}
+
+.sim-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+  .sim-grid {
+    grid-template-columns: 1fr;
+  }
+}
     table {
       width: 100%;
       border-collapse: collapse;
@@ -514,6 +552,7 @@
     <div class="nav-links">
       <a href="#products">Products</a>
 <a href="#how">How It Works</a>
+<a href="#simulators">Simulators</a>
 <a href="#visuals">Visuals</a>
 <a href="#compare">Compare</a>
 <a href="#firmware">Firmware</a>
@@ -632,6 +671,50 @@
   </div>
 
 </section>
+<!-- //des SIMULATOR COMPATIBILITY SECTION -->
+<section id="simulators">
+
+  <h2 class="section-title">Simulator Compatibility</h2>
+  <p class="section-subtitle">
+    AK SimLink works as a standard USB HID gamepad, making it compatible with many FPV simulators.
+  </p>
+
+  <div class="sim-grid">
+
+    <div class="sim-card">
+      <h3>Liftoff</h3>
+      <p>Use your real radio feel for indoor and freestyle simulator practice.</p>
+    </div>
+
+    <div class="sim-card">
+      <h3>VelociDrone</h3>
+      <p>Train racing lines and stick precision with your actual radio setup.</p>
+    </div>
+
+    <div class="sim-card">
+      <h3>Uncrashed</h3>
+      <p>Practice freestyle movement and cinematic stick control.</p>
+    </div>
+
+    <div class="sim-card">
+      <h3>DRL Simulator</h3>
+      <p>Works through standard controller input for FPV race training.</p>
+    </div>
+
+    <div class="sim-card">
+      <h3>FPV SkyDive</h3>
+      <p>Simple plug-and-play simulator training with USB gamepad mode.</p>
+    </div>
+
+    <div class="sim-card">
+      <h3>TRYP FPV</h3>
+      <p>Designed for realistic simulator practice with familiar radio control.</p>
+    </div>
+
+  </div>
+
+</section>
+
   <section>
     <h2 class="section-title">Why AK SimLink?</h2>
     <p class="section-subtitle">Designed to make simulator practice feel closer to real flying.</p>
