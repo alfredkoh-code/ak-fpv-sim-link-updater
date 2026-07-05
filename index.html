@@ -1647,7 +1647,11 @@
       <div class="visual-grid">
         <!-- //des Main large product render -->
         <div class="visual-main">
-          <img src="06_angled_view.png" alt="AK SimLink product render" />
+          <img
+            id="galleryMainImage"
+            src="06_angled_view.png"
+            alt="AK SimLink product render"
+          />
 
           <div class="visual-overlay">
             <h3 style="margin: 0 0 8px; color: var(--yellow); font-size: 28px">
@@ -2083,11 +2087,6 @@
       let isDragging = false;
       let lastX = 0;
 
-      const totalViewerFrames = viewerFrames.length;
-
-      // //des For now all frames use same image.
-      // //des Later replace with real filenames:
-      // //des ak360/frame-01.png, ak360/frame-02.png, etc.
       const viewerFrames = [
         "01_front_view.png",
         "06_angled_view.png",
@@ -2100,6 +2099,8 @@
         "10_package_contents.png",
         "07_in_use_desktop.png",
       ];
+
+      const totalViewerFrames = viewerFrames.length;
 
       function updateViewer() {
         const img = document.getElementById("viewerImage");
@@ -2235,7 +2236,7 @@
       // ======================================================
 
       function changeProductImage(image) {
-        document.getElementById("mainProductImage").src = image;
+        document.getElementById("galleryMainImage").src = image;
       }
       const statsObserver = new IntersectionObserver(
         (entries, observer) => {
