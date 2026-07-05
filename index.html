@@ -482,6 +482,49 @@
         gap: 18px;
       }
 
+      /* //des SUPPORT / DOWNLOADS SECTION */
+      .support-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .support-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        transition: 0.25s;
+      }
+
+      .support-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--red);
+      }
+
+      .support-icon {
+        font-size: 32px;
+        margin-bottom: 12px;
+      }
+
+      .support-card h3 {
+        margin: 0 0 8px;
+        color: var(--yellow);
+      }
+
+      .support-card p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 800px) {
+        .support-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
       /* //des PRODUCT VISUAL / RENDER GALLERY SECTION */
       .visual-grid {
         display: grid;
@@ -687,6 +730,7 @@
         <a href="#visuals">Visuals</a>
         <a href="#compare">Compare</a>
         <a href="#firmware">Firmware</a>
+        <a href="#support">Support</a>
         <a href="#faq">FAQ</a>
         <a href="#buy">Buy</a>
       </div>
@@ -1075,6 +1119,44 @@
             For AK SimLink Pro firmware updates.
           </p>
           <a class="btn yellow" href="pro.html">Open Pro Updater</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des SUPPORT AND DOWNLOADS SECTION -->
+    <section id="support">
+      <h2 class="section-title">Support & Downloads</h2>
+      <p class="section-subtitle">
+        Everything you need to set up, update, and troubleshoot your AK SimLink.
+      </p>
+
+      <div class="support-grid">
+        <div class="support-card">
+          <div class="support-icon">📘</div>
+          <h3>Quick Start Guide</h3>
+          <p>Basic setup steps for first-time users.</p>
+          <a class="btn yellow" href="#">Coming Soon</a>
+        </div>
+
+        <div class="support-card">
+          <div class="support-icon">🔄</div>
+          <h3>Firmware Updater</h3>
+          <p>Update Lite or Pro firmware directly from your browser.</p>
+          <a class="btn yellow" href="#firmware">Open Updater</a>
+        </div>
+
+        <div class="support-card">
+          <div class="support-icon">🛠️</div>
+          <h3>Troubleshooting</h3>
+          <p>Fix common setup, USB, controller, and update issues.</p>
+          <a class="btn yellow" href="#">Coming Soon</a>
+        </div>
+
+        <div class="support-card">
+          <div class="support-icon">📝</div>
+          <h3>Release Notes</h3>
+          <p>View firmware changes, improvements, and version history.</p>
+          <a class="btn yellow" href="#">Coming Soon</a>
         </div>
       </div>
     </section>
