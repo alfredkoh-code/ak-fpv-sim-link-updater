@@ -722,6 +722,37 @@
         line-height: 1.6;
       }
 
+      /* //des FINAL CALL TO ACTION SECTION */
+      .final-cta {
+        max-width: 1180px;
+        margin: 60px auto 30px;
+        padding: 60px 28px;
+        border-radius: 28px;
+        text-align: center;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(229, 9, 20, 0.32),
+            transparent 35%
+          ),
+          linear-gradient(145deg, rgba(20, 26, 34, 0.96), rgba(5, 7, 10, 0.96));
+        border: 1px solid var(--border);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      }
+
+      .final-cta h2 {
+        font-size: 48px;
+        margin: 0 0 14px;
+      }
+
+      .final-cta p {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+        max-width: 680px;
+        margin: 0 auto 28px;
+      }
+
       footer {
         border-top: 1px solid var(--border);
         margin-top: 40px;
@@ -1336,7 +1367,21 @@
         <div class="trust-pill">Designed in Malaysia</div>
       </div>
     </section>
+    <!-- //des FINAL CALL TO ACTION SECTION -->
+    <section class="final-cta">
+      <h2>Train Like You Fly</h2>
 
+      <p>
+        AK SimLink is built for pilots who want simulator practice to feel
+        closer to real flying. Use your real radio setup, update firmware
+        easily, and keep improving every session.
+      </p>
+
+      <div class="buttons" style="justify-content: center">
+        <a class="btn red" href="#buy">Choose Your SimLink</a>
+        <a class="btn yellow" href="#firmware">Open Firmware Updater</a>
+      </div>
+    </section>
     <footer>
       <div class="logo">AK <span>SimLink</span></div>
       <p>Train Like You Fly</p>
