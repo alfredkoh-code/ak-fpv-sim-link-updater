@@ -1220,7 +1220,7 @@
       <div class="hero-card image-card">
         <img
           id="mainProductImage"
-          src="ak-simlink-hero.png"
+          src="06_angled_view.png"
           alt="AK SimLink Product"
         />
       </div>
@@ -1571,7 +1571,7 @@
 
           <img
             id="viewerImage"
-            src="ak-simlink-hero.png"
+            src="06_angled_view.png"
             alt="AK SimLink 360 product viewer"
             draggable="false"
           />
@@ -1647,7 +1647,7 @@
       <div class="visual-grid">
         <!-- //des Main large product render -->
         <div class="visual-main">
-          <img src="ak-simlink-hero.png" alt="AK SimLink product render" />
+          <img src="06_angled_view.png" alt="AK SimLink product render" />
 
           <div class="visual-overlay">
             <h3 style="margin: 0 0 8px; color: var(--yellow); font-size: 28px">
@@ -1665,7 +1665,10 @@
         <div class="visual-side">
           <!-- //des Lite render placeholder -->
           <div class="visual-card">
-            <img src="ak-simlink-hero.png" alt="AK SimLink Lite render" />
+            <img
+              src="08_oled_menu_screen.png"
+              alt="AK SimLink OLED menu screen"
+            />
             <div>
               <h3>AK SimLink Lite</h3>
               <p>
@@ -1677,7 +1680,7 @@
 
           <!-- //des Pro render placeholder -->
           <div class="visual-card">
-            <img src="ak-simlink-hero.png" alt="AK SimLink Pro render" />
+            <img src="01_front_view.png" alt="AK SimLink front view" />
             <div>
               <h3>AK SimLink Pro</h3>
               <p>
@@ -1692,8 +1695,8 @@
       <div class="gallery-row">
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('ak-simlink-hero.png')"
-            src="ak-simlink-hero.png"
+            onclick="changeProductImage('01_front_view.png')"
+            src="01_front_view.png"
           />
 
           <div>
@@ -1705,8 +1708,8 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('render-side.png')"
-            src="render-side.png"
+            onclick="changeProductImage('03_left_side.png')"
+            src="03_left_side.png"
           />
 
           <div>
@@ -1718,8 +1721,8 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('render-oled.png')"
-            src="render-oled.png"
+            onclick="changeProductImage('08_oled_menu_screen.png')"
+            src="08_oled_menu_screen.png"
           />
 
           <div>
@@ -1731,8 +1734,8 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('render-desktop.png')"
-            src="render-desktop.png"
+            onclick="changeProductImage('07_in_use_desktop.png')"
+            src="07_in_use_desktop.png"
           />
 
           <div>
@@ -2080,15 +2083,23 @@
       let isDragging = false;
       let lastX = 0;
 
-      const totalViewerFrames = 36;
+      const totalViewerFrames = viewerFrames.length;
 
       // //des For now all frames use same image.
       // //des Later replace with real filenames:
       // //des ak360/frame-01.png, ak360/frame-02.png, etc.
-      const viewerFrames = Array.from(
-        { length: totalViewerFrames },
-        () => "ak-simlink-hero.png",
-      );
+      const viewerFrames = [
+        "01_front_view.png",
+        "06_angled_view.png",
+        "03_left_side.png",
+        "02_rear_view.png",
+        "04_right_side.png",
+        "05_top_view.png",
+        "08_oled_menu_screen.png",
+        "09_pcb_internal.png",
+        "10_package_contents.png",
+        "07_in_use_desktop.png",
+      ];
 
       function updateViewer() {
         const img = document.getElementById("viewerImage");
