@@ -276,6 +276,100 @@
       gap: 18px;
     }
 
+/* //des PRODUCT VISUAL / RENDER GALLERY SECTION */
+.visual-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+/* //des Large main render card */
+.visual-main {
+  background: rgba(20,26,34,0.86);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  overflow: hidden;
+  min-height: 420px;
+  position: relative;
+}
+
+/* //des Main image full width */
+.visual-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* //des Text overlay on main image */
+.visual-overlay {
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  right: 28px;
+  padding: 20px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.82), rgba(0,0,0,0.25));
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* //des Small gallery grid beside main render */
+.visual-side {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* //des Small render cards */
+.visual-card {
+  background: rgba(20,26,34,0.86);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+/* //des Small render images */
+.visual-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+/* //des Small render card text */
+.visual-card div {
+  padding: 16px;
+}
+
+.visual-card h3 {
+  margin: 0 0 6px;
+  color: var(--yellow);
+}
+
+.visual-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* //des Mobile layout fix */
+@media (max-width: 800px) {
+  .visual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-main {
+    min-height: 300px;
+  }
+
+  .visual-overlay {
+    position: static;
+    border-radius: 0;
+  }
+}
+
     .faq {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -321,10 +415,11 @@
     <div class="logo">AK <span>SimLink</span></div>
     <div class="nav-links">
       <a href="#products">Products</a>
-      <a href="#compare">Compare</a>
-      <a href="#firmware">Firmware</a>
-      <a href="#faq">FAQ</a>
-      <a href="#buy">Buy</a>
+<a href="#visuals">Visuals</a>
+<a href="#compare">Compare</a>
+<a href="#firmware">Firmware</a>
+<a href="#faq">FAQ</a>
+<a href="#buy">Buy</a>
     </div>
   </nav>
 
@@ -421,6 +516,58 @@
     </div>
   </section>
 
+<!-- //des OFFICIAL PRODUCT VISUAL SECTION -->
+<section id="visuals">
+
+  <!-- //des Section title -->
+  <h2 class="section-title">Official AK SimLink Visuals</h2>
+  <p class="section-subtitle">
+    A premium product design language built around matte black, yellow highlights, and red FPV racing energy.
+  </p>
+
+  <div class="visual-grid">
+
+    <!-- //des Main large product render -->
+    <div class="visual-main">
+      <img src="ak-simlink-hero.png" alt="AK SimLink product render">
+
+      <div class="visual-overlay">
+        <h3 style="margin:0 0 8px;color:var(--yellow);font-size:28px;">
+          Train Like You Fly
+        </h3>
+
+        <p style="margin:0;color:var(--muted);line-height:1.6;">
+          Professional FPV simulator adapters designed for real radio feel,
+          low latency training, and future-ready firmware updates.
+        </p>
+      </div>
+    </div>
+
+    <!-- //des Right side gallery cards -->
+    <div class="visual-side">
+
+      <!-- //des Lite render placeholder -->
+      <div class="visual-card">
+        <img src="ak-simlink-hero.png" alt="AK SimLink Lite render">
+        <div>
+          <h3>AK SimLink Lite</h3>
+          <p>Compact ELRS simulator adapter for simple plug-and-play training.</p>
+        </div>
+      </div>
+
+      <!-- //des Pro render placeholder -->
+      <div class="visual-card">
+        <img src="ak-simlink-hero.png" alt="AK SimLink Pro render">
+        <div>
+          <h3>AK SimLink Pro</h3>
+          <p>Multi-protocol version with OLED display, menu UI, and advanced control.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
   <section id="compare">
     <h2 class="section-title">Lite vs Pro</h2>
     <p class="section-subtitle">Pick the version that fits your radio setup.</p>
