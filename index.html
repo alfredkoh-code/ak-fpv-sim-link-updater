@@ -1,1025 +1,1199 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AK SimLink | Train Like You Fly</title>
-
-  <style>
-    :root {
-      --bg: #0b0f14;
-      --card: #141a22;
-      --text: #ffffff;
-      --muted: #9aa4ad;
-      --yellow: #ffc400;
-      --green: #00e676;
-      --red: #e50914;
-      --border: #26313d;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top right, rgba(229,9,20,0.22), transparent 35%),
-                  var(--bg);
-      color: var(--text);
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .nav {
-      max-width: 1180px;
-      margin: auto;
-      padding: 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--yellow);
-      letter-spacing: 1px;
-    }
-
-    .logo span {
-      color: white;
-    }
-
-    .nav-links a {
-      margin-left: 24px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .nav-links a:hover {
-      color: var(--yellow);
-    }
-
-    .hero {
-      max-width: 1180px;
-      margin: auto;
-      padding: 70px 22px 40px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      color: var(--red);
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-size: 72px;
-      line-height: 0.95;
-      margin: 0 0 20px;
-      letter-spacing: -2px;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 20px;
-      line-height: 1.6;
-      margin-bottom: 30px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 14px 22px;
-      border-radius: 8px;
-      font-weight: bold;
-      display: inline-block;
-      border: 1px solid var(--border);
-    }
-
-    .btn.red {
-      background: var(--red);
-      color: white;
-      border-color: var(--red);
-    }
-
-    .btn.yellow {
-      color: var(--yellow);
-      border-color: var(--yellow);
-    }
-
-    .hero-card {
-      background: linear-gradient(145deg, #1b222c, #090c10);
-      border: 1px solid var(--border);
-      border-radius: 26px;
-      padding: 32px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
-    }
-.image-card {
-  padding: 0;
-  overflow: hidden;
-}
-
-.image-card img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 26px;
-  object-fit: cover;
-}
-
-    .device {
-      height: 260px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, #222, #050505);
-      border: 1px solid #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--yellow);
-      font-size: 34px;
-      font-weight: 900;
-      margin-bottom: 22px;
-    }
-
-    .protocols {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .chip {
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 9px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-    }
-
-    section {
-      max-width: 1180px;
-      margin: auto;
-      padding: 55px 22px;
-    }
-
-    .section-title {
-      font-size: 34px;
-      margin-bottom: 12px;
-    }
-
-    .section-subtitle {
-      color: var(--muted);
-      margin-bottom: 30px;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 22px;
-    }
-
-    .product-card, .feature-card, .firmware-card, .faq-card {
-      background: rgba(20,26,34,0.86);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 26px;
-    }
-
-    .product-card h3 {
-      font-size: 38px;
-      margin: 0 0 10px;
-    }
-
-    .lite {
-      color: var(--yellow);
-    }
-
-    .pro {
-      color: var(--red);
-    }
-
-    ul {
-      padding-left: 20px;
-      color: var(--muted);
-      line-height: 1.9;
-    }
-
-    li::marker {
-      color: var(--yellow);
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .feature-card h4 {
-      margin: 0 0 8px;
-      color: var(--yellow);
-    }
-
-    .feature-card p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-/* //des HOW IT WORKS SECTION */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-.step-card {
-  background: rgba(20,26,34,0.86);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px;
-  position: relative;
-}
-
-.step-number {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: var(--red);
-  color: white;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-}
-
-.step-card h3 {
-  margin: 0 0 10px;
-  color: var(--yellow);
-}
-
-.step-card p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.6;
-  font-size: 14px;
-}
-
-@media (max-width: 800px) {
-  .steps {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* //des SIMULATOR COMPATIBILITY SECTION */
-.sim-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.sim-card {
-  background: rgba(20,26,34,0.86);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 22px;
-  transition: 0.25s;
-}
-
-.sim-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--red);
-}
-
-.sim-card h3 {
-  margin: 0 0 8px;
-  color: var(--yellow);
-}
-
-.sim-card p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-@media (max-width: 800px) {
-  .sim-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* //des PILOT FEEDBACK SECTION */
-.feedback-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.feedback-card {
-  background: rgba(20,26,34,0.86);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px;
-}
-
-.feedback-card .quote {
-  color: var(--text);
-  font-size: 16px;
-  line-height: 1.7;
-  margin-bottom: 18px;
-}
-
-.feedback-card .pilot {
-  color: var(--yellow);
-  font-weight: bold;
-}
-
-.feedback-card .role {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-@media (max-width: 800px) {
-  .feedback-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(20,26,34,0.86);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-    }
-
-    th:first-child, td:first-child {
-      text-align: left;
-    }
-
-    th {
-      color: var(--yellow);
-    }
-
-    .yes {
-      color: var(--green);
-      font-weight: bold;
-    }
-
-    .no {
-      color: var(--muted);
-    }
-
-    .firmware {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
-
-/* //des PRODUCT VISUAL / RENDER GALLERY SECTION */
-.visual-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 18px;
-  align-items: stretch;
-}
-
-/* //des Large main render card */
-.visual-main {
-  background: rgba(20,26,34,0.86);
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  overflow: hidden;
-  min-height: 420px;
-  position: relative;
-}
-
-/* //des Main image full width */
-.visual-main img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* //des Text overlay on main image */
-.visual-overlay {
-  position: absolute;
-  left: 28px;
-  bottom: 28px;
-  right: 28px;
-  padding: 20px;
-  border-radius: 16px;
-  background: linear-gradient(90deg, rgba(0,0,0,0.82), rgba(0,0,0,0.25));
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-/* //des Small gallery grid beside main render */
-.visual-side {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
-
-/* //des Small render cards */
-.visual-card {
-  background: rgba(20,26,34,0.86);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: hidden;
-}
-
-/* //des Small render images */
-.visual-card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-}
-
-/* //des Small render card text */
-.visual-card div {
-  padding: 16px;
-}
-
-.visual-card h3 {
-  margin: 0 0 6px;
-  color: var(--yellow);
-}
-
-.visual-card p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/* //des FULL WIDTH PRODUCT GALLERY ROW */
-.gallery-row {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-/* //des Gallery image card */
-.gallery-item {
-  background: rgba(20,26,34,0.86);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: hidden;
-  transition: 0.25s;
-}
-
-.gallery-item:hover {
-  transform: translateY(-4px);
-  border-color: var(--red);
-}
-
-/* //des Gallery image */
-.gallery-item img {
-  width: 100%;
-  height: 170px;
-  object-fit: cover;
-  display: block;
-}
-
-/* //des Gallery text */
-.gallery-item div {
-  padding: 14px;
-}
-
-.gallery-item h4 {
-  margin: 0 0 6px;
-  color: var(--yellow);
-}
-
-.gallery-item p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-/* //des Mobile gallery fix */
-@media (max-width: 800px) {
-  .gallery-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* //des Mobile layout fix */
-@media (max-width: 800px) {
-  .visual-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .visual-main {
-    min-height: 300px;
-  }
-
-  .visual-overlay {
-    position: static;
-    border-radius: 0;
-  }
-}
-
-    .faq {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
-      padding: 30px 22px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    @media (max-width: 800px) {
-      .hero, .products, .firmware, .faq {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AK SimLink | Train Like You Fly</title>
+
+    <style>
+      :root {
+        --bg: #0b0f14;
+        --card: #141a22;
+        --text: #ffffff;
+        --muted: #9aa4ad;
+        --yellow: #ffc400;
+        --green: #00e676;
+        --red: #e50914;
+        --border: #26313d;
       }
 
-      .features {
-        grid-template-columns: repeat(2, 1fr);
+      * {
+        box-sizing: border-box;
       }
 
-      h1 {
-        font-size: 48px;
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(229, 9, 20, 0.22),
+            transparent 35%
+          ),
+          var(--bg);
+        color: var(--text);
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
       }
 
       .nav {
-        flex-direction: column;
-        gap: 15px;
+        max-width: 1180px;
+        margin: auto;
+        padding: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: 900;
+        color: var(--yellow);
+        letter-spacing: 1px;
+      }
+
+      .logo span {
+        color: white;
       }
 
       .nav-links a {
-        margin: 0 10px;
+        margin-left: 24px;
+        color: var(--muted);
+        font-size: 14px;
       }
-    }
-  </style>
-</head>
 
-<body>
+      .nav-links a:hover {
+        color: var(--yellow);
+      }
 
-  <nav class="nav">
-    <div class="logo">AK <span>SimLink</span></div>
-    <div class="nav-links">
-      <a href="#products">Products</a>
-<a href="#how">How It Works</a>
-<a href="#simulators">Simulators</a>
-<a href="#feedback">Feedback</a>
-<a href="#visuals">Visuals</a>
-<a href="#compare">Compare</a>
-<a href="#firmware">Firmware</a>
-<a href="#faq">FAQ</a>
-<a href="#buy">Buy</a>
-    </div>
-  </nav>
+      .hero {
+        max-width: 1180px;
+        margin: auto;
+        padding: 70px 22px 40px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 40px;
+        align-items: center;
+      }
 
-  <main class="hero">
-    <div>
-      <div class="eyebrow">AK SIMLINK</div>
-      <h1>TRAIN LIKE<br>YOU FLY</h1>
-      <p>
-        A professional FPV simulator adapter that lets you use your real radio
-        for simulator training with low latency and plug-and-play simplicity.
-      </p>
+      .eyebrow {
+        color: var(--red);
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+      }
 
-      <div class="buttons">
-        <a class="btn red" href="#buy">Buy Now</a>
-        <a class="btn yellow" href="#firmware">Download Firmware</a>
+      h1 {
+        font-size: 72px;
+        line-height: 0.95;
+        margin: 0 0 20px;
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 14px 22px;
+        border-radius: 8px;
+        font-weight: bold;
+        display: inline-block;
+        border: 1px solid var(--border);
+      }
+
+      .btn.red {
+        background: var(--red);
+        color: white;
+        border-color: var(--red);
+      }
+
+      .btn.yellow {
+        color: var(--yellow);
+        border-color: var(--yellow);
+      }
+
+      .hero-card {
+        background: linear-gradient(145deg, #1b222c, #090c10);
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        padding: 32px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+      .image-card {
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 26px;
+        object-fit: cover;
+      }
+
+      .device {
+        height: 260px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #222, #050505);
+        border: 1px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--yellow);
+        font-size: 34px;
+        font-weight: 900;
+        margin-bottom: 22px;
+      }
+
+      .protocols {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+
+      .chip {
+        border: 1px solid var(--border);
+        color: var(--muted);
+        padding: 9px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+
+      section {
+        max-width: 1180px;
+        margin: auto;
+        padding: 55px 22px;
+      }
+
+      .section-title {
+        font-size: 34px;
+        margin-bottom: 12px;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        margin-bottom: 30px;
+      }
+
+      .products {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+      }
+
+      .product-card,
+      .feature-card,
+      .firmware-card,
+      .faq-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 26px;
+      }
+
+      /* //des PROFESSIONAL BUY SECTION */
+      .buy-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+      }
+
+      .buy-card {
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(9, 12, 16, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .buy-card.featured {
+        border-color: var(--red);
+        box-shadow: 0 0 40px rgba(229, 9, 20, 0.18);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255, 196, 0, 0.12);
+        color: var(--yellow);
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
+
+      .price {
+        font-size: 44px;
+        font-weight: 900;
+        margin: 14px 0;
+      }
+
+      .price span {
+        font-size: 16px;
+        color: var(--muted);
+        font-weight: normal;
+      }
+
+      .buy-note {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+        margin-top: 14px;
+      }
+
+      .trust-row {
+        margin-top: 26px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .trust-pill {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 9px 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 800px) {
+        .buy-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .product-card h3 {
+        font-size: 38px;
+        margin: 0 0 10px;
+      }
+
+      .lite {
+        color: var(--yellow);
+      }
+
+      .pro {
+        color: var(--red);
+      }
+
+      ul {
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.9;
+      }
+
+      li::marker {
+        color: var(--yellow);
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+
+      .feature-card h4 {
+        margin: 0 0 8px;
+        color: var(--yellow);
+      }
+
+      .feature-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      /* //des HOW IT WORKS SECTION */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .step-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        position: relative;
+      }
+
+      .step-number {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--red);
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+
+      .step-card h3 {
+        margin: 0 0 10px;
+        color: var(--yellow);
+      }
+
+      .step-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      @media (max-width: 800px) {
+        .steps {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* //des SIMULATOR COMPATIBILITY SECTION */
+      .sim-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .sim-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 22px;
+        transition: 0.25s;
+      }
+
+      .sim-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--red);
+      }
+
+      .sim-card h3 {
+        margin: 0 0 8px;
+        color: var(--yellow);
+      }
+
+      .sim-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 800px) {
+        .sim-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* //des PILOT FEEDBACK SECTION */
+      .feedback-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .feedback-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+      }
+
+      .feedback-card .quote {
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 18px;
+      }
+
+      .feedback-card .pilot {
+        color: var(--yellow);
+        font-weight: bold;
+      }
+
+      .feedback-card .role {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      @media (max-width: 800px) {
+        .feedback-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+      }
+
+      th:first-child,
+      td:first-child {
+        text-align: left;
+      }
+
+      th {
+        color: var(--yellow);
+      }
+
+      .yes {
+        color: var(--green);
+        font-weight: bold;
+      }
+
+      .no {
+        color: var(--muted);
+      }
+
+      .firmware {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      /* //des PRODUCT VISUAL / RENDER GALLERY SECTION */
+      .visual-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        align-items: stretch;
+      }
+
+      /* //des Large main render card */
+      .visual-main {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        overflow: hidden;
+        min-height: 420px;
+        position: relative;
+      }
+
+      /* //des Main image full width */
+      .visual-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* //des Text overlay on main image */
+      .visual-overlay {
+        position: absolute;
+        left: 28px;
+        bottom: 28px;
+        right: 28px;
+        padding: 20px;
+        border-radius: 16px;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.82),
+          rgba(0, 0, 0, 0.25)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      /* //des Small gallery grid beside main render */
+      .visual-side {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      /* //des Small render cards */
+      .visual-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      /* //des Small render images */
+      .visual-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* //des Small render card text */
+      .visual-card div {
+        padding: 16px;
+      }
+
+      .visual-card h3 {
+        margin: 0 0 6px;
+        color: var(--yellow);
+      }
+
+      .visual-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* //des FULL WIDTH PRODUCT GALLERY ROW */
+      .gallery-row {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      /* //des Gallery image card */
+      .gallery-item {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        transition: 0.25s;
+      }
+
+      .gallery-item:hover {
+        transform: translateY(-4px);
+        border-color: var(--red);
+      }
+
+      /* //des Gallery image */
+      .gallery-item img {
+        width: 100%;
+        height: 170px;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* //des Gallery text */
+      .gallery-item div {
+        padding: 14px;
+      }
+
+      .gallery-item h4 {
+        margin: 0 0 6px;
+        color: var(--yellow);
+      }
+
+      .gallery-item p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      /* //des Mobile gallery fix */
+      @media (max-width: 800px) {
+        .gallery-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* //des Mobile layout fix */
+      @media (max-width: 800px) {
+        .visual-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .visual-main {
+          min-height: 300px;
+        }
+
+        .visual-overlay {
+          position: static;
+          border-radius: 0;
+        }
+      }
+
+      .faq {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        margin-top: 40px;
+        padding: 30px 22px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      @media (max-width: 800px) {
+        .hero,
+        .products,
+        .firmware,
+        .faq {
+          grid-template-columns: 1fr;
+        }
+
+        .features {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        h1 {
+          font-size: 48px;
+        }
+
+        .nav {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .nav-links a {
+          margin: 0 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="nav">
+      <div class="logo">AK <span>SimLink</span></div>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#how">How It Works</a>
+        <a href="#simulators">Simulators</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#visuals">Visuals</a>
+        <a href="#compare">Compare</a>
+        <a href="#firmware">Firmware</a>
+        <a href="#faq">FAQ</a>
+        <a href="#buy">Buy</a>
       </div>
+    </nav>
 
-      <div class="protocols">
-        <div class="chip">ELRS</div>
-        <div class="chip">Crossfire</div>
-        <div class="chip">FrSky</div>
-        <div class="chip">USB HID Gamepad</div>
-      </div>
-    </div>
-
-    <div class="hero-card image-card">
-  <img src="ak-simlink-hero.png" alt="AK SimLink Product Visual">
-</div>
-  </main>
-
-  <section id="products">
-    <h2 class="section-title">Choose Your SimLink</h2>
-    <p class="section-subtitle">Start simple with Lite or unlock more protocols with Pro.</p>
-
-    <div class="products">
-      <div class="product-card">
-        <h3 class="lite">AK SimLink Lite</h3>
-        <p>Simple, reliable ELRS simulator adapter.</p>
-        <ul>
-          <li>ELRS support</li>
-          <li>Plug and play</li>
-          <li>Ultra low latency</li>
-          <li>Compact and lightweight</li>
-          <li>Perfect for beginners</li>
-        </ul>
-        <div class="buttons">
-          <a class="btn yellow" href="lite.html">Lite Firmware</a>
-          <a class="btn red" href="#buy">Buy Lite</a>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <h3 class="pro">AK SimLink Pro</h3>
-        <p>Multi-protocol simulator adapter with onboard screen.</p>
-        <ul>
-          <li>ELRS, Crossfire and FrSky support</li>
-          <li>OLED screen interface</li>
-          <li>Onboard menu system</li>
-          <li>Advanced receiver configuration</li>
-          <li>Future ready firmware updates</li>
-        </ul>
-        <div class="buttons">
-          <a class="btn yellow" href="pro.html">Pro Firmware</a>
-          <a class="btn red" href="#buy">Buy Pro</a>
-        </div>
-      </div>
-    </div>
-  </section>
-<!-- //des HOW AK SIMLINK WORKS SECTION -->
-<section id="how">
-
-  <h2 class="section-title">How It Works</h2>
-  <p class="section-subtitle">
-    AK SimLink turns your real FPV radio setup into a USB simulator controller.
-  </p>
-
-  <div class="steps">
-
-    <div class="step-card">
-      <div class="step-number">1</div>
-      <h3>Connect Receiver</h3>
-      <p>
-        Connect your ELRS, Crossfire, or FrSky receiver to AK SimLink depending on your model.
-      </p>
-    </div>
-
-    <div class="step-card">
-      <div class="step-number">2</div>
-      <h3>Plug Into PC</h3>
-      <p>
-        AK SimLink appears as a standard USB HID gamepad, so no special driver is required.
-      </p>
-    </div>
-
-    <div class="step-card">
-      <div class="step-number">3</div>
-      <h3>Open Simulator</h3>
-      <p>
-        Select AK SimLink inside your FPV simulator controller settings.
-      </p>
-    </div>
-
-    <div class="step-card">
-      <div class="step-number">4</div>
-      <h3>Train Like You Fly</h3>
-      <p>
-        Practice with your real radio feel, real switch layout, and familiar stick movement.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-<!-- //des SIMULATOR COMPATIBILITY SECTION -->
-<section id="simulators">
-
-  <h2 class="section-title">Simulator Compatibility</h2>
-  <p class="section-subtitle">
-    AK SimLink works as a standard USB HID gamepad, making it compatible with many FPV simulators.
-  </p>
-
-  <div class="sim-grid">
-
-    <div class="sim-card">
-      <h3>Liftoff</h3>
-      <p>Use your real radio feel for indoor and freestyle simulator practice.</p>
-    </div>
-
-    <div class="sim-card">
-      <h3>VelociDrone</h3>
-      <p>Train racing lines and stick precision with your actual radio setup.</p>
-    </div>
-
-    <div class="sim-card">
-      <h3>Uncrashed</h3>
-      <p>Practice freestyle movement and cinematic stick control.</p>
-    </div>
-
-    <div class="sim-card">
-      <h3>DRL Simulator</h3>
-      <p>Works through standard controller input for FPV race training.</p>
-    </div>
-
-    <div class="sim-card">
-      <h3>FPV SkyDive</h3>
-      <p>Simple plug-and-play simulator training with USB gamepad mode.</p>
-    </div>
-
-    <div class="sim-card">
-      <h3>TRYP FPV</h3>
-      <p>Designed for realistic simulator practice with familiar radio control.</p>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- //des EARLY PILOT FEEDBACK SECTION -->
-<section id="feedback">
-
-  <h2 class="section-title">Early Pilot Feedback</h2>
-  <p class="section-subtitle">
-    Designed from real simulator practice needs, with a focus on simple setup and real radio feel.
-  </p>
-
-  <div class="feedback-grid">
-
-    <div class="feedback-card">
-      <div class="quote">
-        “The biggest difference is training with the same radio feel I use in real flying.”
-      </div>
-      <div class="pilot">FPV Pilot</div>
-      <div class="role">Simulator Training</div>
-    </div>
-
-    <div class="feedback-card">
-      <div class="quote">
-        “Plug in, open simulator, and fly. That is exactly what I wanted.”
-      </div>
-      <div class="pilot">ELRS User</div>
-      <div class="role">AK SimLink Lite</div>
-    </div>
-
-    <div class="feedback-card">
-      <div class="quote">
-        “The Pro version feels future ready with the screen, menu, and receiver options.”
-      </div>
-      <div class="pilot">Multi-Protocol User</div>
-      <div class="role">AK SimLink Pro</div>
-    </div>
-
-  </div>
-
-</section>
-  <section>
-    <h2 class="section-title">Why AK SimLink?</h2>
-    <p class="section-subtitle">Designed to make simulator practice feel closer to real flying.</p>
-
-    <div class="features">
-      <div class="feature-card">
-        <h4>Low Latency</h4>
-        <p>Fast HID gamepad output for responsive simulator control.</p>
-      </div>
-
-      <div class="feature-card">
-        <h4>Plug & Play</h4>
-        <p>No complicated setup. Connect, select controller, and fly.</p>
-      </div>
-
-      <div class="feature-card">
-        <h4>No Battery Needed</h4>
-        <p>Powered directly from USB for clean desktop training.</p>
-      </div>
-
-      <div class="feature-card">
-        <h4>Free Firmware</h4>
-        <p>Update through the browser with AK SimLink firmware updater.</p>
-      </div>
-    </div>
-  </section>
-
-<!-- //des OFFICIAL PRODUCT VISUAL SECTION -->
-<section id="visuals">
-
-  <!-- //des Section title -->
-  <h2 class="section-title">Official AK SimLink Visuals</h2>
-  <p class="section-subtitle">
-    A premium product design language built around matte black, yellow highlights, and red FPV racing energy.
-  </p>
-
-  <div class="visual-grid">
-
-    <!-- //des Main large product render -->
-    <div class="visual-main">
-      <img src="ak-simlink-hero.png" alt="AK SimLink product render">
-
-      <div class="visual-overlay">
-        <h3 style="margin:0 0 8px;color:var(--yellow);font-size:28px;">
-          Train Like You Fly
-        </h3>
-
-        <p style="margin:0;color:var(--muted);line-height:1.6;">
-          Professional FPV simulator adapters designed for real radio feel,
-          low latency training, and future-ready firmware updates.
+    <main class="hero">
+      <div>
+        <div class="eyebrow">AK SIMLINK</div>
+        <h1>TRAIN LIKE<br />YOU FLY</h1>
+        <p>
+          A professional FPV simulator adapter that lets you use your real radio
+          for simulator training with low latency and plug-and-play simplicity.
         </p>
-      </div>
-    </div>
 
-    <!-- //des Right side gallery cards -->
-    <div class="visual-side">
+        <div class="buttons">
+          <a class="btn red" href="#buy">Buy Now</a>
+          <a class="btn yellow" href="#firmware">Download Firmware</a>
+        </div>
 
-      <!-- //des Lite render placeholder -->
-      <div class="visual-card">
-        <img src="ak-simlink-hero.png" alt="AK SimLink Lite render">
-        <div>
-          <h3>AK SimLink Lite</h3>
-          <p>Compact ELRS simulator adapter for simple plug-and-play training.</p>
+        <div class="protocols">
+          <div class="chip">ELRS</div>
+          <div class="chip">Crossfire</div>
+          <div class="chip">FrSky</div>
+          <div class="chip">USB HID Gamepad</div>
         </div>
       </div>
 
-      <!-- //des Pro render placeholder -->
-      <div class="visual-card">
-        <img src="ak-simlink-hero.png" alt="AK SimLink Pro render">
-        <div>
-          <h3>AK SimLink Pro</h3>
-          <p>Multi-protocol version with OLED display, menu UI, and advanced control.</p>
+      <div class="hero-card image-card">
+        <img src="ak-simlink-hero.png" alt="AK SimLink Product Visual" />
+      </div>
+    </main>
+
+    <section id="products">
+      <h2 class="section-title">Choose Your SimLink</h2>
+      <p class="section-subtitle">
+        Start simple with Lite or unlock more protocols with Pro.
+      </p>
+
+      <div class="products">
+        <div class="product-card">
+          <h3 class="lite">AK SimLink Lite</h3>
+          <p>Simple, reliable ELRS simulator adapter.</p>
+          <ul>
+            <li>ELRS support</li>
+            <li>Plug and play</li>
+            <li>Ultra low latency</li>
+            <li>Compact and lightweight</li>
+            <li>Perfect for beginners</li>
+          </ul>
+          <div class="buttons">
+            <a class="btn yellow" href="lite.html">Lite Firmware</a>
+            <a class="btn red" href="#buy">Buy Lite</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <h3 class="pro">AK SimLink Pro</h3>
+          <p>Multi-protocol simulator adapter with onboard screen.</p>
+          <ul>
+            <li>ELRS, Crossfire and FrSky support</li>
+            <li>OLED screen interface</li>
+            <li>Onboard menu system</li>
+            <li>Advanced receiver configuration</li>
+            <li>Future ready firmware updates</li>
+          </ul>
+          <div class="buttons">
+            <a class="btn yellow" href="pro.html">Pro Firmware</a>
+            <a class="btn red" href="#buy">Buy Pro</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- //des HOW AK SIMLINK WORKS SECTION -->
+    <section id="how">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">
+        AK SimLink turns your real FPV radio setup into a USB simulator
+        controller.
+      </p>
+
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Connect Receiver</h3>
+          <p>
+            Connect your ELRS, Crossfire, or FrSky receiver to AK SimLink
+            depending on your model.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Plug Into PC</h3>
+          <p>
+            AK SimLink appears as a standard USB HID gamepad, so no special
+            driver is required.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Open Simulator</h3>
+          <p>
+            Select AK SimLink inside your FPV simulator controller settings.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Train Like You Fly</h3>
+          <p>
+            Practice with your real radio feel, real switch layout, and familiar
+            stick movement.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- //des SIMULATOR COMPATIBILITY SECTION -->
+    <section id="simulators">
+      <h2 class="section-title">Simulator Compatibility</h2>
+      <p class="section-subtitle">
+        AK SimLink works as a standard USB HID gamepad, making it compatible
+        with many FPV simulators.
+      </p>
+
+      <div class="sim-grid">
+        <div class="sim-card">
+          <h3>Liftoff</h3>
+          <p>
+            Use your real radio feel for indoor and freestyle simulator
+            practice.
+          </p>
+        </div>
+
+        <div class="sim-card">
+          <h3>VelociDrone</h3>
+          <p>
+            Train racing lines and stick precision with your actual radio setup.
+          </p>
+        </div>
+
+        <div class="sim-card">
+          <h3>Uncrashed</h3>
+          <p>Practice freestyle movement and cinematic stick control.</p>
+        </div>
+
+        <div class="sim-card">
+          <h3>DRL Simulator</h3>
+          <p>Works through standard controller input for FPV race training.</p>
+        </div>
+
+        <div class="sim-card">
+          <h3>FPV SkyDive</h3>
+          <p>Simple plug-and-play simulator training with USB gamepad mode.</p>
+        </div>
+
+        <div class="sim-card">
+          <h3>TRYP FPV</h3>
+          <p>
+            Designed for realistic simulator practice with familiar radio
+            control.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des EARLY PILOT FEEDBACK SECTION -->
+    <section id="feedback">
+      <h2 class="section-title">Early Pilot Feedback</h2>
+      <p class="section-subtitle">
+        Designed from real simulator practice needs, with a focus on simple
+        setup and real radio feel.
+      </p>
+
+      <div class="feedback-grid">
+        <div class="feedback-card">
+          <div class="quote">
+            “The biggest difference is training with the same radio feel I use
+            in real flying.”
+          </div>
+          <div class="pilot">FPV Pilot</div>
+          <div class="role">Simulator Training</div>
+        </div>
+
+        <div class="feedback-card">
+          <div class="quote">
+            “Plug in, open simulator, and fly. That is exactly what I wanted.”
+          </div>
+          <div class="pilot">ELRS User</div>
+          <div class="role">AK SimLink Lite</div>
+        </div>
+
+        <div class="feedback-card">
+          <div class="quote">
+            “The Pro version feels future ready with the screen, menu, and
+            receiver options.”
+          </div>
+          <div class="pilot">Multi-Protocol User</div>
+          <div class="role">AK SimLink Pro</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2 class="section-title">Why AK SimLink?</h2>
+      <p class="section-subtitle">
+        Designed to make simulator practice feel closer to real flying.
+      </p>
+
+      <div class="features">
+        <div class="feature-card">
+          <h4>Low Latency</h4>
+          <p>Fast HID gamepad output for responsive simulator control.</p>
+        </div>
+
+        <div class="feature-card">
+          <h4>Plug & Play</h4>
+          <p>No complicated setup. Connect, select controller, and fly.</p>
+        </div>
+
+        <div class="feature-card">
+          <h4>No Battery Needed</h4>
+          <p>Powered directly from USB for clean desktop training.</p>
+        </div>
+
+        <div class="feature-card">
+          <h4>Free Firmware</h4>
+          <p>Update through the browser with AK SimLink firmware updater.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des OFFICIAL PRODUCT VISUAL SECTION -->
+    <section id="visuals">
+      <!-- //des Section title -->
+      <h2 class="section-title">Official AK SimLink Visuals</h2>
+      <p class="section-subtitle">
+        A premium product design language built around matte black, yellow
+        highlights, and red FPV racing energy.
+      </p>
+
+      <div class="visual-grid">
+        <!-- //des Main large product render -->
+        <div class="visual-main">
+          <img src="ak-simlink-hero.png" alt="AK SimLink product render" />
+
+          <div class="visual-overlay">
+            <h3 style="margin: 0 0 8px; color: var(--yellow); font-size: 28px">
+              Train Like You Fly
+            </h3>
+
+            <p style="margin: 0; color: var(--muted); line-height: 1.6">
+              Professional FPV simulator adapters designed for real radio feel,
+              low latency training, and future-ready firmware updates.
+            </p>
+          </div>
+        </div>
+
+        <!-- //des Right side gallery cards -->
+        <div class="visual-side">
+          <!-- //des Lite render placeholder -->
+          <div class="visual-card">
+            <img src="ak-simlink-hero.png" alt="AK SimLink Lite render" />
+            <div>
+              <h3>AK SimLink Lite</h3>
+              <p>
+                Compact ELRS simulator adapter for simple plug-and-play
+                training.
+              </p>
+            </div>
+          </div>
+
+          <!-- //des Pro render placeholder -->
+          <div class="visual-card">
+            <img src="ak-simlink-hero.png" alt="AK SimLink Pro render" />
+            <div>
+              <h3>AK SimLink Pro</h3>
+              <p>
+                Multi-protocol version with OLED display, menu UI, and advanced
+                control.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-    </div>
+      <!-- //des Extra product gallery row -->
+      <div class="gallery-row">
+        <div class="gallery-item">
+          <img src="ak-simlink-hero.png" alt="AK SimLink front view" />
+          <div>
+            <h4>Front View</h4>
+            <p>Clean product face with premium AK SimLink styling.</p>
+          </div>
+        </div>
 
-  </div>
+        <div class="gallery-item">
+          <img src="ak-simlink-hero.png" alt="AK SimLink desktop setup" />
+          <div>
+            <h4>Desktop Setup</h4>
+            <p>Built for simulator practice on your PC training station.</p>
+          </div>
+        </div>
 
-<!-- //des Extra product gallery row -->
-<div class="gallery-row">
+        <div class="gallery-item">
+          <img src="ak-simlink-hero.png" alt="AK SimLink OLED interface" />
+          <div>
+            <h4>OLED Interface</h4>
+            <p>Pro version includes onboard screen and menu navigation.</p>
+          </div>
+        </div>
 
-  <div class="gallery-item">
-    <img src="ak-simlink-hero.png" alt="AK SimLink front view">
-    <div>
-      <h4>Front View</h4>
-      <p>Clean product face with premium AK SimLink styling.</p>
-    </div>
-  </div>
+        <div class="gallery-item">
+          <img src="ak-simlink-hero.png" alt="AK SimLink packaging concept" />
+          <div>
+            <h4>Packaging Concept</h4>
+            <p>
+              Designed as a complete product experience from box to firmware.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="compare">
+      <h2 class="section-title">Lite vs Pro</h2>
+      <p class="section-subtitle">
+        Pick the version that fits your radio setup.
+      </p>
 
-  <div class="gallery-item">
-    <img src="ak-simlink-hero.png" alt="AK SimLink desktop setup">
-    <div>
-      <h4>Desktop Setup</h4>
-      <p>Built for simulator practice on your PC training station.</p>
-    </div>
-  </div>
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>Lite</th>
+          <th>Pro</th>
+        </tr>
+        <tr>
+          <td>ELRS</td>
+          <td class="yes">✓</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>Crossfire</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>FrSky</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>OLED Display</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>Onboard Menu</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>Firmware Updates</td>
+          <td class="yes">✓</td>
+          <td class="yes">✓</td>
+        </tr>
+      </table>
+    </section>
 
-  <div class="gallery-item">
-    <img src="ak-simlink-hero.png" alt="AK SimLink OLED interface">
-    <div>
-      <h4>OLED Interface</h4>
-      <p>Pro version includes onboard screen and menu navigation.</p>
-    </div>
-  </div>
+    <section id="firmware">
+      <h2 class="section-title">Firmware Updater</h2>
+      <p class="section-subtitle">
+        Keep your AK SimLink updated with the latest features and improvements.
+      </p>
 
-  <div class="gallery-item">
-    <img src="ak-simlink-hero.png" alt="AK SimLink packaging concept">
-    <div>
-      <h4>Packaging Concept</h4>
-      <p>Designed as a complete product experience from box to firmware.</p>
-    </div>
-  </div>
+      <div class="firmware">
+        <div class="firmware-card">
+          <h3>Lite Updater</h3>
+          <p style="color: var(--muted)">
+            For AK SimLink Lite firmware updates.
+          </p>
+          <a class="btn yellow" href="lite.html">Open Lite Updater</a>
+        </div>
 
-</div>
-</section>
-  <section id="compare">
-    <h2 class="section-title">Lite vs Pro</h2>
-    <p class="section-subtitle">Pick the version that fits your radio setup.</p>
+        <div class="firmware-card">
+          <h3>Pro Updater</h3>
+          <p style="color: var(--muted)">
+            For AK SimLink Pro firmware updates.
+          </p>
+          <a class="btn yellow" href="pro.html">Open Pro Updater</a>
+        </div>
+      </div>
+    </section>
 
-    <table>
-      <tr>
-        <th>Feature</th>
-        <th>Lite</th>
-        <th>Pro</th>
-      </tr>
-      <tr>
-        <td>ELRS</td>
-        <td class="yes">✓</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Crossfire</td>
-        <td class="no">—</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>FrSky</td>
-        <td class="no">—</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>OLED Display</td>
-        <td class="no">—</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Onboard Menu</td>
-        <td class="no">—</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Firmware Updates</td>
-        <td class="yes">✓</td>
-        <td class="yes">✓</td>
-      </tr>
-    </table>
-  </section>
+    <section id="faq">
+      <h2 class="section-title">FAQ</h2>
 
-  <section id="firmware">
-    <h2 class="section-title">Firmware Updater</h2>
-    <p class="section-subtitle">Keep your AK SimLink updated with the latest features and improvements.</p>
+      <div class="faq">
+        <div class="faq-card">
+          <h3>Which simulators are supported?</h3>
+          <p style="color: var(--muted)">
+            Any simulator that supports standard USB gamepad input, including
+            popular FPV simulators.
+          </p>
+        </div>
 
-    <div class="firmware">
-      <div class="firmware-card">
-        <h3>Lite Updater</h3>
-        <p style="color:var(--muted)">For AK SimLink Lite firmware updates.</p>
-        <a class="btn yellow" href="lite.html">Open Lite Updater</a>
+        <div class="faq-card">
+          <h3>Do I need drivers?</h3>
+          <p style="color: var(--muted)">
+            No special driver is required. AK SimLink appears as a USB HID
+            gamepad.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h3>Can I update firmware myself?</h3>
+          <p style="color: var(--muted)">
+            Yes. Firmware updates are done through the browser using the AK
+            SimLink updater.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h3>Which one should I buy?</h3>
+          <p style="color: var(--muted)">
+            Choose Lite for ELRS only. Choose Pro if you want ELRS, Crossfire,
+            FrSky and onboard screen features.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des PROFESSIONAL BUY SECTION -->
+    <section id="buy">
+      <h2 class="section-title">Ready to Train Like You Fly?</h2>
+      <p class="section-subtitle">
+        Choose your AK SimLink model. PayPal checkout links will be connected
+        when you are ready to sell.
+      </p>
+
+      <div class="buy-grid">
+        <!-- //des AK SIMLINK LITE BUY CARD -->
+        <div class="buy-card">
+          <div class="badge">Best for ELRS pilots</div>
+
+          <h3 class="lite" style="font-size: 36px; margin: 0">
+            AK SimLink Lite
+          </h3>
+
+          <div class="price">RM -- <span>/ unit</span></div>
+
+          <ul>
+            <li>ELRS simulator adapter</li>
+            <li>USB HID gamepad output</li>
+            <li>Compact and simple setup</li>
+            <li>Browser firmware updater</li>
+          </ul>
+
+          <div class="buttons">
+            <a class="btn red" href="#">Buy Lite Soon</a>
+            <a class="btn yellow" href="lite.html">Lite Firmware</a>
+          </div>
+
+          <p class="buy-note">
+            Recommended for pilots who only need ELRS simulator training with a
+            simple plug-and-play device.
+          </p>
+        </div>
+
+        <!-- //des AK SIMLINK PRO BUY CARD -->
+        <div class="buy-card featured">
+          <div class="badge">Most advanced</div>
+
+          <h3 class="pro" style="font-size: 36px; margin: 0">AK SimLink Pro</h3>
+
+          <div class="price">RM -- <span>/ unit</span></div>
+
+          <ul>
+            <li>ELRS, Crossfire and FrSky support</li>
+            <li>OLED screen interface</li>
+            <li>Onboard menu system</li>
+            <li>Future-ready firmware updates</li>
+          </ul>
+
+          <div class="buttons">
+            <a class="btn red" href="#">Buy Pro Soon</a>
+            <a class="btn yellow" href="pro.html">Pro Firmware</a>
+          </div>
+
+          <p class="buy-note">
+            Recommended for pilots who want multi-protocol receiver support,
+            screen interface and more advanced control.
+          </p>
+        </div>
       </div>
 
-      <div class="firmware-card">
-        <h3>Pro Updater</h3>
-        <p style="color:var(--muted)">For AK SimLink Pro firmware updates.</p>
-        <a class="btn yellow" href="pro.html">Open Pro Updater</a>
+      <!-- //des TRUST / PAYMENT NOTES -->
+      <div class="trust-row">
+        <div class="trust-pill">PayPal checkout planned</div>
+        <div class="trust-pill">Worldwide shipping planned</div>
+        <div class="trust-pill">Free firmware updates</div>
+        <div class="trust-pill">Designed in Malaysia</div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="faq">
-    <h2 class="section-title">FAQ</h2>
-
-    <div class="faq">
-      <div class="faq-card">
-        <h3>Which simulators are supported?</h3>
-        <p style="color:var(--muted)">Any simulator that supports standard USB gamepad input, including popular FPV simulators.</p>
-      </div>
-
-      <div class="faq-card">
-        <h3>Do I need drivers?</h3>
-        <p style="color:var(--muted)">No special driver is required. AK SimLink appears as a USB HID gamepad.</p>
-      </div>
-
-      <div class="faq-card">
-        <h3>Can I update firmware myself?</h3>
-        <p style="color:var(--muted)">Yes. Firmware updates are done through the browser using the AK SimLink updater.</p>
-      </div>
-
-      <div class="faq-card">
-        <h3>Which one should I buy?</h3>
-        <p style="color:var(--muted)">Choose Lite for ELRS only. Choose Pro if you want ELRS, Crossfire, FrSky and onboard screen features.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="buy">
-    <h2 class="section-title">Ready to Train Like You Fly?</h2>
-    <p class="section-subtitle">Buy links will be connected to PayPal later.</p>
-
-    <div class="products">
-      <div class="product-card">
-        <h3 class="lite">AK SimLink Lite</h3>
-        <p style="color:var(--muted)">Simple ELRS simulator adapter.</p>
-        <a class="btn red" href="#">Buy Lite</a>
-      </div>
-
-      <div class="product-card">
-        <h3 class="pro">AK SimLink Pro</h3>
-        <p style="color:var(--muted)">Multi-protocol simulator adapter.</p>
-        <a class="btn red" href="#">Buy Pro</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="logo">AK <span>SimLink</span></div>
-    <p>Train Like You Fly</p>
-    <p>© 2026 AK SimLink. All rights reserved.</p>
-  </footer>
-
-</body>
+    <footer>
+      <div class="logo">AK <span>SimLink</span></div>
+      <p>Train Like You Fly</p>
+      <p>© 2026 AK SimLink. All rights reserved.</p>
+    </footer>
+  </body>
 </html>
