@@ -320,6 +320,45 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* //des PILOT FEEDBACK SECTION */
+.feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.feedback-card {
+  background: rgba(20,26,34,0.86);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.feedback-card .quote {
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.feedback-card .pilot {
+  color: var(--yellow);
+  font-weight: bold;
+}
+
+.feedback-card .role {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+@media (max-width: 800px) {
+  .feedback-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -553,6 +592,7 @@
       <a href="#products">Products</a>
 <a href="#how">How It Works</a>
 <a href="#simulators">Simulators</a>
+<a href="#feedback">Feedback</a>
 <a href="#visuals">Visuals</a>
 <a href="#compare">Compare</a>
 <a href="#firmware">Firmware</a>
@@ -715,6 +755,43 @@
 
 </section>
 
+<!-- //des EARLY PILOT FEEDBACK SECTION -->
+<section id="feedback">
+
+  <h2 class="section-title">Early Pilot Feedback</h2>
+  <p class="section-subtitle">
+    Designed from real simulator practice needs, with a focus on simple setup and real radio feel.
+  </p>
+
+  <div class="feedback-grid">
+
+    <div class="feedback-card">
+      <div class="quote">
+        “The biggest difference is training with the same radio feel I use in real flying.”
+      </div>
+      <div class="pilot">FPV Pilot</div>
+      <div class="role">Simulator Training</div>
+    </div>
+
+    <div class="feedback-card">
+      <div class="quote">
+        “Plug in, open simulator, and fly. That is exactly what I wanted.”
+      </div>
+      <div class="pilot">ELRS User</div>
+      <div class="role">AK SimLink Lite</div>
+    </div>
+
+    <div class="feedback-card">
+      <div class="quote">
+        “The Pro version feels future ready with the screen, menu, and receiver options.”
+      </div>
+      <div class="pilot">Multi-Protocol User</div>
+      <div class="role">AK SimLink Pro</div>
+    </div>
+
+  </div>
+
+</section>
   <section>
     <h2 class="section-title">Why AK SimLink?</h2>
     <p class="section-subtitle">Designed to make simulator practice feel closer to real flying.</p>
