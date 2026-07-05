@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AK SimLink Updater</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 520px;
+      text-align: center;
+    }
+
+    img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    p {
+      color: #bbbbbb;
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+
+    .card {
+      display: block;
+      text-decoration: none;
+      color: white;
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 16px;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      background: #222;
+      border-color: #f5c542;
+      transform: translateY(-2px);
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      color: #f5c542;
+      font-size: 24px;
+    }
+
+    .card span {
+      color: #aaaaaa;
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="simlink.png" alt="AK SimLink Logo">
+
+    <h1>AK SimLink Updater</h1>
+    <p>Please select your device model before updating firmware.</p>
+
+    <a class="card" href="pro.html">
+      <h2>AK SimLink Pro</h2>
+      <span>For Pro version with screen and multi-receiver support</span>
+    </a>
+
+    <a class="card" href="lite.html">
+      <h2>AK SimLink Lite</h2>
+      <span>For Lite version firmware updater</span>
+    </a>
+
+    <div class="footer">
+      Make sure you select the correct model before flashing.
+    </div>
+  </div>
+</body>
+</html>
