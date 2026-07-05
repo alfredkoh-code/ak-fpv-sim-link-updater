@@ -964,7 +964,7 @@
       .gallery-row {
         margin-top: 18px;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 18px;
       }
 
@@ -1015,7 +1015,7 @@
       /* //des Mobile gallery fix */
       @media (max-width: 800px) {
         .gallery-row {
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(2, 1fr);
         }
       }
 
@@ -1706,7 +1706,20 @@
           <div>
             <h4>Front View</h4>
 
-            <p>Main product render.</p>
+            <p>Main front product design.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            onclick="changeProductImage('02_rear_view.png')"
+            src="02_rear_view.png"
+          />
+
+          <div>
+            <h4>Rear View</h4>
+
+            <p>Rear USB and receiver layout.</p>
           </div>
         </div>
 
@@ -1717,22 +1730,48 @@
           />
 
           <div>
-            <h4>Side View</h4>
+            <h4>Left Side</h4>
 
-            <p>Side profile.</p>
+            <p>Compact enclosure profile.</p>
           </div>
         </div>
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('08_oled_menu_screen.png')"
-            src="08_oled_menu_screen.png"
+            onclick="changeProductImage('04_right_side.png')"
+            src="04_right_side.png"
           />
 
           <div>
-            <h4>OLED Interface</h4>
+            <h4>Right Side</h4>
 
-            <p>Menu system.</p>
+            <p>Clean industrial design.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            onclick="changeProductImage('05_top_view.png')"
+            src="05_top_view.png"
+          />
+
+          <div>
+            <h4>Top View</h4>
+
+            <p>Premium top appearance.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            onclick="changeProductImage('06_angled_view.png')"
+            src="06_angled_view.png"
+          />
+
+          <div>
+            <h4>Perspective View</h4>
+
+            <p>Hero product angle.</p>
           </div>
         </div>
 
@@ -1745,7 +1784,46 @@
           <div>
             <h4>Desktop Setup</h4>
 
-            <p>Simulator station.</p>
+            <p>Simulator ready.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            onclick="changeProductImage('08_oled_menu_screen.png')"
+            src="08_oled_menu_screen.png"
+          />
+
+          <div>
+            <h4>OLED Interface</h4>
+
+            <p>Built-in menu system.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            onclick="changeProductImage('09_pcb_internal.png')"
+            src="09_pcb_internal.png"
+          />
+
+          <div>
+            <h4>Internal PCB</h4>
+
+            <p>Professional electronics.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            onclick="changeProductImage('10_package_contents.png')"
+            src="10_package_contents.png"
+          />
+
+          <div>
+            <h4>Package</h4>
+
+            <p>Everything included.</p>
           </div>
         </div>
       </div>
