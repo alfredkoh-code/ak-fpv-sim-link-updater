@@ -304,6 +304,91 @@
         color: var(--yellow);
       }
 
+      /* //des WHY BUY AK SIMLINK BIG CARDS */
+      .why-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .why-card {
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(8, 10, 14, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 28px;
+        transition: 0.25s;
+        min-height: 230px;
+      }
+
+      .why-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--red);
+        box-shadow: 0 20px 50px rgba(229, 9, 20, 0.18);
+      }
+
+      .why-icon {
+        font-size: 36px;
+        margin-bottom: 18px;
+      }
+
+      .why-card h3 {
+        margin: 0 0 10px;
+        color: var(--yellow);
+        font-size: 22px;
+      }
+
+      .why-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 15px;
+      }
+
+      /* //des ANIMATED STATS SECTION */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .stat-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 28px;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 46px;
+        font-weight: 900;
+        color: var(--red);
+        margin-bottom: 8px;
+      }
+
+      .stat-label {
+        color: var(--yellow);
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .stat-note {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 800px) {
+        .why-grid,
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
       .features {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -795,6 +880,8 @@
       <div class="nav-links">
         <a href="#products">Products</a>
         <a href="#how">How It Works</a>
+        <a href="#why-buy">Why Buy</a>
+        <a href="#stats">Stats</a>
         <a href="#simulators">Simulators</a>
         <a href="#feedback">Feedback</a>
         <a href="#visuals">Visuals</a>
@@ -915,6 +1002,106 @@
             Practice with your real radio feel, real switch layout, and familiar
             stick movement.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des WHY BUY AK SIMLINK SECTION -->
+    <section id="why-buy">
+      <h2 class="section-title">Why Buy AK SimLink?</h2>
+      <p class="section-subtitle">
+        Built for pilots who want simulator practice to feel closer to real
+        flying.
+      </p>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">⚡</div>
+          <h3>Ultra Low Latency</h3>
+          <p>
+            Designed for responsive simulator control, so your stick movement
+            feels fast and natural.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🔌</div>
+          <h3>Plug & Play</h3>
+          <p>
+            No complicated driver setup. AK SimLink appears as a standard USB
+            HID gamepad.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🎮</div>
+          <h3>Real Radio Feel</h3>
+          <p>
+            Train using your actual radio, real sticks, real switches, and
+            familiar muscle memory.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🔄</div>
+          <h3>Free Firmware Updates</h3>
+          <p>
+            Update your device through the browser and keep getting improvements
+            over time.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">📺</div>
+          <h3>Pro OLED Interface</h3>
+          <p>
+            AK SimLink Pro includes screen feedback, menu navigation, and
+            advanced receiver control.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🌍</div>
+          <h3>Designed in Malaysia</h3>
+          <p>
+            Built as a focused FPV simulator product with practical real-world
+            training needs in mind.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des ANIMATED STATS SECTION -->
+    <section id="stats">
+      <h2 class="section-title">Built for Real Training</h2>
+      <p class="section-subtitle">
+        A simple ecosystem for firmware, simulator practice, and future product
+        expansion.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-target="100">0</div>
+          <div class="stat-label">USB Plug & Play</div>
+          <div class="stat-note">Standard HID gamepad output.</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" data-target="3">0</div>
+          <div class="stat-label">Receiver Protocols</div>
+          <div class="stat-note">ELRS, Crossfire and FrSky on Pro.</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" data-target="16">0</div>
+          <div class="stat-label">Radio Channels</div>
+          <div class="stat-note">Full channel input for simulator control.</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" data-target="1">0</div>
+          <div class="stat-label">Unified Ecosystem</div>
+          <div class="stat-note">Website, updater, firmware and support.</div>
         </div>
       </div>
     </section>
@@ -1387,5 +1574,50 @@
       <p>Train Like You Fly</p>
       <p>© 2026 AK SimLink. All rights reserved.</p>
     </footer>
+    <script>
+      //des Animated number counter when stats section appears
+      const statNumbers = document.querySelectorAll(".stat-number");
+
+      const animateNumber = (el) => {
+        const target = Number(el.dataset.target);
+        let current = 0;
+        const speed = Math.max(1, Math.floor(target / 60));
+
+        const update = () => {
+          current += speed;
+
+          if (current >= target) {
+            el.textContent = target;
+
+            if (target === 100) {
+              el.textContent = "100%";
+            }
+
+            return;
+          }
+
+          el.textContent = current;
+          requestAnimationFrame(update);
+        };
+
+        update();
+      };
+
+      const statsObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateNumber(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+
+      statNumbers.forEach((num) => {
+        statsObserver.observe(num);
+      });
+    </script>
   </body>
 </html>
