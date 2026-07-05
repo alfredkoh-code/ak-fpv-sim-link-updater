@@ -347,7 +347,84 @@
         line-height: 1.6;
         font-size: 15px;
       }
+      /* //des OUR STORY SECTION */
+      .story-box {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 28px;
+        align-items: center;
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(8, 10, 14, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: 34px;
+        overflow: hidden;
+      }
 
+      .story-badge {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(229, 9, 20, 0.12);
+        color: var(--red);
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
+
+      .story-box h2 {
+        font-size: 44px;
+        margin: 0 0 16px;
+      }
+
+      .story-box p {
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 16px;
+      }
+
+      .story-quote {
+        margin-top: 20px;
+        padding: 18px;
+        border-left: 4px solid var(--yellow);
+        background: rgba(255, 196, 0, 0.08);
+        border-radius: 12px;
+        color: var(--text);
+      }
+
+      .story-visual {
+        min-height: 360px;
+        border-radius: 22px;
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(229, 9, 20, 0.32),
+            transparent 35%
+          ),
+          linear-gradient(145deg, #1b222c, #05070a);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--yellow);
+        font-size: 42px;
+        font-weight: 900;
+        text-align: center;
+        padding: 24px;
+      }
+
+      @media (max-width: 800px) {
+        .story-box {
+          grid-template-columns: 1fr;
+        }
+
+        .story-box h2 {
+          font-size: 34px;
+        }
+      }
       /* //des ANIMATED STATS SECTION */
       .stats-grid {
         display: grid;
@@ -881,6 +958,7 @@
         <a href="#products">Products</a>
         <a href="#how">How It Works</a>
         <a href="#why-buy">Why Buy</a>
+        <a href="#story">Story</a>
         <a href="#stats">Stats</a>
         <a href="#simulators">Simulators</a>
         <a href="#feedback">Feedback</a>
@@ -1070,7 +1148,39 @@
         </div>
       </div>
     </section>
+    <!-- //des OUR STORY SECTION -->
+    <section id="story">
+      <div class="story-box">
+        <div class="story-visual">TRAIN<br />LIKE<br />YOU FLY</div>
 
+        <div>
+          <div class="story-badge">WHY WE BUILT THIS</div>
+
+          <h2>Simulator practice should feel like real flying.</h2>
+
+          <p>
+            Every FPV pilot knows the difference. Practicing with a normal game
+            controller never feels the same as holding your own radio.
+          </p>
+
+          <p>
+            AK SimLink was built to close that gap. It lets you train with your
+            real radio, real sticks, real switches, and the same muscle memory
+            you use when flying outside.
+          </p>
+
+          <p>
+            The goal is simple: make simulator training feel more natural, more
+            serious, and more connected to real FPV flying.
+          </p>
+
+          <div class="story-quote">
+            <b>AK SimLink exists for one reason:</b><br />
+            to help pilots train with confidence before every real flight.
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- //des ANIMATED STATS SECTION -->
     <section id="stats">
       <h2 class="section-title">Built for Real Training</h2>
