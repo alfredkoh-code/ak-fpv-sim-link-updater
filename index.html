@@ -237,7 +237,51 @@
       font-size: 14px;
       line-height: 1.5;
     }
+/* //des HOW IT WORKS SECTION */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
 
+.step-card {
+  background: rgba(20,26,34,0.86);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  position: relative;
+}
+
+.step-number {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.step-card h3 {
+  margin: 0 0 10px;
+  color: var(--yellow);
+}
+
+.step-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+@media (max-width: 800px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
     table {
       width: 100%;
       border-collapse: collapse;
@@ -469,6 +513,7 @@
     <div class="logo">AK <span>SimLink</span></div>
     <div class="nav-links">
       <a href="#products">Products</a>
+<a href="#how">How It Works</a>
 <a href="#visuals">Visuals</a>
 <a href="#compare">Compare</a>
 <a href="#firmware">Firmware</a>
@@ -542,7 +587,51 @@
       </div>
     </div>
   </section>
+<!-- //des HOW AK SIMLINK WORKS SECTION -->
+<section id="how">
 
+  <h2 class="section-title">How It Works</h2>
+  <p class="section-subtitle">
+    AK SimLink turns your real FPV radio setup into a USB simulator controller.
+  </p>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <h3>Connect Receiver</h3>
+      <p>
+        Connect your ELRS, Crossfire, or FrSky receiver to AK SimLink depending on your model.
+      </p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <h3>Plug Into PC</h3>
+      <p>
+        AK SimLink appears as a standard USB HID gamepad, so no special driver is required.
+      </p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <h3>Open Simulator</h3>
+      <p>
+        Select AK SimLink inside your FPV simulator controller settings.
+      </p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">4</div>
+      <h3>Train Like You Fly</h3>
+      <p>
+        Practice with your real radio feel, real switch layout, and familiar stick movement.
+      </p>
+    </div>
+
+  </div>
+
+</section>
   <section>
     <h2 class="section-title">Why AK SimLink?</h2>
     <p class="section-subtitle">Designed to make simulator practice feel closer to real flying.</p>
