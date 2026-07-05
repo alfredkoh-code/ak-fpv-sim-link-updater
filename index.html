@@ -686,7 +686,187 @@
           grid-template-columns: 1fr;
         }
       }
+      /* //des FAKE 360 PRODUCT VIEWER */
+      .viewer360 {
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(5, 7, 10, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: 30px;
+        overflow: hidden;
+      }
 
+      .viewer360-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .viewer360-header h2 {
+        font-size: 42px;
+        margin: 0 0 10px;
+      }
+
+      .viewer360-header p {
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .viewer360-stage {
+        position: relative;
+        min-height: 460px;
+        border-radius: 24px;
+        background:
+          radial-gradient(
+            circle at center,
+            rgba(229, 9, 20, 0.18),
+            transparent 45%
+          ),
+          #070a0e;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        cursor: grab;
+      }
+
+      .viewer360-stage:active {
+        cursor: grabbing;
+      }
+
+      .viewer360-stage img {
+        width: 88%;
+        max-width: 900px;
+        user-select: none;
+        pointer-events: none;
+        transition: transform 0.15s ease;
+      }
+
+      .viewer360-frame-label {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        color: var(--yellow);
+        font-weight: bold;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+      }
+
+      .viewer360-controls {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .viewer360-btn {
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(20, 26, 34, 0.86);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .viewer360-btn:hover {
+        border-color: var(--red);
+      }
+
+      .viewer360-hint {
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 14px;
+      }
+
+      .hotspot {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--yellow);
+        box-shadow: 0 0 20px var(--yellow);
+        cursor: pointer;
+      }
+
+      .hotspot::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border: 1px solid var(--yellow);
+        border-radius: 50%;
+        animation: pulse 1.4s infinite;
+      }
+
+      .hotspot.usb {
+        left: 22%;
+        top: 58%;
+      }
+
+      .hotspot.oled {
+        left: 55%;
+        top: 45%;
+      }
+
+      .hotspot.receiver {
+        right: 22%;
+        top: 58%;
+      }
+
+      .hotspot-box {
+        position: absolute;
+        right: 24px;
+        bottom: 24px;
+        max-width: 280px;
+        background: rgba(0, 0, 0, 0.78);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        display: none;
+      }
+
+      .hotspot-box h3 {
+        color: var(--yellow);
+        margin: 0 0 8px;
+      }
+
+      .hotspot-box p {
+        color: var(--muted);
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      @keyframes pulse {
+        from {
+          transform: scale(0.8);
+          opacity: 1;
+        }
+        to {
+          transform: scale(1.8);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .viewer360-stage {
+          min-height: 300px;
+        }
+
+        .viewer360-header h2 {
+          font-size: 32px;
+        }
+
+        .hotspot-box {
+          position: static;
+          margin-top: 14px;
+        }
+      }
       /* //des PRODUCT VISUAL / RENDER GALLERY SECTION */
       .visual-grid {
         display: grid;
@@ -967,6 +1147,7 @@
         <a href="#stats">Stats</a>
         <a href="#simulators">Simulators</a>
         <a href="#feedback">Feedback</a>
+        <a href="#viewer360">360 Viewer</a>
         <a href="#visuals">Visuals</a>
         <a href="#compare">Compare</a>
         <a href="#firmware">Firmware</a>
@@ -1337,7 +1518,85 @@
         </div>
       </div>
     </section>
+    <!-- //des FAKE 360 PRODUCT VIEWER SECTION -->
+    <section id="viewer360">
+      <div class="viewer360">
+        <div class="viewer360-header">
+          <h2>360° Product Viewer</h2>
+          <p>Drag, click, or enable auto-spin to explore AK SimLink Pro.</p>
+        </div>
 
+        <div class="viewer360-stage" id="viewerStage">
+          <div class="viewer360-frame-label">
+            Angle: <span id="viewerAngle">0</span>°
+          </div>
+
+          <img
+            id="viewerImage"
+            src="ak-simlink-hero.png"
+            alt="AK SimLink 360 product viewer"
+            draggable="false"
+          />
+
+          <!-- //des HOTSPOTS -->
+          <div
+            class="hotspot usb"
+            onclick="
+              showHotspot(
+                'USB-C Port',
+                'Used for power, firmware updates, and USB HID simulator output.',
+              )
+            "
+          ></div>
+
+          <div
+            class="hotspot oled"
+            onclick="
+              showHotspot(
+                'OLED Display',
+                'AK SimLink Pro shows protocol, link status, receiver data, menu settings, and device information.',
+              )
+            "
+          ></div>
+
+          <div
+            class="hotspot receiver"
+            onclick="
+              showHotspot(
+                'Receiver Support',
+                'AK SimLink Pro is designed for ELRS, Crossfire, and FrSky receiver support.',
+              )
+            "
+          ></div>
+
+          <div class="hotspot-box" id="hotspotBox">
+            <h3 id="hotspotTitle">OLED Display</h3>
+            <p id="hotspotText">Click a hotspot to learn more.</p>
+          </div>
+        </div>
+
+        <div class="viewer360-controls">
+          <button class="viewer360-btn" onclick="rotateViewer(-1)">
+            ← Rotate Left
+          </button>
+          <button
+            class="viewer360-btn"
+            onclick="toggleAutoSpin()"
+            id="autoSpinBtn"
+          >
+            Auto Spin: Off
+          </button>
+          <button class="viewer360-btn" onclick="rotateViewer(1)">
+            Rotate Right →
+          </button>
+        </div>
+
+        <div class="viewer360-hint">
+          Fake 360 mode now uses one render image. Later we will replace it with
+          36 real angle images.
+        </div>
+      </div>
+    </section>
     <!-- //des OFFICIAL PRODUCT VISUAL SECTION -->
     <section id="visuals">
       <!-- //des Section title -->
@@ -1759,6 +2018,127 @@
       <p>© 2026 AK SimLink. All rights reserved.</p>
     </footer>
     <script>
+      // ======================================================
+      // //des FAKE 360 PRODUCT VIEWER
+      // ======================================================
+      let viewerFrame = 0;
+      let autoSpin = false;
+      let autoSpinTimer = null;
+      let isDragging = false;
+      let lastX = 0;
+
+      const totalViewerFrames = 36;
+
+      // //des For now all frames use same image.
+      // //des Later replace with real filenames:
+      // //des ak360/frame-01.png, ak360/frame-02.png, etc.
+      const viewerFrames = Array.from(
+        { length: totalViewerFrames },
+        () => "ak-simlink-hero.png",
+      );
+
+      function updateViewer() {
+        const img = document.getElementById("viewerImage");
+        const angle = document.getElementById("viewerAngle");
+
+        if (!img || !angle) return;
+
+        img.src = viewerFrames[viewerFrame];
+
+        const degree = Math.round((viewerFrame / totalViewerFrames) * 360);
+        angle.textContent = degree;
+
+        // //des Fake visual rotation effect until real images are ready
+        const fakeTilt =
+          Math.sin((viewerFrame / totalViewerFrames) * Math.PI * 2) * 5;
+        const fakeScale =
+          1 + Math.sin((viewerFrame / totalViewerFrames) * Math.PI * 2) * 0.015;
+
+        img.style.transform = `rotateY(${fakeTilt}deg) scale(${fakeScale})`;
+      }
+
+      function rotateViewer(direction) {
+        viewerFrame += direction;
+
+        if (viewerFrame < 0) viewerFrame = totalViewerFrames - 1;
+        if (viewerFrame >= totalViewerFrames) viewerFrame = 0;
+
+        updateViewer();
+      }
+
+      function toggleAutoSpin() {
+        autoSpin = !autoSpin;
+
+        const btn = document.getElementById("autoSpinBtn");
+        if (btn)
+          btn.textContent = autoSpin ? "Auto Spin: On" : "Auto Spin: Off";
+
+        if (autoSpin) {
+          autoSpinTimer = setInterval(() => {
+            rotateViewer(1);
+          }, 120);
+        } else {
+          clearInterval(autoSpinTimer);
+        }
+      }
+
+      function showHotspot(title, text) {
+        const box = document.getElementById("hotspotBox");
+        const titleEl = document.getElementById("hotspotTitle");
+        const textEl = document.getElementById("hotspotText");
+
+        if (!box || !titleEl || !textEl) return;
+
+        titleEl.textContent = title;
+        textEl.textContent = text;
+        box.style.display = "block";
+      }
+
+      const viewerStage = document.getElementById("viewerStage");
+
+      if (viewerStage) {
+        viewerStage.addEventListener("mousedown", (e) => {
+          isDragging = true;
+          lastX = e.clientX;
+        });
+
+        window.addEventListener("mouseup", () => {
+          isDragging = false;
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!isDragging) return;
+
+          const diff = e.clientX - lastX;
+
+          if (Math.abs(diff) > 8) {
+            rotateViewer(diff > 0 ? 1 : -1);
+            lastX = e.clientX;
+          }
+        });
+
+        viewerStage.addEventListener("touchstart", (e) => {
+          isDragging = true;
+          lastX = e.touches[0].clientX;
+        });
+
+        viewerStage.addEventListener("touchend", () => {
+          isDragging = false;
+        });
+
+        viewerStage.addEventListener("touchmove", (e) => {
+          if (!isDragging) return;
+
+          const diff = e.touches[0].clientX - lastX;
+
+          if (Math.abs(diff) > 8) {
+            rotateViewer(diff > 0 ? 1 : -1);
+            lastX = e.touches[0].clientX;
+          }
+        });
+      }
+
+      updateViewer();
       //des Animated number counter when stats section appears
       const statNumbers = document.querySelectorAll(".stat-number");
 
