@@ -677,10 +677,49 @@
         }
       }
 
+      /* //des FAQ SECTION */
       .faq {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         gap: 14px;
+      }
+
+      .faq-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .faq-card summary {
+        cursor: pointer;
+        padding: 20px 24px;
+        color: var(--yellow);
+        font-weight: bold;
+        list-style: none;
+      }
+
+      .faq-card summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-card summary::after {
+        content: "+";
+        float: right;
+        color: var(--red);
+        font-size: 22px;
+      }
+
+      .faq-card[open] summary::after {
+        content: "−";
+      }
+
+      .faq-card p {
+        margin: 0;
+        padding: 0 24px 22px;
+        color: var(--muted);
+        line-height: 1.6;
       }
 
       footer {
@@ -1161,41 +1200,67 @@
       </div>
     </section>
 
+    <!-- //des FAQ SECTION -->
     <section id="faq">
-      <h2 class="section-title">FAQ</h2>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">
+        Quick answers for setup, compatibility, firmware updates, and product
+        differences.
+      </p>
 
       <div class="faq">
-        <div class="faq-card">
-          <h3>Which simulators are supported?</h3>
-          <p style="color: var(--muted)">
-            Any simulator that supports standard USB gamepad input, including
-            popular FPV simulators.
+        <details class="faq-card" open>
+          <summary>Which AK SimLink model should I choose?</summary>
+          <p>
+            Choose AK SimLink Lite if you only need ELRS simulator support.
+            Choose AK SimLink Pro if you want multi-protocol support such as
+            ELRS, Crossfire, FrSky, onboard screen, menu system, and future
+            advanced features.
           </p>
-        </div>
+        </details>
 
-        <div class="faq-card">
-          <h3>Do I need drivers?</h3>
-          <p style="color: var(--muted)">
-            No special driver is required. AK SimLink appears as a USB HID
-            gamepad.
+        <details class="faq-card">
+          <summary>Does AK SimLink need drivers?</summary>
+          <p>
+            No special driver is required. AK SimLink appears as a standard USB
+            HID gamepad on supported systems.
           </p>
-        </div>
+        </details>
 
-        <div class="faq-card">
-          <h3>Can I update firmware myself?</h3>
-          <p style="color: var(--muted)">
-            Yes. Firmware updates are done through the browser using the AK
-            SimLink updater.
+        <details class="faq-card">
+          <summary>Which simulators are supported?</summary>
+          <p>
+            AK SimLink is designed to work with simulators that support standard
+            USB gamepad input, including popular FPV simulators such as Liftoff,
+            VelociDrone, Uncrashed, DRL Simulator, FPV SkyDive, and TRYP FPV.
           </p>
-        </div>
+        </details>
 
-        <div class="faq-card">
-          <h3>Which one should I buy?</h3>
-          <p style="color: var(--muted)">
-            Choose Lite for ELRS only. Choose Pro if you want ELRS, Crossfire,
-            FrSky and onboard screen features.
+        <details class="faq-card">
+          <summary>Can I update firmware myself?</summary>
+          <p>
+            Yes. Firmware can be updated directly from the browser using the AK
+            SimLink firmware updater. Lite and Pro have separate updater pages
+            to prevent installing the wrong firmware.
           </p>
-        </div>
+        </details>
+
+        <details class="faq-card">
+          <summary>Does Lite support Crossfire or FrSky?</summary>
+          <p>
+            No. AK SimLink Lite is designed as a simple ELRS simulator adapter.
+            For Crossfire and FrSky support, choose AK SimLink Pro.
+          </p>
+        </details>
+
+        <details class="faq-card">
+          <summary>What should I do if the device is not detected?</summary>
+          <p>
+            Try a different USB cable, use a direct USB port on the PC, avoid
+            USB hubs during firmware updates, and confirm that your cable
+            supports data transfer. Some USB cables are charging-only.
+          </p>
+        </details>
       </div>
     </section>
 
