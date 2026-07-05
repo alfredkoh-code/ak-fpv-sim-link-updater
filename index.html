@@ -127,6 +127,18 @@
       padding: 32px;
       box-shadow: 0 30px 80px rgba(0,0,0,0.45);
     }
+.image-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 26px;
+  object-fit: cover;
+}
 
     .device {
       height: 260px;
@@ -338,14 +350,9 @@
       </div>
     </div>
 
-    <div class="hero-card">
-      <div class="device">AK SimLink</div>
-      <h2>Built for real FPV training.</h2>
-      <p style="color:var(--muted);line-height:1.6">
-        Connect your receiver, plug into PC, and train with the same radio feel
-        you use in real flight.
-      </p>
-    </div>
+    <div class="hero-card image-card">
+  <img src="ak-simlink-hero.png" alt="AK SimLink Product Visual">
+</div>
   </main>
 
   <section id="products">
