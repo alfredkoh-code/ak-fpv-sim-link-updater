@@ -787,8 +787,13 @@
       }
 
       .gallery-item:hover {
-        transform: translateY(-4px);
-        border-color: var(--red);
+        transform: translateY(-6px);
+
+        border-color: var(--yellow);
+
+        cursor: pointer;
+
+        box-shadow: 0 10px 30px rgba(255, 196, 0, 0.25);
       }
 
       /* //des Gallery image */
@@ -994,7 +999,11 @@
       </div>
 
       <div class="hero-card image-card">
-        <img src="ak-simlink-hero.png" alt="AK SimLink Product Visual" />
+        <img
+          id="mainProductImage"
+          src="ak-simlink-hero.png"
+          alt="AK SimLink Product"
+        />
       </div>
     </main>
 
@@ -1383,39 +1392,56 @@
         </div>
       </div>
 
-      <!-- //des Extra product gallery row -->
       <div class="gallery-row">
         <div class="gallery-item">
-          <img src="ak-simlink-hero.png" alt="AK SimLink front view" />
+          <img
+            onclick="changeProductImage('ak-simlink-hero.png')"
+            src="ak-simlink-hero.png"
+          />
+
           <div>
             <h4>Front View</h4>
-            <p>Clean product face with premium AK SimLink styling.</p>
+
+            <p>Main product render.</p>
           </div>
         </div>
 
         <div class="gallery-item">
-          <img src="ak-simlink-hero.png" alt="AK SimLink desktop setup" />
+          <img
+            onclick="changeProductImage('render-side.png')"
+            src="render-side.png"
+          />
+
           <div>
-            <h4>Desktop Setup</h4>
-            <p>Built for simulator practice on your PC training station.</p>
+            <h4>Side View</h4>
+
+            <p>Side profile.</p>
           </div>
         </div>
 
         <div class="gallery-item">
-          <img src="ak-simlink-hero.png" alt="AK SimLink OLED interface" />
+          <img
+            onclick="changeProductImage('render-oled.png')"
+            src="render-oled.png"
+          />
+
           <div>
             <h4>OLED Interface</h4>
-            <p>Pro version includes onboard screen and menu navigation.</p>
+
+            <p>Menu system.</p>
           </div>
         </div>
 
         <div class="gallery-item">
-          <img src="ak-simlink-hero.png" alt="AK SimLink packaging concept" />
+          <img
+            onclick="changeProductImage('render-desktop.png')"
+            src="render-desktop.png"
+          />
+
           <div>
-            <h4>Packaging Concept</h4>
-            <p>
-              Designed as a complete product experience from box to firmware.
-            </p>
+            <h4>Desktop Setup</h4>
+
+            <p>Simulator station.</p>
           </div>
         </div>
       </div>
@@ -1760,7 +1786,13 @@
 
         update();
       };
+      // ======================================================
+      // //des PRODUCT GALLERY
+      // ======================================================
 
+      function changeProductImage(image) {
+        document.getElementById("mainProductImage").src = image;
+      }
       const statsObserver = new IntersectionObserver(
         (entries, observer) => {
           entries.forEach((entry) => {
