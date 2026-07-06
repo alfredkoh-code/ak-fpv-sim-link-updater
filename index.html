@@ -1682,6 +1682,130 @@
         }
       }
 
+      /* //des SHIPPING CALCULATOR CHECKOUT
+   Premium checkout calculator for product price, shipping, and total. */
+      .checkout-calculator {
+        margin-top: 34px;
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(8, 10, 14, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+      }
+
+      /* //des CHECKOUT BADGE */
+      .checkout-badge {
+        display: inline-block;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: rgba(255, 196, 0, 0.1);
+        color: var(--yellow);
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+      }
+
+      /* //des CHECKOUT TITLE */
+      .checkout-header h3 {
+        margin: 0 0 8px;
+        font-size: 30px;
+        color: var(--text);
+      }
+
+      /* //des CHECKOUT DESCRIPTION */
+      .checkout-header p {
+        margin: 0 0 24px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* //des CHECKOUT SELECT GRID */
+      .checkout-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      /* //des CHECKOUT LABEL */
+      .checkout-grid label {
+        display: grid;
+        gap: 8px;
+        color: var(--yellow);
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      /* //des CHECKOUT DROPDOWN */
+      .checkout-grid select {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #0b0f14;
+        color: var(--text);
+        font-size: 15px;
+      }
+
+      /* //des CHECKOUT SUMMARY BOX */
+      .checkout-summary {
+        margin-top: 22px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      /* //des SUMMARY ROW */
+      .checkout-summary div {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      /* //des REMOVE LAST BORDER */
+      .checkout-summary div:last-child {
+        border-bottom: none;
+      }
+
+      /* //des TOTAL ROW */
+      .checkout-summary .checkout-total {
+        background: rgba(255, 196, 0, 0.08);
+        color: var(--text);
+        font-size: 18px;
+      }
+
+      /* //des TOTAL PRICE */
+      .checkout-summary strong {
+        color: var(--yellow);
+      }
+
+      /* //des PAYPAL BUTTON SPACING */
+      #paypal-button-container {
+        margin-top: 24px;
+      }
+
+      /* //des CHECKOUT NOTE */
+      .checkout-note {
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      /* //des MOBILE CHECKOUT LAYOUT */
+      @media (max-width: 800px) {
+        .checkout-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
       /* //des PREMIUM FOOTER */
       .premium-footer {
         max-width: 1180px;
@@ -2951,6 +3075,82 @@
             screen interface and more advanced control.
           </p>
         </div>
+
+        <!-- //des SHIPPING CALCULATOR CHECKOUT
+     This lets customers select product and shipping destination.
+     It calculates device price + shipping before PayPal checkout. -->
+        <div class="checkout-calculator">
+          <div class="checkout-header">
+            <div>
+              <div class="checkout-badge">SECURE CHECKOUT</div>
+              <h3>Calculate Shipping & Total</h3>
+              <p>
+                Select your AK SimLink model and delivery region. Shipping is
+                calculated before payment, so there are no surprise shipping
+                charges.
+              </p>
+            </div>
+          </div>
+
+          <div class="checkout-grid">
+            <!-- //des PRODUCT SELECT
+         Customer chooses Lite or Pro. JavaScript updates the product price. -->
+            <label>
+              Product
+              <select id="checkoutProduct" onchange="updateCheckoutTotal()">
+                <option value="lite">AK SimLink Lite — RM149.90</option>
+                <option value="pro">AK SimLink Pro — RM299.90</option>
+              </select>
+            </label>
+
+            <!-- //des SHIPPING DESTINATION SELECT
+         Customer chooses destination zone. JavaScript updates shipping cost. -->
+            <label>
+              Ship To
+              <select id="checkoutCountry" onchange="updateCheckoutTotal()">
+                <option value="malaysia">🇲🇾 Malaysia</option>
+                <option value="singapore">🇸🇬 Singapore / Brunei</option>
+                <option value="sea">
+                  🌏 Thailand / Indonesia / Vietnam / Philippines
+                </option>
+                <option value="asia">
+                  🇯🇵 Japan / Korea / Taiwan / Hong Kong
+                </option>
+                <option value="oceania">🇦🇺 Australia / New Zealand</option>
+                <option value="usa">🇺🇸 United States / Canada</option>
+                <option value="europe">🇬🇧 United Kingdom / Europe</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- //des TOTAL DISPLAY
+       These values are updated by JavaScript whenever product or country changes. -->
+          <div class="checkout-summary">
+            <div>
+              <span>Device</span>
+              <strong id="checkoutDevicePrice">RM149.90</strong>
+            </div>
+
+            <div>
+              <span>Shipping</span>
+              <strong id="checkoutShippingPrice">RM10.00</strong>
+            </div>
+
+            <div class="checkout-total">
+              <span>Total</span>
+              <strong id="checkoutTotalPrice">RM159.90</strong>
+            </div>
+          </div>
+
+          <!-- //des PAYPAL BUTTON CONTAINER
+       PayPal button will appear here after JavaScript renders it. -->
+          <div id="paypal-button-container"></div>
+
+          <p class="checkout-note">
+            Ships from Malaysia. Final delivery time depends on destination
+            country and courier processing.
+          </p>
+        </div>
       </div>
 
       <!-- //des TRUST / PAYMENT NOTES -->
@@ -3064,6 +3264,13 @@
     <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()">
       ↑
     </button>
+
+    <!-- //des PAYPAL SDK
+     This loads PayPal checkout buttons.
+     Replace YOUR_PAYPAL_CLIENT_ID with your real PayPal client ID later.
+     Currency is set to MYR because AK SimLink prices are in Malaysian Ringgit. -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=MYR&intent=capture"></script>
+
     <!-- //des IMAGE LIGHTBOX -->
     <div class="lightbox" id="lightbox">
       <button class="lightbox-btn lightbox-close" onclick="closeLightbox()">
@@ -3322,6 +3529,194 @@
       );
 
       pageSections.forEach((section) => navObserver.observe(section));
+
+      // ======================================================
+      // //des SHIPPING CALCULATOR + PAYPAL CHECKOUT
+      // ======================================================
+      // //des Product prices are stored here so the checkout can calculate totals.
+      // //des You can change these prices later without touching the HTML.
+      const checkoutProducts = {
+        lite: {
+          name: "AK SimLink Lite",
+          price: 149.9,
+        },
+        pro: {
+          name: "AK SimLink Pro",
+          price: 299.9,
+        },
+      };
+
+      // //des Shipping prices by region.
+      // //des Adjust these values after you confirm actual courier prices.
+      const checkoutShipping = {
+        malaysia: {
+          label: "Malaysia",
+          price: 10,
+        },
+        singapore: {
+          label: "Singapore / Brunei",
+          price: 35,
+        },
+        sea: {
+          label: "Thailand / Indonesia / Vietnam / Philippines",
+          price: 55,
+        },
+        asia: {
+          label: "Japan / Korea / Taiwan / Hong Kong",
+          price: 70,
+        },
+        oceania: {
+          label: "Australia / New Zealand",
+          price: 85,
+        },
+        usa: {
+          label: "United States / Canada",
+          price: 95,
+        },
+        europe: {
+          label: "United Kingdom / Europe",
+          price: 95,
+        },
+      };
+
+      // //des This stores the current checkout amount.
+      // //des PayPal reads this value when the customer clicks the PayPal button.
+      let currentCheckout = {
+        productKey: "lite",
+        countryKey: "malaysia",
+        productName: "AK SimLink Lite",
+        productPrice: 149.9,
+        shippingLabel: "Malaysia",
+        shippingPrice: 10,
+        total: 159.9,
+      };
+
+      // //des Format number as Malaysian Ringgit.
+      function formatRM(value) {
+        return `RM${value.toFixed(2)}`;
+      }
+
+      // //des Updates product price, shipping price, and total shown on screen.
+      function updateCheckoutTotal() {
+        const productSelect = document.getElementById("checkoutProduct");
+        const countrySelect = document.getElementById("checkoutCountry");
+
+        if (!productSelect || !countrySelect) return;
+
+        const productKey = productSelect.value;
+        const countryKey = countrySelect.value;
+
+        const product = checkoutProducts[productKey];
+        const shipping = checkoutShipping[countryKey];
+
+        const total = product.price + shipping.price;
+
+        currentCheckout = {
+          productKey,
+          countryKey,
+          productName: product.name,
+          productPrice: product.price,
+          shippingLabel: shipping.label,
+          shippingPrice: shipping.price,
+          total,
+        };
+
+        document.getElementById("checkoutDevicePrice").textContent = formatRM(
+          product.price,
+        );
+
+        document.getElementById("checkoutShippingPrice").textContent = formatRM(
+          shipping.price,
+        );
+
+        document.getElementById("checkoutTotalPrice").textContent =
+          formatRM(total);
+      }
+
+      // //des Renders PayPal checkout button.
+      // //des PayPal will charge the current total when customer clicks the button.
+      function renderPayPalButton() {
+        const paypalContainer = document.getElementById(
+          "paypal-button-container",
+        );
+
+        if (!paypalContainer) return;
+
+        if (typeof paypal === "undefined") {
+          paypalContainer.innerHTML =
+            "<p class='checkout-note'>PayPal is not loaded yet. Check your PayPal client ID.</p>";
+          return;
+        }
+
+        paypal
+          .Buttons({
+            style: {
+              layout: "vertical",
+              color: "gold",
+              shape: "pill",
+              label: "pay",
+            },
+
+            // //des Creates the PayPal order using the current calculated total.
+            createOrder: function (data, actions) {
+              updateCheckoutTotal();
+
+              return actions.order.create({
+                purchase_units: [
+                  {
+                    description: `${currentCheckout.productName} - Ships to ${currentCheckout.shippingLabel}`,
+                    amount: {
+                      currency_code: "MYR",
+                      value: currentCheckout.total.toFixed(2),
+                      breakdown: {
+                        item_total: {
+                          currency_code: "MYR",
+                          value: currentCheckout.productPrice.toFixed(2),
+                        },
+                        shipping: {
+                          currency_code: "MYR",
+                          value: currentCheckout.shippingPrice.toFixed(2),
+                        },
+                      },
+                    },
+                    items: [
+                      {
+                        name: currentCheckout.productName,
+                        quantity: "1",
+                        unit_amount: {
+                          currency_code: "MYR",
+                          value: currentCheckout.productPrice.toFixed(2),
+                        },
+                      },
+                    ],
+                  },
+                ],
+              });
+            },
+
+            // //des Runs after successful PayPal approval.
+            onApprove: function (data, actions) {
+              return actions.order.capture().then(function (details) {
+                alert(
+                  `Payment successful. Thank you, ${details.payer.name.given_name}!`,
+                );
+              });
+            },
+
+            // //des Shows an error if PayPal checkout fails.
+            onError: function (err) {
+              console.error("PayPal Checkout Error:", err);
+              alert(
+                "PayPal checkout error. Please try again or contact support.",
+              );
+            },
+          })
+          .render("#paypal-button-container");
+      }
+
+      // //des Initialize checkout values and PayPal button when page loads.
+      updateCheckoutTotal();
+      renderPayPalButton();
 
       // ======================================================
       // //des FLOATING QUICK ACTION MENU
