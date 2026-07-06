@@ -3104,27 +3104,21 @@
           </p>
         </div>
 
-        <!-- //des SHIPPING CALCULATOR CHECKOUT
-     This lets customers select product and shipping destination.
-     It calculates device price + shipping before PayPal checkout. -->
-        <!-- //des CHECKOUT CALCULATOR ANCHOR
-     Buy buttons jump here so customer calculates shipping before payment. -->
+        <!-- //des PREMIUM CHECKOUT CALCULATOR
+     Customer enters product, shipping destination, and delivery details.
+     Total appears only after clicking Calculate Shipping. -->
         <div class="checkout-calculator" id="checkout">
           <div class="checkout-header">
-            <div>
-              <div class="checkout-badge">SECURE CHECKOUT</div>
-              <h3>Calculate Shipping & Total</h3>
-              <p>
-                Select your AK SimLink model and delivery region. Shipping is
-                calculated before payment, so there are no surprise shipping
-                charges.
-              </p>
-            </div>
+            <div class="checkout-badge">SECURE CHECKOUT</div>
+            <h3>Complete Your Order</h3>
+            <p>
+              Select your AK SimLink model, enter your delivery details, and
+              calculate shipping before payment.
+            </p>
           </div>
 
-          <!-- //des CHECKOUT SELECTION AREA
-     Customer first chooses product and destination.
-     The total stays hidden until they click Calculate Shipping. -->
+          <!-- //des CHECKOUT FORM GRID
+       These fields collect the information needed for shipping and PayPal order notes. -->
           <div class="checkout-grid">
             <label>
               Product
@@ -3151,10 +3145,57 @@
                 <option value="europe">🇬🇧 United Kingdom / Europe</option>
               </select>
             </label>
+
+            <label>
+              Full Name
+              <input
+                id="checkoutName"
+                type="text"
+                placeholder="Your full name"
+              />
+            </label>
+
+            <label>
+              Email
+              <input
+                id="checkoutEmail"
+                type="email"
+                placeholder="you@example.com"
+              />
+            </label>
+
+            <label>
+              Phone / WhatsApp
+              <input id="checkoutPhone" type="tel" placeholder="+60..." />
+            </label>
+
+            <label>
+              Postal Code
+              <input id="checkoutPostcode" type="text" placeholder="43000" />
+            </label>
+
+            <label class="checkout-full">
+              Delivery Address
+              <textarea
+                id="checkoutAddress"
+                rows="3"
+                placeholder="Street address, unit number, building name"
+              ></textarea>
+            </label>
+
+            <label>
+              City
+              <input id="checkoutCity" type="text" placeholder="Kajang" />
+            </label>
+
+            <label>
+              State / Province
+              <input id="checkoutState" type="text" placeholder="Selangor" />
+            </label>
           </div>
 
           <!-- //des CALCULATE SHIPPING BUTTON
-     Customer must click this before the total and PayPal button appear. -->
+       Customer must complete the form and click this before PayPal appears. -->
           <button
             class="btn yellow checkout-calc-btn"
             onclick="calculateCheckout()"
@@ -3162,32 +3203,40 @@
             Calculate Shipping
           </button>
 
-          <!-- //des TOTAL DISPLAY
-       These values are updated by JavaScript whenever product or country changes. -->
+          <!-- //des PREMIUM ORDER SUMMARY
+       Hidden by default. JavaScript shows this after shipping is calculated. -->
           <div class="checkout-summary checkout-hidden" id="checkoutSummary">
             <div>
               <span>Device</span>
-              <strong id="checkoutDevicePrice">RM149.90</strong>
+              <strong id="checkoutDevicePrice">RM0.00</strong>
             </div>
 
             <div>
               <span>Shipping</span>
-              <strong id="checkoutShippingPrice">RM10.00</strong>
+              <strong id="checkoutShippingPrice">RM0.00</strong>
             </div>
 
             <div class="checkout-total">
               <span>Total</span>
-              <strong id="checkoutTotalPrice">RM159.90</strong>
+              <strong id="checkoutTotalPrice">RM0.00</strong>
             </div>
           </div>
 
-          <!-- //des PAYPAL BUTTON CONTAINER
-       PayPal button will appear here after JavaScript renders it. -->
-          <div id="paypal-button-container" class="checkout-hidden"></div>
+          <!-- //des SECURE PAYPAL CHECKOUT BOX
+       PayPal button appears here only after shipping is calculated. -->
+          <div class="paypal-box checkout-hidden" id="paypalBox">
+            <h3>🔒 Secure PayPal Checkout</h3>
+            <p>
+              Your payment is processed securely by PayPal. Delivery details are
+              included in the order description for packing and shipping.
+            </p>
+
+            <div id="paypal-button-container"></div>
+          </div>
 
           <p class="checkout-note">
-            Ships from Malaysia. Final delivery time depends on destination
-            country and courier processing.
+            Ships from Malaysia. Tracking number will be provided after
+            dispatch.
           </p>
         </div>
       </div>
@@ -3323,7 +3372,6 @@
         →
       </button>
     </div>
-    
 
     <script>
       // ======================================================
@@ -3637,23 +3685,48 @@
 
       // //des Calculates product price, shipping price, and final total.
       // //des This only runs after the customer clicks Calculate Shipping.
+      // //des CALCULATE CHECKOUT
+      // //des Validates customer details, calculates shipping, shows total,
+      // //des then renders the PayPal checkout button.
       function calculateCheckout() {
         const productSelect = document.getElementById("checkoutProduct");
         const countrySelect = document.getElementById("checkoutCountry");
+
+        const nameInput = document.getElementById("checkoutName");
+        const emailInput = document.getElementById("checkoutEmail");
+        const phoneInput = document.getElementById("checkoutPhone");
+        const addressInput = document.getElementById("checkoutAddress");
+        const cityInput = document.getElementById("checkoutCity");
+        const stateInput = document.getElementById("checkoutState");
+        const postcodeInput = document.getElementById("checkoutPostcode");
+
         const checkoutSummary = document.getElementById("checkoutSummary");
-        const paypalContainer = document.getElementById(
-          "paypal-button-container",
-        );
+        const paypalBox = document.getElementById("paypalBox");
 
         if (!productSelect || !countrySelect) return;
 
-        const productKey = productSelect.value;
-        const countryKey = countrySelect.value;
-
-        if (!countryKey) {
+        if (!countrySelect.value) {
           alert("Please select your shipping destination first.");
           return;
         }
+
+        if (
+          !nameInput.value.trim() ||
+          !emailInput.value.trim() ||
+          !phoneInput.value.trim() ||
+          !addressInput.value.trim() ||
+          !cityInput.value.trim() ||
+          !stateInput.value.trim() ||
+          !postcodeInput.value.trim()
+        ) {
+          alert(
+            "Please complete all delivery details before calculating shipping.",
+          );
+          return;
+        }
+
+        const productKey = productSelect.value;
+        const countryKey = countrySelect.value;
 
         const product = checkoutProducts[productKey];
         const shipping = checkoutShipping[countryKey];
@@ -3667,6 +3740,13 @@
           shippingLabel: shipping.label,
           shippingPrice: shipping.price,
           total,
+          customerName: nameInput.value.trim(),
+          customerEmail: emailInput.value.trim(),
+          customerPhone: phoneInput.value.trim(),
+          customerAddress: addressInput.value.trim(),
+          customerCity: cityInput.value.trim(),
+          customerState: stateInput.value.trim(),
+          customerPostcode: postcodeInput.value.trim(),
         };
 
         document.getElementById("checkoutDevicePrice").textContent = formatRM(
@@ -3681,9 +3761,8 @@
           formatRM(total);
 
         checkoutSummary.classList.remove("checkout-hidden");
-        paypalContainer.classList.remove("checkout-hidden");
-        // //des Re-render PayPal button after calculation.
-        // //des This makes sure PayPal uses the selected Lite/Pro product and shipping total.
+        paypalBox.classList.remove("checkout-hidden");
+
         renderPayPalButton();
       }
 
@@ -3697,6 +3776,7 @@
         const paypalContainer = document.getElementById(
           "paypal-button-container",
         );
+        const paypalBox = document.getElementById("paypalBox");
 
         if (productSelect) {
           productSelect.value = productKey;
@@ -3704,8 +3784,10 @@
 
         // //des Hide old total and PayPal button when customer changes product.
         if (checkoutSummary) checkoutSummary.classList.add("checkout-hidden");
+        // //des Hide previous checkout result when customer switches Lite / Pro.
+        if (paypalBox) paypalBox.classList.add("checkout-hidden");
+
         if (paypalContainer) {
-          paypalContainer.classList.add("checkout-hidden");
           paypalContainer.innerHTML = "";
         }
 
@@ -3750,7 +3832,17 @@
               return actions.order.create({
                 purchase_units: [
                   {
-                    description: `${currentCheckout.productName} - Ships to ${currentCheckout.shippingLabel}`,
+                    // //des PAYPAL ORDER DESCRIPTION
+                    // //des Sends order and delivery details into PayPal transaction notes.
+                    description:
+                      `${currentCheckout.productName} | ` +
+                      `Ship to: ${currentCheckout.customerName}, ` +
+                      `${currentCheckout.customerPhone}, ` +
+                      `${currentCheckout.customerAddress}, ` +
+                      `${currentCheckout.customerCity}, ` +
+                      `${currentCheckout.customerState}, ` +
+                      `${currentCheckout.customerPostcode}, ` +
+                      `${currentCheckout.shippingLabel}`,
                     amount: {
                       currency_code: "MYR",
                       value: currentCheckout.total.toFixed(2),
