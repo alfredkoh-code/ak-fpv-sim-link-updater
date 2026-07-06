@@ -1849,19 +1849,182 @@
         box-shadow: 0 0 0 3px rgba(255, 196, 0, 0.12);
       }
 
-      /* //des PAYPAL CHECKOUT BOX
-   Premium centered payment area shown after total is calculated. */
+      /* //des APPLE STYLE CHECKOUT CARD
+   Full-width inside buy-grid, but visually centered like a premium checkout card. */
+      .checkout-calculator {
+        grid-column: 1 / -1;
+        width: 100%;
+        max-width: 780px;
+        margin: 60px auto;
+        padding: 38px;
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(8, 10, 14, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+      }
+
+      .checkout-header {
+        text-align: center;
+      }
+
+      .checkout-badge {
+        display: inline-block;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: rgba(255, 196, 0, 0.1);
+        color: var(--yellow);
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+      }
+
+      .checkout-header h3 {
+        margin: 0 0 8px;
+        font-size: 34px;
+        color: var(--text);
+      }
+
+      .checkout-header p {
+        margin: 0 auto 26px;
+        color: var(--muted);
+        line-height: 1.6;
+        max-width: 560px;
+      }
+
+      /* //des CHECKOUT STEP INDICATOR */
+      .checkout-steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 28px 0;
+      }
+
+      .checkout-step {
+        padding: 12px;
+        border-radius: 999px;
+        text-align: center;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .checkout-step.active {
+        color: var(--yellow);
+        border-color: var(--yellow);
+        background: rgba(255, 196, 0, 0.08);
+      }
+
+      /* //des CHECKOUT PANEL */
+      .checkout-panel {
+        animation: checkoutFade 0.25s ease;
+      }
+
+      .checkout-panel h4 {
+        margin: 0 0 20px;
+        font-size: 24px;
+        color: var(--yellow);
+        text-align: center;
+      }
+
+      .checkout-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      .checkout-panel label,
+      .checkout-grid label {
+        display: grid;
+        gap: 8px;
+        color: var(--yellow);
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .checkout-panel select,
+      .checkout-panel input,
+      .checkout-panel textarea {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #0b0f14;
+        color: var(--text);
+        font-size: 15px;
+        font-family: inherit;
+      }
+
+      .checkout-full {
+        grid-column: 1 / -1;
+      }
+
+      .checkout-panel select:focus,
+      .checkout-panel input:focus,
+      .checkout-panel textarea:focus {
+        outline: none;
+        border-color: var(--yellow);
+        box-shadow: 0 0 0 3px rgba(255, 196, 0, 0.12);
+      }
+
+      .checkout-actions {
+        margin-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .checkout-next-btn {
+        margin-top: 24px;
+        width: 100%;
+        text-align: center;
+      }
+
+      /* //des ORDER SUMMARY */
+      .checkout-summary {
+        margin-top: 22px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      .checkout-summary div {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .checkout-summary div:last-child {
+        border-bottom: none;
+      }
+
+      .checkout-summary .checkout-total {
+        background: rgba(255, 196, 0, 0.08);
+        color: var(--text);
+        font-size: 18px;
+      }
+
+      .checkout-summary strong {
+        color: var(--yellow);
+      }
+
+      /* //des PAYPAL PAYMENT BOX */
       .paypal-box {
         margin: 35px auto 0;
         padding: 30px;
         max-width: 500px;
-
         border-radius: 20px;
-
         border: 1px solid rgba(255, 255, 255, 0.08);
-
         background: rgba(255, 255, 255, 0.03);
-
         text-align: center;
       }
 
@@ -1873,17 +2036,62 @@
       .paypal-box p {
         margin: 0 auto 22px;
         color: var(--muted);
-        max-width: 560px;
+        max-width: 420px;
         line-height: 1.6;
       }
 
-      /* //des PAYPAL BUTTON
-   Centers the PayPal iframe inside the payment box. */
       #paypal-button-container {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+
+      .checkout-hidden {
+        display: none;
+      }
+
+      .checkout-note {
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      @keyframes checkoutFade {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 800px) {
+        .checkout-calculator {
+          padding: 26px;
+        }
+
+        .checkout-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .checkout-steps {
+          grid-template-columns: 1fr;
+        }
+
+        .checkout-actions {
+          flex-direction: column;
+        }
+
+        .checkout-actions .btn {
+          width: 100%;
+          text-align: center;
+        }
       }
 
       /* //des PREMIUM FOOTER */
@@ -3172,22 +3380,30 @@
           </p>
         </div>
 
-        <!-- //des PREMIUM CHECKOUT CALCULATOR
-     Customer enters product, shipping destination, and delivery details.
-     Total appears only after clicking Calculate Shipping. -->
+        <!-- //des APPLE STYLE CHECKOUT
+     Clean 3-step checkout:
+     Step 1 choose product, Step 2 delivery details, Step 3 review and pay. -->
         <div class="checkout-calculator" id="checkout">
           <div class="checkout-header">
             <div class="checkout-badge">SECURE CHECKOUT</div>
             <h3>Complete Your Order</h3>
             <p>
-              Select your AK SimLink model, enter your delivery details, and
-              calculate shipping before payment.
+              Choose your model, enter delivery details, then review before
+              payment.
             </p>
           </div>
 
-          <!-- //des CHECKOUT FORM GRID
-       These fields collect the information needed for shipping and PayPal order notes. -->
-          <div class="checkout-grid">
+          <!-- //des CHECKOUT STEP INDICATOR -->
+          <div class="checkout-steps">
+            <div class="checkout-step active" id="stepDot1">1. Product</div>
+            <div class="checkout-step" id="stepDot2">2. Delivery</div>
+            <div class="checkout-step" id="stepDot3">3. Payment</div>
+          </div>
+
+          <!-- //des STEP 1 PRODUCT SELECTION -->
+          <div class="checkout-panel" id="checkoutStep1">
+            <h4>Choose Your AK SimLink</h4>
+
             <label>
               Product
               <select id="checkoutProduct">
@@ -3196,110 +3412,127 @@
               </select>
             </label>
 
-            <label>
-              Ship To
-              <select id="checkoutCountry">
-                <option value="">Select your country / region</option>
-                <option value="malaysia">🇲🇾 Malaysia</option>
-                <option value="singapore">🇸🇬 Singapore / Brunei</option>
-                <option value="sea">
-                  🌏 Thailand / Indonesia / Vietnam / Philippines
-                </option>
-                <option value="asia">
-                  🇯🇵 Japan / Korea / Taiwan / Hong Kong
-                </option>
-                <option value="oceania">🇦🇺 Australia / New Zealand</option>
-                <option value="usa">🇺🇸 United States / Canada</option>
-                <option value="europe">🇬🇧 United Kingdom / Europe</option>
-              </select>
-            </label>
-
-            <label>
-              Full Name
-              <input
-                id="checkoutName"
-                type="text"
-                placeholder="Your full name"
-              />
-            </label>
-
-            <label>
-              Email
-              <input
-                id="checkoutEmail"
-                type="email"
-                placeholder="you@example.com"
-              />
-            </label>
-
-            <label>
-              Phone / WhatsApp
-              <input id="checkoutPhone" type="tel" placeholder="+60..." />
-            </label>
-
-            <label>
-              Postal Code
-              <input id="checkoutPostcode" type="text" placeholder="43000" />
-            </label>
-
-            <label class="checkout-full">
-              Delivery Address
-              <textarea
-                id="checkoutAddress"
-                rows="3"
-                placeholder="Street address, unit number, building name"
-              ></textarea>
-            </label>
-
-            <label>
-              City
-              <input id="checkoutCity" type="text" placeholder="Kajang" />
-            </label>
-
-            <label>
-              State / Province
-              <input id="checkoutState" type="text" placeholder="Selangor" />
-            </label>
+            <button
+              class="btn yellow checkout-next-btn"
+              onclick="goCheckoutStep(2)"
+            >
+              Continue to Delivery
+            </button>
           </div>
 
-          <!-- //des CALCULATE SHIPPING BUTTON
-       Customer must complete the form and click this before PayPal appears. -->
-          <button
-            class="btn yellow checkout-calc-btn"
-            onclick="calculateCheckout()"
-          >
-            Calculate Shipping
-          </button>
+          <!-- //des STEP 2 DELIVERY DETAILS -->
+          <div class="checkout-panel checkout-hidden" id="checkoutStep2">
+            <h4>Delivery Details</h4>
 
-          <!-- //des PREMIUM ORDER SUMMARY
-       Hidden by default. JavaScript shows this after shipping is calculated. -->
-          <div class="checkout-summary checkout-hidden" id="checkoutSummary">
-            <div>
-              <span>Device</span>
-              <strong id="checkoutDevicePrice">RM0.00</strong>
+            <div class="checkout-grid">
+              <label>
+                Ship To
+                <select id="checkoutCountry">
+                  <option value="">Select your country / region</option>
+                  <option value="malaysia">🇲🇾 Malaysia</option>
+                  <option value="singapore">🇸🇬 Singapore / Brunei</option>
+                  <option value="sea">
+                    🌏 Thailand / Indonesia / Vietnam / Philippines
+                  </option>
+                  <option value="asia">
+                    🇯🇵 Japan / Korea / Taiwan / Hong Kong
+                  </option>
+                  <option value="oceania">🇦🇺 Australia / New Zealand</option>
+                  <option value="usa">🇺🇸 United States / Canada</option>
+                  <option value="europe">🇬🇧 United Kingdom / Europe</option>
+                </select>
+              </label>
+
+              <label>
+                Full Name
+                <input
+                  id="checkoutName"
+                  type="text"
+                  placeholder="Your full name"
+                />
+              </label>
+
+              <label>
+                Email
+                <input
+                  id="checkoutEmail"
+                  type="email"
+                  placeholder="you@example.com"
+                />
+              </label>
+
+              <label>
+                Phone / WhatsApp
+                <input id="checkoutPhone" type="tel" placeholder="+60..." />
+              </label>
+
+              <label class="checkout-full">
+                Delivery Address
+                <textarea
+                  id="checkoutAddress"
+                  rows="3"
+                  placeholder="Street address, unit number, building name"
+                ></textarea>
+              </label>
+
+              <label>
+                City
+                <input id="checkoutCity" type="text" placeholder="Kajang" />
+              </label>
+
+              <label>
+                State / Province
+                <input id="checkoutState" type="text" placeholder="Selangor" />
+              </label>
+
+              <label>
+                Postal Code
+                <input id="checkoutPostcode" type="text" placeholder="43000" />
+              </label>
             </div>
 
-            <div>
-              <span>Shipping</span>
-              <strong id="checkoutShippingPrice">RM0.00</strong>
-            </div>
-
-            <div class="checkout-total">
-              <span>Total</span>
-              <strong id="checkoutTotalPrice">RM0.00</strong>
+            <div class="checkout-actions">
+              <button class="btn yellow" onclick="goCheckoutStep(1)">
+                Back
+              </button>
+              <button class="btn red" onclick="calculateCheckout()">
+                Review Order
+              </button>
             </div>
           </div>
 
-          <!-- //des SECURE PAYPAL CHECKOUT BOX
-       PayPal button appears here only after shipping is calculated. -->
-          <div class="paypal-box checkout-hidden" id="paypalBox">
-            <h3>🔒 Secure PayPal Checkout</h3>
-            <p>
-              Your payment is processed securely by PayPal. Delivery details are
-              included in the order description for packing and shipping.
-            </p>
+          <!-- //des STEP 3 REVIEW AND PAYMENT -->
+          <div class="checkout-panel checkout-hidden" id="checkoutStep3">
+            <h4>Review Your Order</h4>
 
-            <div id="paypal-button-container"></div>
+            <div class="checkout-summary" id="checkoutSummary">
+              <div>
+                <span>Device</span>
+                <strong id="checkoutDevicePrice">RM0.00</strong>
+              </div>
+
+              <div>
+                <span>Shipping</span>
+                <strong id="checkoutShippingPrice">RM0.00</strong>
+              </div>
+
+              <div class="checkout-total">
+                <span>Total</span>
+                <strong id="checkoutTotalPrice">RM0.00</strong>
+              </div>
+            </div>
+
+            <div class="paypal-box" id="paypalBox">
+              <h3>🔒 Secure PayPal Checkout</h3>
+              <p>Payment is processed securely by PayPal.</p>
+              <div id="paypal-button-container"></div>
+            </div>
+
+            <div class="checkout-actions">
+              <button class="btn yellow" onclick="goCheckoutStep(2)">
+                Back
+              </button>
+            </div>
           </div>
 
           <p class="checkout-note">
@@ -3746,6 +3979,41 @@
         total: 159.9,
       };
 
+      // //des CHECKOUT STEP CONTROL
+      // //des Shows one checkout step at a time for an Apple-style checkout flow.
+      function goCheckoutStep(stepNumber) {
+        const step1 = document.getElementById("checkoutStep1");
+        const step2 = document.getElementById("checkoutStep2");
+        const step3 = document.getElementById("checkoutStep3");
+
+        const dot1 = document.getElementById("stepDot1");
+        const dot2 = document.getElementById("stepDot2");
+        const dot3 = document.getElementById("stepDot3");
+
+        [step1, step2, step3].forEach((step) => {
+          if (step) step.classList.add("checkout-hidden");
+        });
+
+        [dot1, dot2, dot3].forEach((dot) => {
+          if (dot) dot.classList.remove("active");
+        });
+
+        if (stepNumber === 1 && step1 && dot1) {
+          step1.classList.remove("checkout-hidden");
+          dot1.classList.add("active");
+        }
+
+        if (stepNumber === 2 && step2 && dot2) {
+          step2.classList.remove("checkout-hidden");
+          dot2.classList.add("active");
+        }
+
+        if (stepNumber === 3 && step3 && dot3) {
+          step3.classList.remove("checkout-hidden");
+          dot3.classList.add("active");
+        }
+      }
+
       // //des Format number as Malaysian Ringgit.
       function formatRM(value) {
         return `RM${value.toFixed(2)}`;
@@ -3828,36 +4096,33 @@
         document.getElementById("checkoutTotalPrice").textContent =
           formatRM(total);
 
-        checkoutSummary.classList.remove("checkout-hidden");
-        paypalBox.classList.remove("checkout-hidden");
-
+        // //des Move to Step 3 after all details are valid and total is calculated.
+        goCheckoutStep(3);
         renderPayPalButton();
       }
 
       // //des SELECT CHECKOUT PRODUCT
       // //des Used by Buy Lite and Buy Pro buttons.
       // //des It chooses the correct product in the checkout calculator and scrolls there.
+      // //des SELECT CHECKOUT PRODUCT
+      // //des Used by Buy Lite and Buy Pro buttons.
+      // //des It selects the correct model and restarts checkout at Step 1.
       function selectCheckoutProduct(productKey) {
         const productSelect = document.getElementById("checkoutProduct");
         const checkoutSection = document.getElementById("checkout");
-        const checkoutSummary = document.getElementById("checkoutSummary");
         const paypalContainer = document.getElementById(
           "paypal-button-container",
         );
-        const paypalBox = document.getElementById("paypalBox");
 
         if (productSelect) {
           productSelect.value = productKey;
         }
 
-        // //des Hide old total and PayPal button when customer changes product.
-        if (checkoutSummary) checkoutSummary.classList.add("checkout-hidden");
-        // //des Hide previous checkout result when customer switches Lite / Pro.
-        if (paypalBox) paypalBox.classList.add("checkout-hidden");
-
         if (paypalContainer) {
           paypalContainer.innerHTML = "";
         }
+
+        goCheckoutStep(1);
 
         if (checkoutSection) {
           checkoutSection.scrollIntoView({
