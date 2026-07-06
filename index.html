@@ -1406,11 +1406,17 @@
       /* //des FLOATING QUICK ACTION MENU
    This controls the floating action button at the bottom-left of the screen.
    It gives visitors quick access to Buy, Firmware, and Support without using a sticky nav. */
+      /* //des FLOATING QUICK ACTION MENU
+   This positions only the round + button at bottom-left.
+   The menu links are positioned above it so they do not create an invisible box
+   that blocks other buttons on mobile. */
       .quick-action {
         position: fixed;
         left: 24px;
         bottom: 24px;
         z-index: 9998;
+        width: 56px;
+        height: 56px;
       }
 
       /* //des QUICK ACTION MAIN BUTTON
@@ -1437,11 +1443,14 @@
       }
 
       /* //des QUICK ACTION MENU ITEMS
-   These links are hidden by default and appear when the menu is opened. */
+   These links are hidden above the + button.
+   Position absolute prevents the hidden menu from blocking other page buttons. */
       .quick-action-menu {
+        position: absolute;
+        left: 0;
+        bottom: 68px;
         display: grid;
         gap: 10px;
-        margin-bottom: 12px;
         opacity: 0;
         pointer-events: none;
         transform: translateY(12px);
