@@ -1791,6 +1791,18 @@
         margin-top: 24px;
       }
 
+      /* //des HIDDEN CHECKOUT STATE
+   Used to hide the total and PayPal button until shipping is calculated. */
+      .checkout-hidden {
+        display: none;
+      }
+
+      /* //des CALCULATE SHIPPING BUTTON
+   Gives the calculate button breathing room below the dropdowns. */
+      .checkout-calc-btn {
+        margin-top: 20px;
+      }
+
       /* //des CHECKOUT NOTE */
       .checkout-note {
         margin: 16px 0 0;
@@ -3123,9 +3135,49 @@
             </label>
           </div>
 
+          <!-- //des CHECKOUT SELECTION AREA
+     Customer first chooses product and destination.
+     The total stays hidden until they click Calculate Shipping. -->
+          <div class="checkout-grid">
+            <label>
+              Product
+              <select id="checkoutProduct">
+                <option value="lite">AK SimLink Lite — RM149.90</option>
+                <option value="pro">AK SimLink Pro — RM299.90</option>
+              </select>
+            </label>
+
+            <label>
+              Ship To
+              <select id="checkoutCountry">
+                <option value="">Select your country / region</option>
+                <option value="malaysia">🇲🇾 Malaysia</option>
+                <option value="singapore">🇸🇬 Singapore / Brunei</option>
+                <option value="sea">
+                  🌏 Thailand / Indonesia / Vietnam / Philippines
+                </option>
+                <option value="asia">
+                  🇯🇵 Japan / Korea / Taiwan / Hong Kong
+                </option>
+                <option value="oceania">🇦🇺 Australia / New Zealand</option>
+                <option value="usa">🇺🇸 United States / Canada</option>
+                <option value="europe">🇬🇧 United Kingdom / Europe</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- //des CALCULATE SHIPPING BUTTON
+     Customer must click this before the total and PayPal button appear. -->
+          <button
+            class="btn yellow checkout-calc-btn"
+            onclick="calculateCheckout()"
+          >
+            Calculate Shipping
+          </button>
+
           <!-- //des TOTAL DISPLAY
        These values are updated by JavaScript whenever product or country changes. -->
-          <div class="checkout-summary">
+          <div class="checkout-summary checkout-hidden" id="checkoutSummary">
             <div>
               <span>Device</span>
               <strong id="checkoutDevicePrice">RM149.90</strong>
@@ -3144,7 +3196,7 @@
 
           <!-- //des PAYPAL BUTTON CONTAINER
        PayPal button will appear here after JavaScript renders it. -->
-          <div id="paypal-button-container"></div>
+          <div id="paypal-button-container" class="checkout-hidden"></div>
 
           <p class="checkout-note">
             Ships from Malaysia. Final delivery time depends on destination
@@ -3596,19 +3648,28 @@
         return `RM${value.toFixed(2)}`;
       }
 
-      // //des Updates product price, shipping price, and total shown on screen.
-      function updateCheckoutTotal() {
+      // //des Calculates product price, shipping price, and final total.
+      // //des This only runs after the customer clicks Calculate Shipping.
+      function calculateCheckout() {
         const productSelect = document.getElementById("checkoutProduct");
         const countrySelect = document.getElementById("checkoutCountry");
+        const checkoutSummary = document.getElementById("checkoutSummary");
+        const paypalContainer = document.getElementById(
+          "paypal-button-container",
+        );
 
         if (!productSelect || !countrySelect) return;
 
         const productKey = productSelect.value;
         const countryKey = countrySelect.value;
 
+        if (!countryKey) {
+          alert("Please select your shipping destination first.");
+          return;
+        }
+
         const product = checkoutProducts[productKey];
         const shipping = checkoutShipping[countryKey];
-
         const total = product.price + shipping.price;
 
         currentCheckout = {
@@ -3631,6 +3692,9 @@
 
         document.getElementById("checkoutTotalPrice").textContent =
           formatRM(total);
+
+        checkoutSummary.classList.remove("checkout-hidden");
+        paypalContainer.classList.remove("checkout-hidden");
       }
 
       // //des Renders PayPal checkout button.
@@ -3659,7 +3723,7 @@
 
             // //des Creates the PayPal order using the current calculated total.
             createOrder: function (data, actions) {
-              updateCheckoutTotal();
+              calculateCheckout();
 
               return actions.order.create({
                 purchase_units: [
@@ -3715,7 +3779,7 @@
       }
 
       // //des Initialize checkout values and PayPal button when page loads.
-      updateCheckoutTotal();
+      // //des Render PayPal button on page load, but keep it hidden until customer calculates shipping.
       renderPayPalButton();
 
       // ======================================================
