@@ -1368,6 +1368,45 @@
         }
       }
 
+      /* //des BACK TO TOP FLOATING BUTTON
+   This controls the small round arrow button that appears after scrolling down.
+   It stays fixed on screen so users can quickly return to the top of the page. */
+      .back-to-top {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: rgba(20, 26, 34, 0.92);
+        color: var(--yellow);
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 9998;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(12px);
+        transition: 0.25s ease;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+      }
+
+      /* //des VISIBLE STATE
+   JavaScript adds this class when the user scrolls down enough. */
+      .back-to-top.show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      /* //des HOVER EFFECT
+   Gives the button a premium glowing interaction when the mouse touches it. */
+      .back-to-top:hover {
+        border-color: var(--yellow);
+        box-shadow: 0 0 28px rgba(255, 196, 0, 0.28);
+      }
+
       /* //des PREMIUM FOOTER */
       .premium-footer {
         max-width: 1180px;
@@ -1924,7 +1963,7 @@
             onclick="
               showHotspot(
                 'USB-C Port',
-                'Used for power, firmware updates, and USB HID simulator output.'
+                'Used for power, firmware updates, and USB HID simulator output.',
               )
             "
           ></div>
@@ -1934,7 +1973,7 @@
             onclick="
               showHotspot(
                 'OLED Display',
-                'AK SimLink Pro shows protocol, link status, receiver data, menu settings, and device information.'
+                'AK SimLink Pro shows protocol, link status, receiver data, menu settings, and device information.',
               )
             "
           ></div>
@@ -1944,7 +1983,7 @@
             onclick="
               showHotspot(
                 'Receiver Support',
-                'AK SimLink Pro is designed for ELRS, Crossfire, and FrSky receiver support.'
+                'AK SimLink Pro is designed for ELRS, Crossfire, and FrSky receiver support.',
               )
             "
           ></div>
@@ -2575,7 +2614,12 @@
         <span>Designed in Malaysia 🇲🇾</span>
       </div>
     </footer>
-
+    <!-- //des BACK TO TOP BUTTON
+     This floating button appears after scrolling down.
+     Clicking it sends the visitor smoothly back to the top of the page. -->
+    <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()">
+      ↑
+    </button>
     <!-- //des IMAGE LIGHTBOX -->
     <div class="lightbox" id="lightbox">
       <button class="lightbox-btn lightbox-close" onclick="closeLightbox()">
@@ -2834,6 +2878,31 @@
       );
 
       pageSections.forEach((section) => navObserver.observe(section));
+
+      // ======================================================
+      // //des BACK TO TOP BUTTON
+      // ======================================================
+      // //des This button stays hidden near the top of the page.
+      // //des Once the user scrolls down, it fades in.
+      // //des Clicking it smoothly scrolls the page back to the hero section.
+      const backToTopBtn = document.getElementById("backToTopBtn");
+
+      window.addEventListener("scroll", () => {
+        if (!backToTopBtn) return;
+
+        if (window.scrollY > 500) {
+          backToTopBtn.classList.add("show");
+        } else {
+          backToTopBtn.classList.remove("show");
+        }
+      });
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
 
       // ======================================================
       // //des LIGHTBOX GALLERY
