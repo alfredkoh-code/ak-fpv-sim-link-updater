@@ -1174,6 +1174,199 @@
           background: rgba(255, 255, 255, 0.03);
         }
       }
+
+      /* //des PREMIUM ACTIVE NAV */
+      .nav-links a.active {
+        color: var(--yellow);
+        background: rgba(255, 196, 0, 0.08);
+        padding: 8px 10px;
+        border-radius: 999px;
+      }
+
+      /* //des SCROLL REVEAL ANIMATION */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* //des PREMIUM SVG ICON STYLE */
+      .icon-line {
+        width: 42px;
+        height: 42px;
+        margin-bottom: 18px;
+        color: var(--yellow);
+      }
+
+      .icon-line svg {
+        width: 100%;
+        height: 100%;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* //des PREMIUM COMPARISON SECTION */
+      .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .compare-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 26px;
+      }
+
+      .compare-card.featured {
+        border-color: var(--yellow);
+        box-shadow: 0 0 45px rgba(255, 196, 0, 0.12);
+      }
+
+      .compare-card h3 {
+        margin: 0 0 16px;
+        color: var(--yellow);
+        font-size: 24px;
+      }
+
+      .compare-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .compare-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .compare-list li:last-child {
+        border-bottom: none;
+      }
+
+      .compare-good {
+        color: var(--green);
+        font-weight: bold;
+      }
+
+      .compare-bad {
+        color: var(--red);
+        font-weight: bold;
+      }
+
+      /* //des ROADMAP SECTION */
+      .roadmap {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 16px;
+      }
+
+      .roadmap-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 22px;
+        position: relative;
+      }
+
+      .roadmap-card::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: var(--yellow);
+        border-radius: 50%;
+        display: block;
+        margin-bottom: 14px;
+        box-shadow: 0 0 18px rgba(255, 196, 0, 0.7);
+      }
+
+      .roadmap-card h3 {
+        margin: 0 0 8px;
+        color: var(--yellow);
+      }
+
+      .roadmap-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      /* //des LIGHTBOX GALLERY */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 22px;
+      }
+
+      .lightbox.open {
+        display: flex;
+      }
+
+      .lightbox img {
+        max-width: 92vw;
+        max-height: 82vh;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+      }
+
+      .lightbox-btn {
+        position: absolute;
+        background: rgba(20, 26, 34, 0.9);
+        border: 1px solid var(--border);
+        color: var(--yellow);
+        border-radius: 999px;
+        padding: 12px 16px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .lightbox-close {
+        top: 24px;
+        right: 24px;
+      }
+
+      .lightbox-prev {
+        left: 24px;
+      }
+
+      .lightbox-next {
+        right: 24px;
+      }
+
+      @media (max-width: 800px) {
+        .compare-grid,
+        .roadmap {
+          grid-template-columns: 1fr;
+        }
+
+        .lightbox-prev {
+          left: 12px;
+        }
+
+        .lightbox-next {
+          right: 12px;
+        }
+      }
     </style>
   </head>
 
@@ -1194,7 +1387,9 @@
         <a href="#feedback">Feedback</a>
         <a href="#viewer360">360 Viewer</a>
         <a href="#visuals">Visuals</a>
-        <a href="#compare">Compare</a>
+        <a href="#compare">Lite vs Pro</a>
+        <a href="#comparison">Why SimLink</a>
+        <a href="#roadmap">Roadmap</a>
         <a href="#firmware">Firmware</a>
         <a href="#support">Support</a>
         <a href="#faq">FAQ</a>
@@ -1320,69 +1515,108 @@
     </section>
 
     <!-- //des WHY BUY AK SIMLINK SECTION -->
-    <section id="why-buy">
-      <h2 class="section-title">Why Buy AK SimLink?</h2>
+    <section id="why-buy" class="reveal">
+      <h2 class="section-title">Why AK SimLink?</h2>
       <p class="section-subtitle">
-        Built for pilots who want simulator practice to feel closer to real
-        flying.
+        Built for FPV pilots who want wireless freedom without losing the
+        feeling of real radio control.
       </p>
 
       <div class="why-grid">
         <div class="why-card">
-          <div class="why-icon">⚡</div>
-          <h3>Ultra Low Latency</h3>
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M13 2L4 14h7l-1 8 10-13h-7z" />
+            </svg>
+          </div>
+          <h3>Low Latency Feel</h3>
           <p>
-            Designed for responsive simulator control, so your stick movement
-            feels fast and natural.
+            Designed for responsive simulator control, so stick movements feel
+            fast, direct, and natural.
           </p>
         </div>
 
         <div class="why-card">
-          <div class="why-icon">🔌</div>
-          <h3>Plug & Play</h3>
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 12h16" />
+              <path d="M8 8l-4 4 4 4" />
+              <path d="M16 8l4 4-4 4" />
+            </svg>
+          </div>
+          <h3>Wireless Freedom</h3>
           <p>
-            No complicated driver setup. AK SimLink appears as a standard USB
-            HID gamepad.
+            Practice without a USB cable pulling on your radio or limiting your
+            distance from the computer.
           </p>
         </div>
 
         <div class="why-card">
-          <div class="why-icon">🎮</div>
-          <h3>Real Radio Feel</h3>
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <rect x="4" y="7" width="16" height="10" rx="2" />
+              <path d="M8 11v2" />
+              <path d="M16 11v2" />
+              <path d="M10 17l-2 4" />
+              <path d="M14 17l2 4" />
+            </svg>
+          </div>
+          <h3>Real Radio Setup</h3>
           <p>
-            Train using your actual radio, real sticks, real switches, and
+            Train with your actual radio, real sticks, real switches, and
             familiar muscle memory.
           </p>
         </div>
 
         <div class="why-card">
-          <div class="why-icon">🔄</div>
-          <h3>Free Firmware Updates</h3>
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v6" />
+              <path d="M8 7l4-4 4 4" />
+              <path d="M5 13a7 7 0 0 0 14 0" />
+            </svg>
+          </div>
+          <h3>Real Receiver Path</h3>
           <p>
-            Update your device through the browser and keep getting improvements
-            over time.
+            AK SimLink uses your own FPV receiver, making simulator control feel
+            closer to the way your quad receives commands.
           </p>
         </div>
 
         <div class="why-card">
-          <div class="why-icon">📺</div>
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <rect x="5" y="4" width="14" height="16" rx="2" />
+              <path d="M9 8h6" />
+              <path d="M9 12h6" />
+              <path d="M9 16h3" />
+            </svg>
+          </div>
           <h3>Pro OLED Interface</h3>
           <p>
-            AK SimLink Pro includes screen feedback, menu navigation, and
-            advanced receiver control.
+            AK SimLink Pro adds screen feedback, menu navigation, receiver
+            status, and future diagnostic features.
           </p>
         </div>
 
         <div class="why-card">
-          <div class="why-icon">🌍</div>
-          <h3>Designed in Malaysia</h3>
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4v6h6" />
+              <path d="M20 20v-6h-6" />
+              <path d="M5 19a8 8 0 0 0 13-3" />
+              <path d="M19 5a8 8 0 0 0-13 3" />
+            </svg>
+          </div>
+          <h3>Free Firmware Updates</h3>
           <p>
-            Built as a focused FPV simulator product with practical real-world
-            training needs in mind.
+            Update through the browser and keep improving the device as new
+            features are released.
           </p>
         </div>
       </div>
     </section>
+
     <!-- //des OUR STORY SECTION -->
     <section id="story">
       <div class="story-box">
@@ -1428,6 +1662,169 @@
             <br />
             Because the best simulator practice should feel like the real thing.
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des WHY BUY AK SIMLINK SECTION -->
+    <section id="why-buy" class="reveal">
+      <h2 class="section-title">Why AK SimLink?</h2>
+      <p class="section-subtitle">
+        Built for FPV pilots who want wireless freedom without losing the
+        feeling of real radio control.
+      </p>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M13 2L4 14h7l-1 8 10-13h-7z" />
+            </svg>
+          </div>
+          <h3>Low Latency Feel</h3>
+          <p>
+            Designed for responsive simulator control, so stick movements feel
+            fast, direct, and natural.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 12h16" />
+              <path d="M8 8l-4 4 4 4" />
+              <path d="M16 8l4 4-4 4" />
+            </svg>
+          </div>
+          <h3>Wireless Freedom</h3>
+          <p>
+            Practice without a USB cable pulling on your radio or limiting your
+            distance from the computer.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <rect x="4" y="7" width="16" height="10" rx="2" />
+              <path d="M8 11v2" />
+              <path d="M16 11v2" />
+              <path d="M10 17l-2 4" />
+              <path d="M14 17l2 4" />
+            </svg>
+          </div>
+          <h3>Real Radio Setup</h3>
+          <p>
+            Train with your actual radio, real sticks, real switches, and
+            familiar muscle memory.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v6" />
+              <path d="M8 7l4-4 4 4" />
+              <path d="M5 13a7 7 0 0 0 14 0" />
+            </svg>
+          </div>
+          <h3>Real Receiver Path</h3>
+          <p>
+            AK SimLink uses your own FPV receiver, making simulator control feel
+            closer to the way your quad receives commands.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <rect x="5" y="4" width="14" height="16" rx="2" />
+              <path d="M9 8h6" />
+              <path d="M9 12h6" />
+              <path d="M9 16h3" />
+            </svg>
+          </div>
+          <h3>Pro OLED Interface</h3>
+          <p>
+            AK SimLink Pro adds screen feedback, menu navigation, receiver
+            status, and future diagnostic features.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="icon-line">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4v6h6" />
+              <path d="M20 20v-6h-6" />
+              <path d="M5 19a8 8 0 0 0 13-3" />
+              <path d="M19 5a8 8 0 0 0-13 3" />
+            </svg>
+          </div>
+          <h3>Free Firmware Updates</h3>
+          <p>
+            Update through the browser and keep improving the device as new
+            features are released.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- //des AK SIMLINK COMPARISON SECTION -->
+    <section id="comparison" class="reveal">
+      <h2 class="section-title">Why Not Just Use Bluetooth or USB Cable?</h2>
+      <p class="section-subtitle">
+        AK SimLink is designed to sit between convenience and realism — wireless
+        like Bluetooth, but closer to real FPV control.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h3>USB Cable</h3>
+          <ul class="compare-list">
+            <li><span class="compare-good">✓</span> Direct connection</li>
+            <li>
+              <span class="compare-good">✓</span> No radio battery concern
+            </li>
+            <li><span class="compare-bad">✕</span> Cable limits movement</li>
+            <li><span class="compare-bad">✕</span> Desk clutter</li>
+            <li>
+              <span class="compare-bad">✕</span> Less natural training feel
+            </li>
+          </ul>
+        </div>
+
+        <div class="compare-card">
+          <h3>Bluetooth Adapter</h3>
+          <ul class="compare-list">
+            <li><span class="compare-good">✓</span> Wireless setup</li>
+            <li><span class="compare-good">✓</span> Simple to carry</li>
+            <li>
+              <span class="compare-bad">✕</span> Additional Bluetooth latency
+            </li>
+            <li>
+              <span class="compare-bad">✕</span> Uses more transmitter battery
+            </li>
+            <li>
+              <span class="compare-bad">✕</span> Not the same receiver path
+            </li>
+          </ul>
+        </div>
+
+        <div class="compare-card featured">
+          <h3>AK SimLink</h3>
+          <ul class="compare-list">
+            <li><span class="compare-good">✓</span> Wireless radio training</li>
+            <li>
+              <span class="compare-good">✓</span> Uses your real FPV receiver
+            </li>
+            <li>
+              <span class="compare-good">✓</span> Real radio, sticks, switches
+            </li>
+            <li><span class="compare-good">✓</span> Standard USB HID output</li>
+            <li>
+              <span class="compare-good">✓</span> Closest feel to real FPV
+              control
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -1551,34 +1948,7 @@
         </div>
       </div>
     </section>
-    <section>
-      <h2 class="section-title">Why AK SimLink?</h2>
-      <p class="section-subtitle">
-        Designed to make simulator practice feel closer to real flying.
-      </p>
 
-      <div class="features">
-        <div class="feature-card">
-          <h4>Low Latency</h4>
-          <p>Fast HID gamepad output for responsive simulator control.</p>
-        </div>
-
-        <div class="feature-card">
-          <h4>Plug & Play</h4>
-          <p>No complicated setup. Connect, select controller, and fly.</p>
-        </div>
-
-        <div class="feature-card">
-          <h4>No Battery Needed</h4>
-          <p>Powered directly from USB for clean desktop training.</p>
-        </div>
-
-        <div class="feature-card">
-          <h4>Free Firmware</h4>
-          <p>Update through the browser with AK SimLink firmware updater.</p>
-        </div>
-      </div>
-    </section>
     <!-- //des FAKE 360 PRODUCT VIEWER SECTION -->
     <section id="viewer360">
       <div class="viewer360">
@@ -1722,7 +2092,7 @@
       <div class="gallery-row">
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('01_front_view.png')"
+            onclick="openLightbox('01_front_view.png')"
             src="01_front_view.png"
           />
 
@@ -1735,7 +2105,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('02_rear_view.png')"
+            onclick="openLightbox('02_rear_view.png')"
             src="02_rear_view.png"
           />
 
@@ -1748,7 +2118,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('03_left_side.png')"
+            onclick="openLightbox('03_left_side.png')"
             src="03_left_side.png"
           />
 
@@ -1761,7 +2131,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('04_right_side.png')"
+            onclick="openLightbox('04_right_side.png')"
             src="04_right_side.png"
           />
 
@@ -1774,7 +2144,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('05_top_view.png')"
+            onclick="openLightbox('05_top_view.png')"
             src="05_top_view.png"
           />
 
@@ -1787,7 +2157,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('06_angled_view.png')"
+            onclick="openLightbox('06_angled_view.png')"
             src="06_angled_view.png"
           />
 
@@ -1800,7 +2170,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('07_in_use_desktop.png')"
+            onclick="openLightbox('07_in_use_desktop.png')"
             src="07_in_use_desktop.png"
           />
 
@@ -1813,7 +2183,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('08_oled_menu_screen.png')"
+            onclick="openLightbox('08_oled_menu_screen.png')"
             src="08_oled_menu_screen.png"
           />
 
@@ -1826,7 +2196,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('09_pcb_internal.png')"
+            onclick="openLightbox('09_pcb_internal.png')"
             src="09_pcb_internal.png"
           />
 
@@ -1839,7 +2209,7 @@
 
         <div class="gallery-item">
           <img
-            onclick="changeProductImage('10_package_contents.png')"
+            onclick="openLightbox('10_package_contents.png')"
             src="10_package_contents.png"
           />
 
@@ -1894,6 +2264,55 @@
           <td class="yes">✓</td>
         </tr>
       </table>
+    </section>
+    <!-- //des AK SIMLINK ROADMAP SECTION -->
+    <section id="roadmap" class="reveal">
+      <h2 class="section-title">AK SimLink Roadmap</h2>
+      <p class="section-subtitle">
+        From a simple ELRS simulator adapter to a full FPV training ecosystem.
+      </p>
+
+      <div class="roadmap">
+        <div class="roadmap-card">
+          <h3>Prototype</h3>
+          <p>
+            First working version built to prove real radio simulator control
+            through an FPV receiver.
+          </p>
+        </div>
+
+        <div class="roadmap-card">
+          <h3>Lite</h3>
+          <p>
+            Simple ELRS-focused version for pilots who want a compact
+            plug-and-play simulator adapter.
+          </p>
+        </div>
+
+        <div class="roadmap-card">
+          <h3>Pro</h3>
+          <p>
+            Multi-protocol version with ELRS, Crossfire, FrSky, OLED screen, and
+            onboard menu system.
+          </p>
+        </div>
+
+        <div class="roadmap-card">
+          <h3>Updater</h3>
+          <p>
+            Browser-based firmware updates for easier improvements, fixes, and
+            new features over time.
+          </p>
+        </div>
+
+        <div class="roadmap-card">
+          <h3>Future</h3>
+          <p>
+            More diagnostics, better UI, receiver information, channel monitor,
+            and advanced training features.
+          </p>
+        </div>
+      </div>
     </section>
 
     <section id="firmware">
@@ -2353,6 +2772,127 @@
 
       statNumbers.forEach((num) => {
         statsObserver.observe(num);
+      });
+
+      <!-- //des IMAGE LIGHTBOX -->
+      <div class="lightbox" id="lightbox">
+        <button class="lightbox-btn lightbox-close" onclick="closeLightbox()">
+          ×
+        </button>
+        <button class="lightbox-btn lightbox-prev" onclick="changeLightbox(-1)">
+          ←
+        </button>
+        <img id="lightboxImage" src="" alt="AK SimLink gallery preview" />
+        <button class="lightbox-btn lightbox-next" onclick="changeLightbox(1)">
+          →
+        </button>
+      </div>;
+      // ======================================================
+      // //des SCROLL REVEAL ANIMATION
+      // ======================================================
+      const revealElements = document.querySelectorAll(
+        "section, .product-card, .why-card, .stat-card, .sim-card, .feedback-card, .support-card, .faq-card, .buy-card",
+      );
+
+      revealElements.forEach((el) => {
+        el.classList.add("reveal");
+      });
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // ======================================================
+      // //des ACTIVE NAV HIGHLIGHT
+      // ======================================================
+      const navAnchors = document.querySelectorAll(".nav-links a[href^='#']");
+      const pageSections = [...navAnchors]
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      const navObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            navAnchors.forEach((link) => link.classList.remove("active"));
+
+            const activeLink = document.querySelector(
+              `.nav-links a[href="#${entry.target.id}"]`,
+            );
+
+            if (activeLink) activeLink.classList.add("active");
+          });
+        },
+        {
+          threshold: 0.35,
+        },
+      );
+
+      pageSections.forEach((section) => navObserver.observe(section));
+
+      // ======================================================
+      // //des LIGHTBOX GALLERY
+      // ======================================================
+      const lightboxImages = [
+        "01_front_view.png",
+        "02_rear_view.png",
+        "03_left_side.png",
+        "04_right_side.png",
+        "05_top_view.png",
+        "06_angled_view.png",
+        "07_in_use_desktop.png",
+        "08_oled_menu_screen.png",
+        "09_pcb_internal.png",
+        "10_package_contents.png",
+      ];
+
+      let lightboxIndex = 0;
+
+      function openLightbox(image) {
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImage = document.getElementById("lightboxImage");
+
+        lightboxIndex = lightboxImages.indexOf(image);
+        if (lightboxIndex < 0) lightboxIndex = 0;
+
+        lightboxImage.src = lightboxImages[lightboxIndex];
+        lightbox.classList.add("open");
+      }
+
+      function closeLightbox() {
+        const lightbox = document.getElementById("lightbox");
+        lightbox.classList.remove("open");
+      }
+
+      function changeLightbox(direction) {
+        const lightboxImage = document.getElementById("lightboxImage");
+
+        lightboxIndex += direction;
+
+        if (lightboxIndex < 0) lightboxIndex = lightboxImages.length - 1;
+        if (lightboxIndex >= lightboxImages.length) lightboxIndex = 0;
+
+        lightboxImage.src = lightboxImages[lightboxIndex];
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") changeLightbox(-1);
+        if (e.key === "ArrowRight") changeLightbox(1);
+      });
+
+      document.getElementById("lightbox").addEventListener("click", (e) => {
+        if (e.target.id === "lightbox") closeLightbox();
       });
     </script>
   </body>
