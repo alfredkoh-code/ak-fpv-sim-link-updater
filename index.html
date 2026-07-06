@@ -1367,6 +1367,68 @@
           right: 12px;
         }
       }
+
+      /* //des PREMIUM FOOTER */
+      .premium-footer {
+        max-width: 1180px;
+        margin: 70px auto 0;
+        padding: 44px 22px 28px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr repeat(4, 1fr);
+        gap: 28px;
+        margin-bottom: 34px;
+      }
+
+      .footer-tagline {
+        max-width: 320px;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+
+      .premium-footer h4 {
+        color: var(--yellow);
+        margin: 0 0 14px;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .premium-footer a {
+        display: block;
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .premium-footer a:hover {
+        color: var(--yellow);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid var(--border);
+        padding-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-size: 13px;
+      }
+
+      @media (max-width: 800px) {
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .footer-grid > div:first-child {
+          grid-column: 1 / -1;
+        }
+      }
     </style>
   </head>
 
@@ -1379,20 +1441,9 @@
 
       <div class="nav-links" id="navLinks">
         <a href="#products">Products</a>
-        <a href="#how">How It Works</a>
-        <a href="#why-buy">Why Buy</a>
-        <a href="#story">Story</a>
-        <a href="#stats">Stats</a>
-        <a href="#simulators">Simulators</a>
-        <a href="#feedback">Feedback</a>
-        <a href="#viewer360">360 Viewer</a>
-        <a href="#visuals">Visuals</a>
-        <a href="#compare">Lite vs Pro</a>
-        <a href="#comparison">Why SimLink</a>
-        <a href="#roadmap">Roadmap</a>
+        <a href="#why-buy">Features</a>
+        <a href="#visuals">Gallery</a>
         <a href="#firmware">Firmware</a>
-        <a href="#support">Support</a>
-        <a href="#faq">FAQ</a>
         <a href="#buy">Buy</a>
       </div>
     </nav>
@@ -2476,10 +2527,53 @@
         <a class="btn yellow" href="#firmware">Open Firmware Updater</a>
       </div>
     </section>
-    <footer>
-      <div class="logo">AK <span>SimLink</span></div>
-      <p>Train Like You Fly</p>
-      <p>© 2026 AK SimLink. All rights reserved.</p>
+    <footer class="premium-footer">
+      <div class="footer-grid">
+        <div>
+          <div class="logo">AK <span>SimLink</span></div>
+          <p class="footer-tagline">
+            Train Like You Fly. Built for FPV pilots who want simulator practice
+            to feel closer to real flying.
+          </p>
+        </div>
+
+        <div>
+          <h4>Product</h4>
+          <a href="#products">Products</a>
+          <a href="#why-buy">Features</a>
+          <a href="#story">Story</a>
+          <a href="#roadmap">Roadmap</a>
+        </div>
+
+        <div>
+          <h4>Training</h4>
+          <a href="#how">How It Works</a>
+          <a href="#comparison">Why SimLink</a>
+          <a href="#simulators">Simulators</a>
+          <a href="#feedback">Pilot Feedback</a>
+        </div>
+
+        <div>
+          <h4>Explore</h4>
+          <a href="#viewer360">360 Viewer</a>
+          <a href="#visuals">Gallery</a>
+          <a href="#compare">Lite vs Pro</a>
+          <a href="#stats">Stats</a>
+        </div>
+
+        <div>
+          <h4>Support</h4>
+          <a href="#firmware">Firmware</a>
+          <a href="#support">Support</a>
+          <a href="#faq">FAQ</a>
+          <a href="#buy">Buy</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 AK SimLink. All rights reserved.</span>
+        <span>Designed in Malaysia 🇲🇾</span>
+      </div>
     </footer>
 
     <!-- //des IMAGE LIGHTBOX -->
