@@ -1368,6 +1368,87 @@
         }
       }
 
+      /* //des FLOATING QUICK ACTION MENU
+   This controls the floating action button at the bottom-left of the screen.
+   It gives visitors quick access to Buy, Firmware, and Support without using a sticky nav. */
+      .quick-action {
+        position: fixed;
+        left: 24px;
+        bottom: 24px;
+        z-index: 9998;
+      }
+
+      /* //des QUICK ACTION MAIN BUTTON
+   This is the round button users click to open or close the quick menu. */
+      .quick-action-main {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--red);
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 14px 40px rgba(229, 9, 20, 0.35);
+        transition: 0.25s ease;
+      }
+
+      /* //des MAIN BUTTON HOVER
+   Adds a premium lift and glow when the mouse touches the button. */
+      .quick-action-main:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 50px rgba(229, 9, 20, 0.5);
+      }
+
+      /* //des QUICK ACTION MENU ITEMS
+   These links are hidden by default and appear when the menu is opened. */
+      .quick-action-menu {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(12px);
+        transition: 0.25s ease;
+      }
+
+      /* //des OPEN STATE
+   JavaScript adds this class when the quick action menu is open. */
+      .quick-action.open .quick-action-menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      /* //des QUICK ACTION LINK
+   Each item jumps to an important section of the website. */
+      .quick-action-menu a {
+        min-width: 132px;
+        padding: 12px 14px;
+        border-radius: 999px;
+        background: rgba(20, 26, 34, 0.96);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+      }
+
+      /* //des QUICK ACTION LINK HOVER
+   Gives each quick link a yellow glow for a premium interaction. */
+      .quick-action-menu a:hover {
+        color: var(--yellow);
+        border-color: var(--yellow);
+        box-shadow: 0 0 28px rgba(255, 196, 0, 0.22);
+      }
+
+      /* //des ROTATE PLUS BUTTON
+   When menu opens, the plus turns into an X-like shape. */
+      .quick-action.open .quick-action-main {
+        transform: rotate(45deg);
+      }
+
       /* //des BACK TO TOP FLOATING BUTTON
    This controls the small round arrow button that appears after scrolling down.
    It stays fixed on screen so users can quickly return to the top of the page. */
@@ -2614,6 +2695,24 @@
         <span>Designed in Malaysia 🇲🇾</span>
       </div>
     </footer>
+
+    <!-- //des FLOATING QUICK ACTION MENU
+     This small floating menu gives quick access to important actions.
+     It stays on screen while visitors scroll through the long landing page. -->
+    <div class="quick-action" id="quickAction">
+      <!-- //des QUICK ACTION LINKS
+       These links jump directly to the most important website sections. -->
+      <div class="quick-action-menu">
+        <a href="#buy" onclick="closeQuickAction()">Buy</a>
+        <a href="#firmware" onclick="closeQuickAction()">Firmware</a>
+        <a href="#support" onclick="closeQuickAction()">Support</a>
+      </div>
+
+      <!-- //des QUICK ACTION MAIN BUTTON
+       Clicking this button opens or closes the floating menu. -->
+      <button class="quick-action-main" onclick="toggleQuickAction()">+</button>
+    </div>
+
     <!-- //des BACK TO TOP BUTTON
      This floating button appears after scrolling down.
      Clicking it sends the visitor smoothly back to the top of the page. -->
@@ -2878,6 +2977,35 @@
       );
 
       pageSections.forEach((section) => navObserver.observe(section));
+
+      // ======================================================
+      // //des FLOATING QUICK ACTION MENU
+      // ======================================================
+      // //des This controls the round + button at bottom-left.
+      // //des When clicked, it opens quick links for Buy, Firmware, and Support.
+      const quickAction = document.getElementById("quickAction");
+
+      function toggleQuickAction() {
+        if (!quickAction) return;
+        quickAction.classList.toggle("open");
+      }
+
+      // //des This closes the quick action menu after user clicks a link.
+      function closeQuickAction() {
+        if (!quickAction) return;
+        quickAction.classList.remove("open");
+      }
+
+      // //des This closes the quick action menu when user clicks outside of it.
+      document.addEventListener("click", (event) => {
+        if (!quickAction) return;
+
+        const clickedInsideQuickAction = quickAction.contains(event.target);
+
+        if (!clickedInsideQuickAction) {
+          quickAction.classList.remove("open");
+        }
+      });
 
       // ======================================================
       // //des BACK TO TOP BUTTON
