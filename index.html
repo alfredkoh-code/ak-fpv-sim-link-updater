@@ -1565,6 +1565,114 @@
         color: var(--muted);
       }
 
+      /* //des VERIFIED HARDWARE ECOSYSTEM
+   Premium card layout for transmitters, receivers, and simulators.
+   This section builds customer confidence by showing the full compatible setup. */
+      .hardware-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-top: 34px;
+      }
+
+      /* //des HARDWARE CARD
+   Each card represents one part of the AK SimLink ecosystem. */
+      .hardware-card {
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(8, 10, 14, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 28px;
+        transition: 0.25s ease;
+      }
+
+      /* //des FEATURED HARDWARE CARD
+   Highlights the receiver card because receivers are the key link between
+   the radio and AK SimLink. */
+      .hardware-card.featured {
+        border-color: var(--yellow);
+        box-shadow: 0 0 45px rgba(255, 196, 0, 0.12);
+      }
+
+      /* //des HARDWARE CARD HOVER
+   Adds premium lift and glow when the user hovers over the card. */
+      .hardware-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--yellow);
+        box-shadow: 0 18px 50px rgba(255, 196, 0, 0.16);
+      }
+
+      /* //des HARDWARE BADGE
+   Small label showing the category type: transmitters, receivers, or simulators. */
+      .hardware-badge {
+        display: inline-block;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: rgba(255, 196, 0, 0.1);
+        color: var(--yellow);
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 14px;
+      }
+
+      /* //des HARDWARE TITLE */
+      .hardware-card h3 {
+        margin: 0 0 18px;
+        font-size: 24px;
+        color: var(--text);
+      }
+
+      /* //des HARDWARE CHIP LIST
+   Turns hardware names into premium small badges instead of normal bullet lists. */
+      .hardware-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      /* //des HARDWARE CHIP */
+      .hardware-list span {
+        padding: 9px 11px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      /* //des HARDWARE CHIP HOVER */
+      .hardware-list span:hover {
+        color: var(--yellow);
+        border-color: var(--yellow);
+      }
+
+      /* //des HARDWARE NOTE
+   Important explanation below the cards so customers understand compatibility. */
+      .hardware-note {
+        margin-top: 24px;
+        padding: 20px;
+        border-left: 4px solid var(--yellow);
+        border-radius: 14px;
+        background: rgba(255, 196, 0, 0.08);
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hardware-note b {
+        color: var(--text);
+      }
+
+      /* //des MOBILE HARDWARE LAYOUT */
+      @media (max-width: 900px) {
+        .hardware-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
       /* //des PREMIUM FOOTER */
       .premium-footer {
         max-width: 1180px;
@@ -1638,6 +1746,7 @@
 
       <div class="nav-links" id="navLinks">
         <a href="#products">Products</a>
+        <a href="#hardware">Verified Hardware</a>
         <a href="#why-buy">Features</a>
         <a href="#visuals">Gallery</a>
         <a href="#firmware">Firmware</a>
@@ -2117,6 +2226,94 @@
             <li>✓ Standard OpenTX / EdgeTX Radios</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <!-- //des VERIFIED HARDWARE ECOSYSTEM SECTION
+     This section shows the full AK SimLink ecosystem:
+     popular radios, compatible receivers, and supported simulators.
+     It helps customers quickly confirm whether their setup can work. -->
+    <section id="hardware" class="reveal">
+      <h2 class="section-title">Verified Hardware Ecosystem</h2>
+
+      <p class="section-subtitle">
+        AK SimLink is designed for real FPV training setups. If your radio can
+        bind to ELRS, Crossfire, or FrSky receivers, it can be used with the
+        matching AK SimLink model.
+      </p>
+
+      <div class="hardware-grid">
+        <!-- //des TRANSMITTER CATEGORY
+         Popular FPV radios commonly used with ELRS, Crossfire, or FrSky. -->
+        <div class="hardware-card">
+          <div class="hardware-badge">TRANSMITTERS</div>
+          <h3>Popular FPV Radios</h3>
+
+          <div class="hardware-list">
+            <span>Radiomaster Pocket</span>
+            <span>Radiomaster Boxer</span>
+            <span>Radiomaster TX16S</span>
+            <span>Radiomaster Zorro</span>
+            <span>Radiomaster GX12</span>
+            <span>Radiomaster MT12</span>
+            <span>Jumper T15</span>
+            <span>Jumper T20</span>
+            <span>Jumper T14</span>
+            <span>FrSky X9D Plus</span>
+            <span>FrSky X-Lite</span>
+            <span>FrSky X18 / X20</span>
+          </div>
+        </div>
+
+        <!-- //des RECEIVER CATEGORY
+         Receivers that connect to AK SimLink and receive signal from the radio. -->
+        <div class="hardware-card featured">
+          <div class="hardware-badge">RECEIVERS</div>
+          <h3>Receiver Support</h3>
+
+          <div class="hardware-list">
+            <span>ELRS RP1</span>
+            <span>ELRS RP2</span>
+            <span>ELRS RP3</span>
+            <span>ELRS RP4</span>
+            <span>ELRS RP4TD</span>
+            <span>Crossfire Nano RX</span>
+            <span>Crossfire Diversity RX</span>
+            <span>FrSky R-XSR</span>
+            <span>FrSky XSR</span>
+            <span>FrSky XM+</span>
+            <span>SBUS Receivers</span>
+            <span>CRSF Receivers</span>
+          </div>
+        </div>
+
+        <!-- //des SIMULATOR CATEGORY
+         Simulators that can use AK SimLink as a standard USB HID gamepad. -->
+        <div class="hardware-card">
+          <div class="hardware-badge">SIMULATORS</div>
+          <h3>FPV Simulator Apps</h3>
+
+          <div class="hardware-list">
+            <span>Liftoff</span>
+            <span>VelociDrone</span>
+            <span>TRYP FPV</span>
+            <span>Uncrashed</span>
+            <span>DRL Simulator</span>
+            <span>FPV SkyDive</span>
+            <span>AI Drone Simulator</span>
+            <span>Orqa FPV.SkyDive</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- //des COMPATIBILITY NOTE
+       This explains the important rule: exact radio model matters less than
+       whether the radio can connect to a supported receiver protocol. -->
+      <div class="hardware-note">
+        <b>Compatibility rule:</b> your exact radio model is less important than
+        the receiver protocol. If your radio can bind to a supported ELRS,
+        Crossfire, or FrSky receiver, AK SimLink can use that receiver signal
+        for simulator input.
       </div>
     </section>
 
