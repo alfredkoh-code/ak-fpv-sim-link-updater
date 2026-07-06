@@ -1949,7 +1949,13 @@
           </ul>
           <div class="buttons">
             <a class="btn yellow" href="lite.html">Lite Firmware</a>
-            <a class="btn red" href="#buy">Buy Lite</a>
+            <a
+              class="btn red"
+              href="#checkout"
+              onclick="selectCheckoutProduct('lite')"
+            >
+              Buy Lite
+            </a>
           </div>
         </div>
 
@@ -1965,7 +1971,13 @@
           </ul>
           <div class="buttons">
             <a class="btn yellow" href="pro.html">Pro Firmware</a>
-            <a class="btn red" href="#buy">Buy Pro</a>
+            <a
+              class="btn red"
+              href="#checkout"
+              onclick="selectCheckoutProduct('pro')"
+            >
+              Buy Pro
+            </a>
           </div>
         </div>
       </div>
@@ -3108,37 +3120,6 @@
                 charges.
               </p>
             </div>
-          </div>
-
-          <div class="checkout-grid">
-            <!-- //des PRODUCT SELECT
-         Customer chooses Lite or Pro. JavaScript updates the product price. -->
-            <label>
-              Product
-              <select id="checkoutProduct" onchange="updateCheckoutTotal()">
-                <option value="lite">AK SimLink Lite — RM149.90</option>
-                <option value="pro">AK SimLink Pro — RM299.90</option>
-              </select>
-            </label>
-
-            <!-- //des SHIPPING DESTINATION SELECT
-         Customer chooses destination zone. JavaScript updates shipping cost. -->
-            <label>
-              Ship To
-              <select id="checkoutCountry" onchange="updateCheckoutTotal()">
-                <option value="malaysia">🇲🇾 Malaysia</option>
-                <option value="singapore">🇸🇬 Singapore / Brunei</option>
-                <option value="sea">
-                  🌏 Thailand / Indonesia / Vietnam / Philippines
-                </option>
-                <option value="asia">
-                  🇯🇵 Japan / Korea / Taiwan / Hong Kong
-                </option>
-                <option value="oceania">🇦🇺 Australia / New Zealand</option>
-                <option value="usa">🇺🇸 United States / Canada</option>
-                <option value="europe">🇬🇧 United Kingdom / Europe</option>
-              </select>
-            </label>
           </div>
 
           <!-- //des CHECKOUT SELECTION AREA
