@@ -1818,6 +1818,67 @@
         }
       }
 
+      /* //des CHECKOUT INPUT AND TEXTAREA
+   Makes the customer detail fields match the premium dark checkout style. */
+      .checkout-grid input,
+      .checkout-grid textarea {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #0b0f14;
+        color: var(--text);
+        font-size: 15px;
+        font-family: inherit;
+      }
+
+      /* //des FULL WIDTH CHECKOUT FIELD
+   Used for delivery address so customer has more room to type. */
+      .checkout-full {
+        grid-column: 1 / -1;
+      }
+
+      /* //des CHECKOUT FOCUS EFFECT */
+      .checkout-grid input:focus,
+      .checkout-grid textarea:focus,
+      .checkout-grid select:focus {
+        outline: none;
+        border-color: var(--yellow);
+        box-shadow: 0 0 0 3px rgba(255, 196, 0, 0.12);
+      }
+
+      /* //des PAYPAL CHECKOUT BOX
+   Premium centered payment area shown after total is calculated. */
+      .paypal-box {
+        margin-top: 30px;
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        text-align: center;
+      }
+
+      .paypal-box h3 {
+        margin: 0 0 8px;
+        color: var(--yellow);
+      }
+
+      .paypal-box p {
+        margin: 0 auto 22px;
+        color: var(--muted);
+        max-width: 560px;
+        line-height: 1.6;
+      }
+
+      /* //des PAYPAL BUTTON CONTAINER
+   Centers PayPal button. */
+      #paypal-button-container {
+        margin-top: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
       /* //des PREMIUM FOOTER */
       .premium-footer {
         max-width: 1180px;
