@@ -3028,11 +3028,13 @@
           </ul>
 
           <div class="buttons">
+            <!-- //des BUY LITE BUTTON
+     This no longer goes directly to the old PayPal link.
+     It selects Lite in the checkout calculator and scrolls customer there. -->
             <a
               class="btn red"
-              href="https://www.paypal.com/ncp/payment/VNRT738S44DF4"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#checkout"
+              onclick="selectCheckoutProduct('lite')"
             >
               Buy Lite
             </a>
@@ -3071,11 +3073,13 @@
           </ul>
 
           <div class="buttons">
+            <!-- //des BUY PRO BUTTON
+     This no longer goes directly to the old PayPal link.
+     It selects Pro in the checkout calculator and scrolls customer there. -->
             <a
               class="btn red"
-              href="https://www.paypal.com/ncp/payment/P7PNFFR5NTMPG"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#checkout"
+              onclick="selectCheckoutProduct('pro')"
             >
               Buy Pro
             </a>
@@ -3091,7 +3095,9 @@
         <!-- //des SHIPPING CALCULATOR CHECKOUT
      This lets customers select product and shipping destination.
      It calculates device price + shipping before PayPal checkout. -->
-        <div class="checkout-calculator">
+        <!-- //des CHECKOUT CALCULATOR ANCHOR
+     Buy buttons jump here so customer calculates shipping before payment. -->
+        <div class="checkout-calculator" id="checkout">
           <div class="checkout-header">
             <div>
               <div class="checkout-badge">SECURE CHECKOUT</div>
@@ -3695,16 +3701,53 @@
 
         checkoutSummary.classList.remove("checkout-hidden");
         paypalContainer.classList.remove("checkout-hidden");
+        // //des Re-render PayPal button after calculation.
+        // //des This makes sure PayPal uses the selected Lite/Pro product and shipping total.
+        renderPayPalButton();
+      }
+
+      // //des SELECT CHECKOUT PRODUCT
+      // //des Used by Buy Lite and Buy Pro buttons.
+      // //des It chooses the correct product in the checkout calculator and scrolls there.
+      function selectCheckoutProduct(productKey) {
+        const productSelect = document.getElementById("checkoutProduct");
+        const checkoutSection = document.getElementById("checkout");
+        const checkoutSummary = document.getElementById("checkoutSummary");
+        const paypalContainer = document.getElementById(
+          "paypal-button-container",
+        );
+
+        if (productSelect) {
+          productSelect.value = productKey;
+        }
+
+        // //des Hide old total and PayPal button when customer changes product.
+        if (checkoutSummary) checkoutSummary.classList.add("checkout-hidden");
+        if (paypalContainer) {
+          paypalContainer.classList.add("checkout-hidden");
+          paypalContainer.innerHTML = "";
+        }
+
+        if (checkoutSection) {
+          checkoutSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
       }
 
       // //des Renders PayPal checkout button.
       // //des PayPal will charge the current total when customer clicks the button.
+      // //des Renders PayPal checkout button only after shipping is calculated.
+      // //des This avoids PayPal button breaking when rendered inside a hidden box.
       function renderPayPalButton() {
         const paypalContainer = document.getElementById(
           "paypal-button-container",
         );
 
         if (!paypalContainer) return;
+
+        paypalContainer.innerHTML = "";
 
         if (typeof paypal === "undefined") {
           paypalContainer.innerHTML =
@@ -3721,10 +3764,8 @@
               label: "pay",
             },
 
-            // //des Creates the PayPal order using the current calculated total.
+            // //des Creates the PayPal order using the latest calculated total.
             createOrder: function (data, actions) {
-              calculateCheckout();
-
               return actions.order.create({
                 purchase_units: [
                   {
@@ -3758,7 +3799,6 @@
               });
             },
 
-            // //des Runs after successful PayPal approval.
             onApprove: function (data, actions) {
               return actions.order.capture().then(function (details) {
                 alert(
@@ -3767,7 +3807,6 @@
               });
             },
 
-            // //des Shows an error if PayPal checkout fails.
             onError: function (err) {
               console.error("PayPal Checkout Error:", err);
               alert(
@@ -3777,10 +3816,6 @@
           })
           .render("#paypal-button-container");
       }
-
-      // //des Initialize checkout values and PayPal button when page loads.
-      // //des Render PayPal button on page load, but keep it hidden until customer calculates shipping.
-      renderPayPalButton();
 
       // ======================================================
       // //des FLOATING QUICK ACTION MENU
