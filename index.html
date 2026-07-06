@@ -1523,6 +1523,48 @@
         box-shadow: 0 0 28px rgba(255, 196, 0, 0.28);
       }
 
+      /* //des SUPPORTED RADIOS SECTION
+   Displays compatible radio brands in clean premium cards.
+   This reassures customers that their existing radio is supported. */
+
+      .radio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 22px;
+        margin-top: 40px;
+      }
+
+      .radio-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        transition: 0.25s;
+      }
+
+      .radio-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--yellow);
+        box-shadow: 0 18px 45px rgba(255, 196, 0, 0.12);
+      }
+
+      .radio-card h3 {
+        margin-top: 0;
+        margin-bottom: 18px;
+        color: var(--yellow);
+      }
+
+      .radio-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .radio-card li {
+        padding: 8px 0;
+        color: var(--muted);
+      }
+
       /* //des PREMIUM FOOTER */
       .premium-footer {
         max-width: 1180px;
@@ -2012,6 +2054,68 @@
             Designed for realistic simulator practice with familiar radio
             control.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des SUPPORTED RADIOS SECTION
+     This section shows some of the most popular FPV radios that work with
+     AK SimLink. Any radio capable of outputting ELRS, Crossfire, or FrSky
+     can be used with the appropriate receiver. -->
+    <section id="radios" class="reveal">
+      <h2 class="section-title">Works With Popular FPV Radios</h2>
+
+      <p class="section-subtitle">
+        AK SimLink works with many popular transmitters using ELRS, Crossfire or
+        FrSky receivers. Here are some of the radios commonly used by FPV
+        pilots.
+      </p>
+
+      <div class="radio-grid">
+        <div class="radio-card">
+          <h3>Radiomaster</h3>
+
+          <ul>
+            <li>✓ Pocket</li>
+            <li>✓ Boxer</li>
+            <li>✓ TX16S</li>
+            <li>✓ GX12</li>
+            <li>✓ MT12</li>
+            <li>✓ Zorro</li>
+          </ul>
+        </div>
+
+        <div class="radio-card">
+          <h3>JumperRC</h3>
+
+          <ul>
+            <li>✓ T15</li>
+            <li>✓ T20</li>
+            <li>✓ T14</li>
+          </ul>
+        </div>
+
+        <div class="radio-card">
+          <h3>FrSky</h3>
+
+          <ul>
+            <li>✓ X9D Plus</li>
+            <li>✓ X-Lite</li>
+            <li>✓ X18</li>
+            <li>✓ X20</li>
+            <li>✓ Horus X10</li>
+          </ul>
+        </div>
+
+        <div class="radio-card">
+          <h3>Other Compatible Radios</h3>
+
+          <ul>
+            <li>✓ Any ELRS Radio</li>
+            <li>✓ Any Crossfire Radio</li>
+            <li>✓ Any FrSky Radio</li>
+            <li>✓ Standard OpenTX / EdgeTX Radios</li>
+          </ul>
         </div>
       </div>
     </section>
