@@ -2583,6 +2583,22 @@
       <p>Train Like You Fly</p>
       <p>© 2026 AK SimLink. All rights reserved.</p>
     </footer>
+
+    <!-- //des IMAGE LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-btn lightbox-close" onclick="closeLightbox()">
+        ×
+      </button>
+      <button class="lightbox-btn lightbox-prev" onclick="changeLightbox(-1)">
+        ←
+      </button>
+      <img id="lightboxImage" src="" alt="AK SimLink gallery preview" />
+      <button class="lightbox-btn lightbox-next" onclick="changeLightbox(1)">
+        →
+      </button>
+    </div>
+    ;
+
     <script>
       // ======================================================
       // //des MOBILE MENU
@@ -2774,19 +2790,6 @@
         statsObserver.observe(num);
       });
 
-      <!-- //des IMAGE LIGHTBOX -->
-      <div class="lightbox" id="lightbox">
-        <button class="lightbox-btn lightbox-close" onclick="closeLightbox()">
-          ×
-        </button>
-        <button class="lightbox-btn lightbox-prev" onclick="changeLightbox(-1)">
-          ←
-        </button>
-        <img id="lightboxImage" src="" alt="AK SimLink gallery preview" />
-        <button class="lightbox-btn lightbox-next" onclick="changeLightbox(1)">
-          →
-        </button>
-      </div>;
       // ======================================================
       // //des SCROLL REVEAL ANIMATION
       // ======================================================
