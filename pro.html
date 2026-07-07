@@ -284,7 +284,44 @@
         gap: 14px;
         flex-wrap: wrap;
       }
+      /* //des UPDATE REQUIREMENTS GRID */
+      .requirements-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
 
+      /* //des REQUIREMENT CARD */
+      .requirement-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
+        transition: 0.25s ease;
+      }
+
+      .requirement-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--yellow);
+        box-shadow: 0 18px 45px rgba(255, 196, 0, 0.12);
+      }
+
+      .requirement-icon {
+        font-size: 32px;
+        margin-bottom: 14px;
+      }
+
+      .requirement-card h3 {
+        margin: 0 0 10px;
+        color: var(--yellow);
+      }
+
+      .requirement-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
       /* //des FIRMWARE CARD GRID */
       #firmwareList {
         max-width: 1180px;
@@ -429,6 +466,7 @@
       @media (max-width: 800px) {
         .updater-hero,
         .status-grid,
+        .requirements-grid,
         #firmwareList {
           grid-template-columns: 1fr;
         }
@@ -550,7 +588,44 @@
         </div>
       </div>
     </section>
+    <!-- //des UPDATE REQUIREMENTS SECTION -->
+    <section id="requirements">
+      <h2 class="section-title">Before You Update</h2>
 
+      <p class="section-subtitle">
+        Make sure your browser, cable, and device mode are ready before flashing
+        firmware.
+      </p>
+
+      <div class="requirements-grid">
+        <div class="requirement-card">
+          <div class="requirement-icon">🌐</div>
+          <h3>Use Chrome or Edge</h3>
+          <p>
+            Firmware updating requires Web Serial support. Use Google Chrome or
+            Microsoft Edge on desktop.
+          </p>
+        </div>
+
+        <div class="requirement-card">
+          <div class="requirement-icon">🔌</div>
+          <h3>Use a Data USB Cable</h3>
+          <p>
+            Some USB cables only charge and cannot transfer data. Use a known
+            working data cable.
+          </p>
+        </div>
+
+        <div class="requirement-card">
+          <div class="requirement-icon">⚡</div>
+          <h3>Enter Bootloader Mode</h3>
+          <p>
+            Hold the ENTER button while plugging in USB if the updater cannot
+            connect normally.
+          </p>
+        </div>
+      </div>
+    </section>
     <!-- //des FIRMWARE SECTION TITLE -->
     <section>
       <h2 class="section-title">Install Firmware</h2>
