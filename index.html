@@ -1893,6 +1893,16 @@
         transform: scale(1.2);
       }
 
+      .checkout-agreement input:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
+      .checkout-agreement:has(input:checked) {
+        border-color: var(--green);
+        background: rgba(0, 230, 118, 0.08);
+      }
+
       #agreementWarning {
         color: var(--yellow);
       }
