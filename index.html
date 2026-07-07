@@ -1682,7 +1682,6 @@
         }
       }
 
-  
       /* //des APPLE STYLE CHECKOUT CARD
    Full-width inside buy-grid, but visually centered like a premium checkout card. */
       .checkout-calculator {
@@ -1874,6 +1873,30 @@
         line-height: 1.6;
       }
 
+      /* //des CHECKOUT AGREEMENT CHECKBOX */
+      .checkout-agreement {
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .checkout-agreement input {
+        margin-top: 3px;
+        transform: scale(1.2);
+      }
+
+      #agreementWarning {
+        color: var(--yellow);
+      }
+
       #paypal-button-container {
         width: 100%;
         display: flex;
@@ -1988,6 +2011,79 @@
         .footer-grid > div:first-child {
           grid-column: 1 / -1;
         }
+      }
+
+      /* //des CHECKOUT SUCCESS POPUP */
+      .checkout-success-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        padding: 24px;
+        background: rgba(0, 0, 0, 0.78);
+        backdrop-filter: blur(14px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .checkout-success-overlay.checkout-hidden {
+        display: none;
+      }
+
+      .checkout-success-card {
+        width: 100%;
+        max-width: 560px;
+        padding: 34px;
+        border-radius: 28px;
+        background: linear-gradient(145deg, #151a20, #050608);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+        text-align: center;
+      }
+
+      .checkout-success-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #001b0d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        font-weight: 900;
+      }
+
+      .checkout-success-card h2 {
+        margin: 0 0 10px;
+        font-size: 32px;
+      }
+
+      .checkout-success-card p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .checkout-success-summary {
+        margin: 24px 0;
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.06);
+        text-align: left;
+      }
+
+      .checkout-success-summary p {
+        margin: 8px 0;
+      }
+
+      .checkout-success-summary strong {
+        color: var(--yellow);
+      }
+
+      .checkout-screenshot-note {
+        color: var(--yellow) !important;
+        font-weight: 700;
       }
     </style>
   </head>
@@ -3266,12 +3362,12 @@
                   <option value="malaysia">🇲🇾 Malaysia</option>
                   <option value="singapore">🇸🇬 Singapore / Brunei</option>
                   <option value="sea">
-                    🌏 Thailand / Indonesia / Vietnam / Philippines
+                    🇹🇭 Thailand / 🇮🇩 Indonesia / 🇻🇳 Vietnam / 🇵🇭 Philippines
                   </option>
                   <option value="asia">
-                    🇯🇵 Japan / Korea / Taiwan / Hong Kong
+                    🇯🇵 Japan / 🇰🇷 Korea / 🇹🇼 Taiwan / 🇭🇰 Hong Kong
                   </option>
-                  <option value="oceania">🇦🇺 Australia / New Zealand</option>
+                  <option value="oceania">🇦🇺 Australia / 🇳🇿 New Zealand</option>
                   <option value="usa">🇺🇸 United States / Canada</option>
                   <option value="europe">🇬🇧 United Kingdom / Europe</option>
                 </select>
@@ -3359,6 +3455,18 @@
             <div class="paypal-box" id="paypalBox">
               <h3>🔒 Secure PayPal Checkout</h3>
               <p>Payment is processed securely by PayPal.</p>
+              <!-- //des CHECKOUT AGREEMENT CHECKBOX -->
+              <label class="checkout-agreement">
+                <input type="checkbox" id="checkoutAgree" />
+                <span>
+                  I confirm my delivery details are correct and I understand
+                  this order will be processed after payment.
+                </span>
+              </label>
+
+              <p class="checkout-note" id="agreementWarning">
+                Please tick the confirmation box before paying.
+              </p>
               <div id="paypal-button-container"></div>
             </div>
 
@@ -3415,6 +3523,42 @@
         <a class="btn yellow" href="#firmware">Open Firmware Updater</a>
       </div>
     </section>
+
+    <!-- //des CHECKOUT SUCCESS POPUP -->
+    <div
+      class="checkout-success-overlay checkout-hidden"
+      id="checkoutSuccessPopup"
+    >
+      <div class="checkout-success-card">
+        <div class="checkout-success-icon">✓</div>
+
+        <h2>Checkout Completed</h2>
+
+        <p>
+          Thank you. Your payment was successful and your order details have
+          been recorded.
+        </p>
+
+        <div class="checkout-success-summary">
+          <p><strong>Product:</strong> <span id="successProduct"></span></p>
+          <p><strong>Name:</strong> <span id="successName"></span></p>
+          <p><strong>Email:</strong> <span id="successEmail"></span></p>
+          <p><strong>Phone:</strong> <span id="successPhone"></span></p>
+          <p>
+            <strong>Payment ID:</strong> <span id="successPaymentId"></span>
+          </p>
+        </div>
+
+        <p class="checkout-screenshot-note">
+          Please screenshot this confirmation for your record.
+        </p>
+
+        <button class="btn yellow" onclick="closeCheckoutSuccess()">
+          Done
+        </button>
+      </div>
+    </div>
+
     <footer class="premium-footer">
       <div class="footer-grid">
         <div>
@@ -3966,6 +4110,35 @@
         }
       }
 
+      // //des SHOW CHECKOUT SUCCESS POPUP
+      function showCheckoutSuccess(details, data) {
+        document.getElementById("successProduct").textContent =
+          currentCheckout.productName;
+
+        document.getElementById("successName").textContent =
+          currentCheckout.customerName;
+
+        document.getElementById("successEmail").textContent =
+          currentCheckout.customerEmail;
+
+        document.getElementById("successPhone").textContent =
+          currentCheckout.customerPhone;
+
+        document.getElementById("successPaymentId").textContent =
+          details.id || data.orderID;
+
+        document
+          .getElementById("checkoutSuccessPopup")
+          .classList.remove("checkout-hidden");
+      }
+
+      // //des CLOSE CHECKOUT SUCCESS POPUP
+      function closeCheckoutSuccess() {
+        document
+          .getElementById("checkoutSuccessPopup")
+          .classList.add("checkout-hidden");
+      }
+
       // //des Renders PayPal checkout button.
       // //des PayPal will charge the current total when customer clicks the button.
       // //des Renders PayPal checkout button only after shipping is calculated.
@@ -3999,20 +4172,27 @@
 
             // //des Creates the PayPal order using the latest calculated total.
             createOrder: function (data, actions) {
+              const checkoutAgree = document.getElementById("checkoutAgree");
+
+              if (!checkoutAgree || !checkoutAgree.checked) {
+                alert("Please confirm your delivery details before payment.");
+                return;
+              }
               return actions.order.create({
                 purchase_units: [
                   {
                     // //des PAYPAL ORDER DESCRIPTION
                     // //des Sends order and delivery details into PayPal transaction notes.
                     description:
-                      `${currentCheckout.productName} | ` +
-                      `Ship to: ${currentCheckout.customerName}, ` +
-                      `${currentCheckout.customerPhone}, ` +
-                      `${currentCheckout.customerAddress}, ` +
-                      `${currentCheckout.customerCity}, ` +
-                      `${currentCheckout.customerState}, ` +
-                      `${currentCheckout.customerPostcode}, ` +
-                      `${currentCheckout.shippingLabel}`,
+                      `${currentCheckout.productName}\n` +
+                      `Name: ${currentCheckout.customerName}\n` +
+                      `Email: ${currentCheckout.customerEmail}\n` +
+                      `Phone: ${currentCheckout.customerPhone}\n` +
+                      `Address: ${currentCheckout.customerAddress}\n` +
+                      `${currentCheckout.customerCity}\n` +
+                      `${currentCheckout.customerState}\n` +
+                      `${currentCheckout.customerPostcode}\n` +
+                      `Shipping: ${currentCheckout.shippingLabel}`,
                     amount: {
                       currency_code: "MYR",
                       value: currentCheckout.total.toFixed(2),
@@ -4044,9 +4224,7 @@
 
             onApprove: function (data, actions) {
               return actions.order.capture().then(function (details) {
-                alert(
-                  `Payment successful. Thank you, ${details.payer.name.given_name}!`,
-                );
+                showCheckoutSuccess(details, data);
               });
             },
 
