@@ -459,8 +459,19 @@
       </div>
 
       <div class="hero-card">
-        <div class="device-preview">AK<br />SIMLINK<br />PRO</div>
-
+        <!-- //des PRODUCT HERO IMAGE -->
+        <div class="device-preview">
+          <img
+            src="simlink.png"
+            alt="AK SimLink Pro"
+            style="
+              width: 100%;
+              max-width: 320px;
+              height: auto;
+              object-fit: contain;
+            "
+          />
+        </div>
         <div class="chip-row">
           <div class="chip">ELRS</div>
           <div class="chip">Crossfire</div>
@@ -479,20 +490,24 @@
         before updating.
       </p>
 
+      <!-- //des STATUS GRID -->
       <div class="status-grid">
         <div class="status-card">
           <div class="status-label">Latest Firmware</div>
+
           <div class="status-value" id="latestVersion">---</div>
         </div>
 
         <div class="status-card">
           <div class="status-label">Device Version</div>
+
           <div class="status-value" id="deviceVersion">Not Connected</div>
         </div>
 
         <div class="status-card">
-          <div class="status-label">Update Status</div>
-          <div class="status-value" id="status">UNKNOWN</div>
+          <div class="status-label">Device Status</div>
+
+          <div class="status-value" id="status">Ready</div>
         </div>
       </div>
 
