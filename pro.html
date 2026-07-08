@@ -653,37 +653,59 @@
           mode manually and flash the latest firmware.
         </div>
 
-        <h3>Step 1 — Check Current Firmware Version</h3>
+        <!-- //des STEP 1 CONNECT UPDATE USB -->
+
+        <h3>Step 1 — Connect the UPDATE USB Port</h3>
+
         <ol>
-          <li>Plug your <b>AK SimLink Pro</b> into your PC normally.</li>
-          <li>Click <b>Read Device Version</b> on this page.</li>
-          <li>Select the correct COM port when the browser asks.</li>
           <li>
-            If successful, the page will show your current device version and
-            compare it with the latest firmware.
+            Connect AK SimLink Pro to your PC using the <b>UPDATE USB</b> port.
           </li>
+
+          <li>Wait for the device to power on.</li>
+
+          <li>Click <b>Read Device Version</b>.</li>
+
+          <li>Select the COM port when prompted by your browser.</li>
+
           <li>
-            If it shows <b>Read Failed</b> or <b>NO RESPONSE</b>, continue with
-            manual bootloader update below.
+            The updater will display your current firmware version and compare
+            it with the latest available version.
           </li>
         </ol>
 
         <!-- //des PRO BOOT USB CONNECTION GUIDE -->
-        <h3>Step 2 — Connect the BOOT USB Port</h3>
+        <!-- //des STEP 2 INSTALL -->
+
+        <h3>Step 2 — Install Firmware</h3>
+
         <ol>
-          <li>Disconnect the normal USB cable from AK SimLink Pro.</li>
-          <li>Connect your USB cable to the <b>BOOT USB port</b>.</li>
-          <li>Plug the USB cable into your PC.</li>
-          <li>The device is now ready for firmware installation.</li>
+          <li>Select the firmware version you wish to install.</li>
+
+          <li>Click <b>INSTALL</b>.</li>
+
+          <li>Select the same COM port.</li>
+
+          <li>Wait until the installation is complete.</li>
+
+          <li>Do not disconnect the USB cable during the update.</li>
         </ol>
 
-        <h3>Step 3 — Install Firmware</h3>
+        <!-- //des STEP 3 VERIFY -->
+
+        <h3>Step 3 — Verify Firmware</h3>
+
         <ol>
-          <li>Select the firmware version below.</li>
-          <li>Click the <b>INSTALL</b> button.</li>
-          <li>Select the correct COM port.</li>
-          <li>Follow the browser flashing instructions.</li>
-          <li>Do not disconnect the USB cable during flashing.</li>
+          <li>
+            After the installation is complete, wait for the device to restart.
+          </li>
+
+          <li>Click <b>Read Device Version</b> again.</li>
+
+          <li>
+            Confirm that the displayed firmware version matches the installed
+            version.
+          </li>
         </ol>
 
         <h3>Step 4 — Restart and Verify</h3>
