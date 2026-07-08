@@ -619,10 +619,11 @@
         <div class="requirement-card">
           <!-- //des PRO BOOT USB UPDATE METHOD -->
           <div class="requirement-icon">⚡</div>
-          <h3>Use the BOOT USB Port</h3>
+          <!-- //des PRO UPDATE USB METHOD -->
+          <h3>Use the UPDATE USB Port</h3>
           <p>
-            For firmware updating, connect AK SimLink Pro using the BOOT USB
-            port. No button hold is required.
+            For firmware version checking and firmware installation, connect AK
+            SimLink Pro using the UPDATE USB port. No button hold is required.
           </p>
         </div>
       </div>
@@ -632,8 +633,8 @@
       <h2 class="section-title">Install Firmware</h2>
 
       <p class="section-subtitle">
-        Select the latest AK SimLink Pro firmware below. To install firmware,
-        connect the device using the BOOT USB port.
+        Select the latest AK SimLink Pro firmware below. Use the UPDATE USB port
+        for both version checking and firmware installation.
       </p>
     </section>
 
@@ -647,10 +648,9 @@
 
         <div class="note">
           <b>⚠ IMPORTANT</b><br /><br />
-          For AK SimLink Pro, please use the <b>Read Device Version</b> button
-          first if the device is already running firmware that supports version
-          reading. If the version cannot be read, you can still enter bootloader
-          mode manually and flash the latest firmware.
+          For AK SimLink Pro, connect using the <b>UPDATE USB</b> port before
+          using this updater. The UPDATE USB port is used for both reading the
+          firmware version and installing firmware.
         </div>
 
         <!-- //des STEP 1 CONNECT UPDATE USB -->
@@ -708,18 +708,13 @@
           </li>
         </ol>
 
-        <h3>Step 4 — Restart and Verify</h3>
+        <!-- //des STEP 4 READY TO FLY -->
+        <h3>Step 4 — Ready to Fly</h3>
+
         <ol>
-          <li>
-            After flashing is complete, unplug and reconnect AK SimLink Pro
-            normally.
-          </li>
-          <li>Wait for the screen to boot into the main interface.</li>
-          <li>Click <b>Read Device Version</b> again to confirm the update.</li>
-          <li>
-            You can also check the version on the Pro device screen if your
-            firmware displays it in Device Info.
-          </li>
+          <li>Disconnect the <b>UPDATE USB</b> cable.</li>
+          <li>Connect the <b>GAME USB</b> port when using FPV simulators.</li>
+          <li>Enjoy flying with the latest firmware.</li>
         </ol>
 
         <div class="success">
@@ -737,7 +732,8 @@
           <li>Use a data-capable USB cable. Charging cables may not work.</li>
           <li>If no COM port appears, try another cable or USB port.</li>
           <li>
-            If flashing fails halfway, enter bootloader mode and try again.
+            If flashing fails halfway, reconnect using the UPDATE USB port and
+            try again.
           </li>
           <li>
             Make sure you are on the <b>Pro updater page</b>, not the Lite
