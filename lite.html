@@ -505,6 +505,66 @@
         color: var(--text);
       }
 
+      /* //des JOY.CPL QUICK GUIDE POPUP */
+      .joy-popup {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.78);
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 24px;
+      }
+
+      .joy-popup.hidden {
+        display: none;
+      }
+
+      .joy-card {
+        width: min(760px, 94%);
+        max-height: 90vh;
+        overflow-y: auto;
+        background: #141a22;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 34px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .joy-card h2 {
+        margin-top: 0;
+        color: var(--green);
+      }
+
+      .joy-card p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .guide-step {
+        margin-top: 28px;
+      }
+
+      .guide-step h3 {
+        color: var(--green);
+        margin-bottom: 10px;
+      }
+
+      .guide-image {
+        width: 100%;
+        margin-top: 14px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      .joy-close {
+        margin-top: 24px;
+        width: 100%;
+      }
+
       /* //des FOOTER */
       .footer {
         max-width: 1180px;
@@ -649,7 +709,9 @@
         </p>
 
         <div class="control-actions">
-          <a class="btn yellow" href="#guide">How to Check Version</a>
+          <button class="yellow" onclick="showJoyGuide()">
+            📖 How to Check Version
+          </button>
         </div>
       </div>
     </section>
@@ -771,6 +833,47 @@
         </div>
       </details>
     </section>
+
+    <!-- //des JOY.CPL QUICK GUIDE POPUP -->
+    <div class="joy-popup hidden" id="joyPopup">
+      <div class="joy-card">
+        <h2>How to Check Current Firmware</h2>
+
+        <p>
+          AK SimLink Lite cannot automatically read the installed firmware
+          version. Follow the two steps below before installing an update.
+        </p>
+
+        <!-- //des STEP 1 IMAGE -->
+        <div class="guide-step">
+          <h3>Step 1 — Open Run</h3>
+
+          <p>Press <b>Win + R</b> to open the Windows Run dialog.</p>
+
+          <img src="step1-win-r.png" alt="Press Win + R" class="guide-image" />
+        </div>
+
+        <!-- //des STEP 2 IMAGE -->
+        <div class="guide-step">
+          <h3>Step 2 — Open Game Controllers</h3>
+
+          <p>
+            Type <b>joy.cpl</b> and press Enter. Your current firmware version
+            is shown directly in the controller name.
+          </p>
+
+          <img
+            src="step2-joy-cpl.png"
+            alt="AK SimLink Lite firmware version in joy.cpl"
+            class="guide-image"
+          />
+        </div>
+
+        <button class="btn green joy-close" onclick="closeJoyGuide()">
+          Got It
+        </button>
+      </div>
+    </div>
 
     <!-- //des FOOTER -->
     <footer class="footer">
@@ -905,6 +1008,15 @@
       /* ================= VERSION PARSER ================= */
       function toNum(v) {
         return v.split(".").reduce((a, b) => a * 100 + parseInt(b || 0), 0);
+      }
+
+      /* ================= JOY.CPL QUICK GUIDE ================= */
+      function showJoyGuide() {
+        document.getElementById("joyPopup").classList.remove("hidden");
+      }
+
+      function closeJoyGuide() {
+        document.getElementById("joyPopup").classList.add("hidden");
       }
 
       /* ================= BROWSER COMPATIBILITY CHECK ================= */
