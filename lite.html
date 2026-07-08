@@ -505,6 +505,58 @@
         color: var(--text);
       }
 
+      /* //des INSTALL SUCCESS POPUP */
+      .install-success-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        padding: 24px;
+        background: rgba(0, 0, 0, 0.78);
+        backdrop-filter: blur(14px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .install-success-overlay.hidden {
+        display: none;
+      }
+
+      .install-success-card {
+        width: 100%;
+        max-width: 520px;
+        padding: 34px;
+        border-radius: 28px;
+        background: linear-gradient(145deg, #151a20, #050608);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+        text-align: center;
+      }
+
+      .install-success-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #001b0d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        font-weight: 900;
+      }
+
+      .install-success-card h2 {
+        margin: 0 0 10px;
+        font-size: 30px;
+      }
+
+      .install-success-card p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
       /* //des FOOTER */
       .footer {
         max-width: 1180px;
@@ -772,6 +824,24 @@
       </details>
     </section>
 
+    <!-- //des INSTALL SUCCESS POPUP -->
+    <div class="install-success-overlay hidden" id="installSuccessPopup">
+      <div class="install-success-card">
+        <div class="install-success-icon">✓</div>
+
+        <h2>Firmware Installed</h2>
+
+        <p>AK SimLink Lite firmware installation has completed successfully.</p>
+
+        <p>
+          Please unplug and reconnect the device normally, then open
+          <code>joy.cpl</code> to verify the firmware version.
+        </p>
+
+        <button class="yellow" onclick="closeInstallSuccess()">Done</button>
+      </div>
+    </div>
+
     <!-- //des FOOTER -->
     <footer class="footer">
       <div class="logo">AK <span>SimLink</span></div>
@@ -939,6 +1009,17 @@
         }
       }
 
+      /* ================= INSTALL SUCCESS POPUP ================= */
+      function showInstallSuccess() {
+        document
+          .getElementById("installSuccessPopup")
+          .classList.remove("hidden");
+      }
+
+      function closeInstallSuccess() {
+        document.getElementById("installSuccessPopup").classList.add("hidden");
+      }
+
       /* ================= CLEAN INSTALL FLOW FIX ================= */
       /* This prevents ESP Web Tools from trapping user in extra UI screens */
       document.addEventListener("DOMContentLoaded", () => {
@@ -947,7 +1028,7 @@
             console.log("Install complete");
 
             setTimeout(() => {
-              alert("Installation Complete ✔");
+              showInstallSuccess();
             }, 300);
           });
         });
