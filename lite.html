@@ -491,63 +491,179 @@
   </head>
 
   <body>
-    <!-- BANNER -->
-    <div class="banner"></div>
+    <!-- //des NAVIGATION BAR -->
+    <nav class="nav">
+      <div class="logo">AK <span>SimLink</span></div>
 
-    <div class="box">
-      <h1>AK FPV SIMLINK LITE</h1>
-      <p style="color: var(--muted)">ELRS Simulator Dongle</p>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="pro.html">Pro Updater</a>
+        <a href="#firmwareList">Firmware</a>
+        <a href="#guide">Guide</a>
+      </div>
+    </nav>
 
-      <p>
-        Latest Firmware:
-        <span id="latestVersion">---</span>
+    <!-- //des LITE UPDATER HERO SECTION -->
+    <main class="updater-hero">
+      <div>
+        <div class="eyebrow">AK SIMLINK LITE</div>
+        <h1>Firmware<br />Updater</h1>
+
+        <p class="hero-text">
+          Update your AK SimLink Lite through the browser and keep your ELRS
+          simulator adapter ready for smooth plug-and-play training.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn green" href="#firmwareList">Install Firmware</a>
+          <a class="btn yellow" href="#guide">Update Guide</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <!-- //des LITE PRODUCT HERO IMAGE -->
+        <div class="device-preview">
+          <img
+            src="simlink.png"
+            alt="AK SimLink Lite"
+            style="
+              width: 100%;
+              max-width: 320px;
+              height: auto;
+              object-fit: contain;
+            "
+          />
+        </div>
+
+        <!-- //des LITE FEATURE CHIPS -->
+        <div class="chip-row">
+          <div class="chip">ELRS</div>
+          <div class="chip">Plug & Play</div>
+          <div class="chip">USB HID</div>
+          <div class="chip">Browser Updater</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- //des LITE STATUS SECTION -->
+    <section id="statusPanel">
+      <h2 class="section-title">Firmware Status</h2>
+
+      <p class="section-subtitle">
+        AK SimLink Lite firmware version is checked from Windows controller
+        settings. Use the latest firmware list below to decide whether you need
+        to update.
       </p>
 
-      <p>
-        Device Version:
-        <span id="deviceVersion">Not Connected</span>
+      <!-- //des STATUS GRID -->
+      <div class="status-grid">
+        <div class="status-card">
+          <div class="status-label">Latest Firmware</div>
+          <div class="status-value" id="latestVersion">---</div>
+        </div>
+
+        <div class="status-card">
+          <div class="status-label">Device Version</div>
+          <div class="status-value" id="deviceVersion">Check in joy.cpl</div>
+        </div>
+
+        <div class="status-card">
+          <div class="status-label">Device Status</div>
+          <div class="status-value" id="status">Manual Check</div>
+        </div>
+      </div>
+
+      <div class="control-panel">
+        <h2 class="section-title">Lite Version Check</h2>
+
+        <p class="section-subtitle">
+          For AK SimLink Lite, open <b>joy.cpl</b> in Windows and check the
+          controller name to see your installed firmware version.
+        </p>
+
+        <div class="control-actions">
+          <a class="btn yellow" href="#guide">How to Check Version</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des UPDATE REQUIREMENTS SECTION -->
+    <section id="requirements">
+      <h2 class="section-title">Before You Update</h2>
+
+      <p class="section-subtitle">
+        Make sure your browser, cable, and bootloader mode are ready before
+        flashing firmware.
       </p>
 
-      <p>
-        Status:
-        <span id="status">UNKNOWN</span>
+      <div class="requirements-grid">
+        <div class="requirement-card">
+          <div class="requirement-icon">🌐</div>
+          <h3>Use Chrome or Edge</h3>
+          <p>
+            Firmware updating requires Web Serial support. Use Google Chrome or
+            Microsoft Edge on desktop.
+          </p>
+        </div>
+
+        <div class="requirement-card">
+          <div class="requirement-icon">🔌</div>
+          <h3>Use a Data USB Cable</h3>
+          <p>
+            Some USB cables only charge and cannot transfer data. Use a known
+            working data cable.
+          </p>
+        </div>
+
+        <div class="requirement-card">
+          <div class="requirement-icon">⚡</div>
+          <h3>Enter Bootloader Mode</h3>
+          <p>
+            Hold the BOOT button while plugging in USB before installing
+            firmware.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- //des FIRMWARE SECTION TITLE -->
+    <section>
+      <h2 class="section-title">Install Lite Firmware</h2>
+
+      <p class="section-subtitle">
+        Select the latest AK SimLink Lite firmware below. Only update if your
+        current version is older than the latest available version.
       </p>
+    </section>
 
-      <button onclick="readVersion()">Read Device Version</button>
-      <button onclick="toggleTheme()">Dark / Light</button>
+    <!-- //des FIRMWARE LIST -->
+    <div id="firmwareList"></div>
 
+    <!-- //des UPDATE GUIDE SECTION -->
+    <section id="guide">
       <details class="guide" open>
-        <summary>📖 First Time Updating? Click Here</summary>
+        <summary>📖 AK SimLink Lite Firmware Update Guide</summary>
 
         <div class="note">
           <b>⚠ IMPORTANT</b><br /><br />
-
           AK SimLink Lite cannot automatically detect the installed firmware
-          version. Please check your current firmware version before updating.
+          version. Please check your current firmware version in Windows before
+          updating.
         </div>
 
         <h3>Step 1 — Check Your Current Firmware Version</h3>
-
         <ol>
           <li>Plug your <b>AK SimLink Lite</b> into your PC normally.</li>
-
           <li>
             Press <code>Win + R</code>, type <code>joy.cpl</code>, then press
             Enter.
           </li>
-
           <li>Open the controller properties.</li>
-
           <li>
             The firmware version is shown in the controller name.<br /><br />
-
-            Example:
-
-            <br /><br />
-
+            Example:<br /><br />
             <b>AK SimLink Lite v1.5.1</b>
           </li>
-
           <li>
             Compare your current version with the firmware versions listed
             below. Only update if a newer version is available.
@@ -555,51 +671,46 @@
         </ol>
 
         <h3>Step 2 — Enter Bootloader Mode</h3>
-
         <ol>
           <li>Disconnect the USB cable.</li>
-
           <li><b>Press and hold the BOOT button.</b></li>
-
           <li>While holding the button, plug the USB cable into your PC.</li>
+          <li>Release the BOOT button after the USB is connected.</li>
         </ol>
 
-        <h3>Step 3 — Release the BOOT Button</h3>
-
-        <p>
-          Once the USB is connected, release the BOOT button. The device is now
-          ready for firmware flashing.
-        </p>
-
-        <h3>Step 4 — Install Firmware</h3>
-
+        <h3>Step 3 — Install Firmware</h3>
         <ol>
           <li>Select the firmware version below.</li>
-
           <li>Click the <b>INSTALL</b> button.</li>
-
           <li>Select the COM port.</li>
-
           <li>Wait until the installation finishes.</li>
-
           <li>Do not disconnect the USB cable during the update.</li>
         </ol>
 
+        <h3>Step 4 — Restart and Verify</h3>
+        <ol>
+          <li>Unplug and reconnect AK SimLink Lite normally.</li>
+          <li>
+            Open <code>joy.cpl</code> again and confirm the firmware version has
+            changed.
+          </li>
+        </ol>
+
         <div class="success">
-          <b>✔ Update Complete</b>
-
-          <br /><br />
-
+          <b>✔ Update Complete</b><br /><br />
           Reconnect your AK SimLink Lite normally and open
           <code>joy.cpl</code> again to verify that the firmware version has
           been updated successfully.
         </div>
       </details>
-    </div>
+    </section>
 
-    <!-- FIRMWARE LIST -->
-    <div id="firmwareList"></div>
-
+    <!-- //des FOOTER -->
+    <footer class="footer">
+      <div class="logo">AK <span>SimLink</span></div>
+      <p>AK SimLink Lite Firmware Updater</p>
+      <p>Train Like You Fly</p>
+    </footer>
     <script>
       let latestGlobal = "";
 
