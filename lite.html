@@ -1,306 +1,630 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>AK SIMLINK LITE UPDATER</title>
-
-  <script type="module"
-    src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js">
-  </script>
-
-  <style>
-    /* ================= THEME SYSTEM ================= */
-    :root {
-      --bg: #0b0f14;
-      --card: #141a22;
-      --text: #e6e6e6;
-      --muted: #9aa4ad;
-      --accent: #00ff9d;
-      --warn: #ff9f1c;
-      --border: #222;
-    }
-
-    body.light {
-      --bg: #f4f6f8;
-      --card: #ffffff;
-      --text: #111;
-      --muted: #555;
-      --border: #ddd;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 850px;
-      margin: 40px auto;
-      text-align: center;
-      background: var(--bg);
-      color: var(--text);
-      transition: 0.3s;
-    }
-
-    /* ================= BANNER ================= */
-    .banner {
-      width: 100%;
-      height: 180px;
-      border-radius: 12px;
-      background: url("simlink.png") center/cover no-repeat;
-      border: 1px solid var(--border);
-      margin-bottom: 20px;
-    }
-
-    /* ================= BOX ================= */
-    .box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 25px;
-      transition: 0.3s;
-    }
-
-    /* ================= BUTTONS ================= */
-    button {
-      padding: 10px 14px;
-      margin: 8px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      border-color: var(--accent);
-    }
-
-    /* ================= STATUS ================= */
-    .ok { color: var(--accent); }
-    .bad { color: var(--warn); }
-
-    /* ================= FIRMWARE CARD ================= */
-    .fw {
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--card);
-    }
-
-/* ================= UPDATE GUIDE ================= */
-
-.guide {
-  margin-top: 25px;
-  text-align: left;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px;
-}
-
-.guide summary {
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--warn);
-  outline: none;
-}
-
-.guide summary:hover {
-  color: var(--accent);
-}
-
-.guide h3 {
-  margin-top: 20px;
-  color: var(--accent);
-}
-
-.guide ol {
-  line-height: 1.8;
-  padding-left: 22px;
-}
-
-.guide li {
-  margin-bottom: 14px;
-}
-
-.guide code {
-  background: rgba(255,255,255,0.08);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.note {
-  margin-top: 15px;
-  padding: 12px;
-  border-left: 4px solid var(--warn);
-  background: rgba(255,159,28,0.08);
-  border-radius: 8px;
-}
-
-.success {
-  margin-top: 18px;
-  padding: 12px;
-  border-left: 4px solid var(--accent);
-  background: rgba(0,255,157,0.08);
-  border-radius: 8px;
-}
-
-  </style>
-</head>
-
-<body>
-
-<!-- BANNER -->
-<div class="banner"></div>
-
-<div class="box">
-
-  <h1>AK FPV SIMLINK LITE</h1>
-  <p style="color:var(--muted)">ELRS Simulator Dongle</p>
-
-  <p>Latest Firmware:
-    <span id="latestVersion">---</span>
-  </p>
-
-  <p>Device Version:
-    <span id="deviceVersion">Not Connected</span>
-  </p>
-
-  <p>Status:
-    <span id="status">UNKNOWN</span>
-  </p>
-
-  <button onclick="readVersion()">Read Device Version</button>
-  <button onclick="toggleTheme()">Dark / Light</button>
-
-<details class="guide" open>
-
-<summary>📖 First Time Updating? Click Here</summary>
-
-<div class="note">
-
-<b>⚠ IMPORTANT</b><br><br>
-
-AK SimLink Lite cannot automatically detect the installed firmware version.
-
-Please check your current firmware version before updating.
-
-</div>
-
-<h3>Step 1 — Check Your Current Firmware Version</h3>
-
-<ol>
-
-<li>
-Plug your <b>AK SimLink Lite</b> into your PC normally.
-</li>
-
-<li>
-Press <code>Win + R</code>, type <code>joy.cpl</code>, then press Enter.
-</li>
-
-<li>
-Open the controller properties.
-</li>
-
-<li>
-The firmware version is shown in the controller name.<br><br>
-
-Example:
-
-<br><br>
-
-<b>AK SimLink Lite v1.5.1</b>
-
-</li>
-
-<li>
-Compare your current version with the firmware versions listed below.
-Only update if a newer version is available.
-</li>
-
-</ol>
-
-<h3>Step 2 — Enter Bootloader Mode</h3>
-
-<ol>
-
-<li>Disconnect the USB cable.</li>
-
-<li><b>Press and hold the BOOT button.</b></li>
-
-<li>While holding the button, plug the USB cable into your PC.</li>
-
-</ol>
-
-<h3>Step 3 — Release the BOOT Button</h3>
-
-<p>
-
-Once the USB is connected, release the BOOT button.
-
-The device is now ready for firmware flashing.
-
-</p>
-
-<h3>Step 4 — Install Firmware</h3>
-
-<ol>
-
-<li>Select the firmware version below.</li>
-
-<li>Click the <b>INSTALL</b> button.</li>
-
-<li>Select the COM port.</li>
-
-<li>Wait until the installation finishes.</li>
-
-<li>Do not disconnect the USB cable during the update.</li>
-
-</ol>
-
-<div class="success">
-
-<b>✔ Update Complete</b>
-
-<br><br>
-
-Reconnect your AK SimLink Lite normally and open <code>joy.cpl</code> again to verify that the firmware version has been updated successfully.
-
-</div>
-
-</details>
-
-</div>
-
-<!-- FIRMWARE LIST -->
-<div id="firmwareList"></div>
-
-<script>
-let latestGlobal = "";
-
-/* ================= THEME TOGGLE (FIXED) ================= */
-function toggleTheme() {
-  document.body.classList.toggle("light");
-}
-
-/* ================= LOAD FIRMWARE LIST ================= */
-async function loadFirmwareList() {
-  try {
-    const res = await fetch("./manifest-lite.json");
-    const data = await res.json();
-
-    latestGlobal = data.latest;
-
-    document.getElementById("latestVersion").innerText = data.latest;
-
-    const container = document.getElementById("firmwareList");
-
-    data.firmwares.forEach(fw => {
-      const div = document.createElement("div");
-      div.className = "fw";
-
-      div.innerHTML = `
+  <head>
+    <meta charset="utf-8" />
+    <!-- //des PAGE TITLE -->
+    <title>AK SimLink Lite Firmware Updater</title>
+
+    <script
+      type="module"
+      src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js"
+    ></script>
+
+    <style>
+      /* ================= LITE THEME SYSTEM ================= */
+      :root {
+        --bg: #0b0f14;
+        --card: #141a22;
+        --text: #ffffff;
+        --muted: #9aa4ad;
+        --yellow: #00e676;
+        --green: #00e676;
+        --red: #00e676;
+        --border: #26313d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(0, 230, 118, 0.18),
+            transparent 35%
+          ),
+          var(--bg);
+        color: var(--text);
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* //des NAVIGATION BAR */
+      .nav {
+        max-width: 1180px;
+        margin: auto;
+        padding: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: 900;
+        color: var(--yellow);
+        letter-spacing: 1px;
+      }
+
+      .logo span {
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .nav-links a:hover {
+        color: var(--yellow);
+      }
+
+      /* //des GLOBAL BUTTON STYLE */
+      .btn,
+      button {
+        padding: 14px 22px;
+        border-radius: 8px;
+        font-weight: bold;
+        display: inline-block;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        transition:
+          transform 0.22s ease,
+          box-shadow 0.22s ease,
+          border-color 0.22s ease,
+          background 0.22s ease,
+          color 0.22s ease;
+      }
+
+      .btn:hover,
+      button:hover {
+        transform: translateY(-3px);
+      }
+
+      .btn.green {
+        background: var(--green);
+        color: #001b0d;
+        border-color: var(--green);
+        box-shadow: 0 10px 28px rgba(0, 230, 118, 0.18);
+      }
+
+      .btn.green:hover {
+        box-shadow: 0 16px 42px rgba(0, 230, 118, 0.35);
+        border-color: #66ffb8;
+      }
+
+      .btn.yellow,
+      button.yellow {
+        color: var(--yellow);
+        border-color: var(--yellow);
+        background: rgba(0, 230, 118, 0.04);
+      }
+
+      .btn.yellow:hover,
+      button.yellow:hover {
+        background: rgba(0, 230, 118, 0.1);
+        box-shadow: 0 16px 42px rgba(0, 230, 118, 0.22);
+      }
+
+      /* //des HERO SECTION */
+      .updater-hero {
+        max-width: 1180px;
+        margin: auto;
+        padding: 70px 22px 40px;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        color: var(--green);
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: 64px;
+        line-height: 0.95;
+        margin: 0 0 20px;
+        letter-spacing: -2px;
+      }
+
+      .hero-text {
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      /* //des HERO DEVICE CARD */
+      .hero-card {
+        background: linear-gradient(145deg, #1b222c, #090c10);
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        padding: 32px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .device-preview {
+        min-height: 260px;
+        border-radius: 22px;
+        background:
+          radial-gradient(
+            circle at center,
+            rgba(0, 230, 118, 0.16),
+            transparent 48%
+          ),
+          linear-gradient(135deg, #222, #050505);
+        border: 1px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--yellow);
+        font-size: 32px;
+        font-weight: 900;
+        margin-bottom: 22px;
+        text-align: center;
+      }
+
+      .chip-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .chip {
+        border: 1px solid var(--border);
+        color: var(--muted);
+        padding: 9px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+
+      /* //des MAIN CONTENT WRAPPER */
+      section {
+        max-width: 1180px;
+        margin: auto;
+        padding: 45px 22px;
+      }
+
+      .section-title {
+        font-size: 34px;
+        margin-bottom: 12px;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        margin-bottom: 30px;
+        line-height: 1.6;
+      }
+
+      /* //des STATUS CARD GRID */
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .status-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
+      }
+
+      .status-label {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+
+      .status-value {
+        color: var(--yellow);
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .ok {
+        color: var(--green);
+      }
+
+      .bad {
+        color: #ff9f1c;
+      }
+
+      /* //des CONTROL PANEL */
+      .control-panel {
+        margin-top: 24px;
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(8, 10, 14, 0.96)
+        );
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 28px;
+        text-align: center;
+      }
+
+      .control-actions {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      /* //des UPDATE REQUIREMENTS GRID */
+      .requirements-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .requirement-card {
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
+        transition: 0.25s ease;
+      }
+
+      .requirement-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--yellow);
+        box-shadow: 0 18px 45px rgba(0, 230, 118, 0.12);
+      }
+
+      .requirement-icon {
+        font-size: 32px;
+        margin-bottom: 14px;
+      }
+
+      .requirement-card h3 {
+        margin: 0 0 10px;
+        color: var(--yellow);
+      }
+
+      .requirement-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      /* //des FIRMWARE CARD GRID */
+      #firmwareList {
+        max-width: 1180px;
+        margin: auto;
+        padding: 20px 22px 55px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+      }
+
+      .fw {
+        padding: 26px;
+        border-radius: 22px;
+        border: 1px solid var(--border);
+        background: linear-gradient(
+          145deg,
+          rgba(20, 26, 34, 0.96),
+          rgba(8, 10, 14, 0.96)
+        );
+        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.24);
+      }
+
+      .fw-badge {
+        display: inline-block;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: rgba(0, 230, 118, 0.1);
+        color: var(--yellow);
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 14px;
+      }
+
+      .fw h3 {
+        margin: 0 0 10px;
+        color: var(--yellow);
+        font-size: 26px;
+      }
+
+      .fw p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .fw-checklist {
+        display: grid;
+        gap: 10px;
+        margin: 18px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .fw-install-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 14px;
+      }
+
+      esp-web-install-button {
+        display: block;
+        margin-top: 18px;
+      }
+
+      /* //des UPDATE GUIDE */
+      .guide {
+        text-align: left;
+        background: rgba(20, 26, 34, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 24px;
+      }
+
+      .guide summary {
+        cursor: pointer;
+        font-size: 22px;
+        font-weight: bold;
+        color: var(--yellow);
+        outline: none;
+      }
+
+      .guide summary:hover {
+        color: var(--green);
+      }
+
+      .guide h3 {
+        margin-top: 24px;
+        color: var(--yellow);
+      }
+
+      .guide ol {
+        line-height: 1.8;
+        padding-left: 22px;
+        color: var(--muted);
+      }
+
+      .guide li {
+        margin-bottom: 12px;
+      }
+
+      .guide code {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      .note {
+        margin-top: 18px;
+        padding: 16px;
+        border-left: 4px solid #ff9f1c;
+        background: rgba(255, 159, 28, 0.08);
+        border-radius: 12px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .success {
+        margin-top: 18px;
+        padding: 16px;
+        border-left: 4px solid var(--green);
+        background: rgba(0, 230, 118, 0.08);
+        border-radius: 12px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .success b,
+      .note b {
+        color: var(--text);
+      }
+
+      /* //des FOOTER */
+      .footer {
+        max-width: 1180px;
+        margin: 40px auto 0;
+        padding: 30px 22px;
+        border-top: 1px solid var(--border);
+        text-align: center;
+        color: var(--muted);
+      }
+
+      /* //des MOBILE LAYOUT */
+      @media (max-width: 800px) {
+        .updater-hero,
+        .status-grid,
+        .requirements-grid,
+        #firmwareList {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 46px;
+        }
+
+        .nav {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- BANNER -->
+    <div class="banner"></div>
+
+    <div class="box">
+      <h1>AK FPV SIMLINK LITE</h1>
+      <p style="color: var(--muted)">ELRS Simulator Dongle</p>
+
+      <p>
+        Latest Firmware:
+        <span id="latestVersion">---</span>
+      </p>
+
+      <p>
+        Device Version:
+        <span id="deviceVersion">Not Connected</span>
+      </p>
+
+      <p>
+        Status:
+        <span id="status">UNKNOWN</span>
+      </p>
+
+      <button onclick="readVersion()">Read Device Version</button>
+      <button onclick="toggleTheme()">Dark / Light</button>
+
+      <details class="guide" open>
+        <summary>📖 First Time Updating? Click Here</summary>
+
+        <div class="note">
+          <b>⚠ IMPORTANT</b><br /><br />
+
+          AK SimLink Lite cannot automatically detect the installed firmware
+          version. Please check your current firmware version before updating.
+        </div>
+
+        <h3>Step 1 — Check Your Current Firmware Version</h3>
+
+        <ol>
+          <li>Plug your <b>AK SimLink Lite</b> into your PC normally.</li>
+
+          <li>
+            Press <code>Win + R</code>, type <code>joy.cpl</code>, then press
+            Enter.
+          </li>
+
+          <li>Open the controller properties.</li>
+
+          <li>
+            The firmware version is shown in the controller name.<br /><br />
+
+            Example:
+
+            <br /><br />
+
+            <b>AK SimLink Lite v1.5.1</b>
+          </li>
+
+          <li>
+            Compare your current version with the firmware versions listed
+            below. Only update if a newer version is available.
+          </li>
+        </ol>
+
+        <h3>Step 2 — Enter Bootloader Mode</h3>
+
+        <ol>
+          <li>Disconnect the USB cable.</li>
+
+          <li><b>Press and hold the BOOT button.</b></li>
+
+          <li>While holding the button, plug the USB cable into your PC.</li>
+        </ol>
+
+        <h3>Step 3 — Release the BOOT Button</h3>
+
+        <p>
+          Once the USB is connected, release the BOOT button. The device is now
+          ready for firmware flashing.
+        </p>
+
+        <h3>Step 4 — Install Firmware</h3>
+
+        <ol>
+          <li>Select the firmware version below.</li>
+
+          <li>Click the <b>INSTALL</b> button.</li>
+
+          <li>Select the COM port.</li>
+
+          <li>Wait until the installation finishes.</li>
+
+          <li>Do not disconnect the USB cable during the update.</li>
+        </ol>
+
+        <div class="success">
+          <b>✔ Update Complete</b>
+
+          <br /><br />
+
+          Reconnect your AK SimLink Lite normally and open
+          <code>joy.cpl</code> again to verify that the firmware version has
+          been updated successfully.
+        </div>
+      </details>
+    </div>
+
+    <!-- FIRMWARE LIST -->
+    <div id="firmwareList"></div>
+
+    <script>
+      let latestGlobal = "";
+
+      /* ================= THEME TOGGLE (FIXED) ================= */
+      function toggleTheme() {
+        document.body.classList.toggle("light");
+      }
+
+      /* ================= LOAD FIRMWARE LIST ================= */
+      async function loadFirmwareList() {
+        try {
+          const res = await fetch("./manifest-lite.json");
+          const data = await res.json();
+
+          latestGlobal = data.latest;
+
+          document.getElementById("latestVersion").innerText = data.latest;
+
+          const container = document.getElementById("firmwareList");
+
+          data.firmwares.forEach((fw) => {
+            const div = document.createElement("div");
+            div.className = "fw";
+
+            div.innerHTML = `
         <h3>${fw.version}</h3>
         <p style="color:var(--muted)">${fw.notes || ""}</p>
 
@@ -313,108 +637,105 @@ async function loadFirmwareList() {
         </p>
       `;
 
-      container.appendChild(div);
-    });
+            container.appendChild(div);
+          });
+        } catch (e) {
+          console.error("Manifest load failed", e);
+        }
+      }
 
-  } catch (e) {
-    console.error("Manifest load failed", e);
-  }
-}
+      /* ================= READ DEVICE VERSION ================= */
+      async function readVersion() {
+        try {
+          const port = await navigator.serial.requestPort();
+          await port.open({ baudRate: 115200 });
 
-/* ================= READ DEVICE VERSION ================= */
-async function readVersion() {
-  try {
-    const port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200 });
+          const writer = port.writable.getWriter();
+          await writer.write(new TextEncoder().encode("VERSION?\n"));
+          writer.releaseLock();
 
-    const writer = port.writable.getWriter();
-    await writer.write(new TextEncoder().encode("VERSION?\n"));
-    writer.releaseLock();
+          const reader = port.readable.getReader();
 
-    const reader = port.readable.getReader();
+          let buffer = "";
+          const decoder = new TextDecoder();
 
-    let buffer = "";
-    const decoder = new TextDecoder();
+          const timeout = setTimeout(async () => {
+            await reader.cancel();
+          }, 800);
 
-    const timeout = setTimeout(async () => {
-      await reader.cancel();
-    }, 800);
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
 
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
+            buffer += decoder.decode(value || new Uint8Array());
 
-      buffer += decoder.decode(value || new Uint8Array());
+            if (buffer.includes("VERSION:")) break;
+          }
 
-      if (buffer.includes("VERSION:")) break;
-    }
+          clearTimeout(timeout);
 
-    clearTimeout(timeout);
+          await reader.releaseLock();
+          await port.close();
 
-    await reader.releaseLock();
-    await port.close();
+          console.log("RAW:", buffer);
 
-    console.log("RAW:", buffer);
+          const match = buffer.match(/VERSION:([0-9.]+)/);
 
-    const match = buffer.match(/VERSION:([0-9.]+)/);
+          const deviceEl = document.getElementById("deviceVersion");
+          const statusEl = document.getElementById("status");
 
-    const deviceEl = document.getElementById("deviceVersion");
-    const statusEl = document.getElementById("status");
+          if (match) {
+            const v = match[1];
 
-    if (match) {
-      const v = match[1];
+            deviceEl.innerText = v;
+            compare(v, latestGlobal);
+          } else {
+            deviceEl.innerText = "Unknown";
+            statusEl.innerText = "NO RESPONSE";
+            statusEl.className = "bad";
+          }
+        } catch (err) {
+          console.error(err);
+          document.getElementById("deviceVersion").innerText = "Read Failed";
+        }
+      }
+      /* ================= COMPARE ================= */
+      function compare(device, latest) {
+        const status = document.getElementById("status");
 
-      deviceEl.innerText = v;
-      compare(v, latestGlobal);
-    } else {
-      deviceEl.innerText = "Unknown";
-      statusEl.innerText = "NO RESPONSE";
-      statusEl.className = "bad";
-    }
+        const d = toNum(device);
+        const l = toNum(latest);
 
-  } catch (err) {
-    console.error(err);
-    document.getElementById("deviceVersion").innerText = "Read Failed";
-  }
-}
-/* ================= COMPARE ================= */
-function compare(device, latest) {
-  const status = document.getElementById("status");
+        if (d >= l) {
+          status.innerText = "UP TO DATE";
+          status.className = "ok";
+        } else {
+          status.innerText = "UPDATE AVAILABLE";
+          status.className = "bad";
+        }
+      }
 
-  const d = toNum(device);
-  const l = toNum(latest);
+      /* ================= VERSION PARSER ================= */
+      function toNum(v) {
+        return v.split(".").reduce((a, b) => a * 100 + parseInt(b || 0), 0);
+      }
 
-  if (d >= l) {
-    status.innerText = "UP TO DATE";
-    status.className = "ok";
-  } else {
-    status.innerText = "UPDATE AVAILABLE";
-    status.className = "bad";
-  }
-}
+      /* ================= CLEAN INSTALL FLOW FIX ================= */
+      /* This prevents ESP Web Tools from trapping user in extra UI screens */
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("esp-web-install-button").forEach((btn) => {
+          btn.addEventListener("finished", () => {
+            console.log("Install complete");
 
-/* ================= VERSION PARSER ================= */
-function toNum(v) {
-  return v.split(".").reduce((a,b)=>a*100+parseInt(b||0),0);
-}
+            setTimeout(() => {
+              alert("Installation Complete ✔");
+            }, 300);
+          });
+        });
+      });
 
-/* ================= CLEAN INSTALL FLOW FIX ================= */
-/* This prevents ESP Web Tools from trapping user in extra UI screens */
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("esp-web-install-button").forEach(btn => {
-    btn.addEventListener("finished", () => {
-      console.log("Install complete");
-
-      setTimeout(() => {
-        alert("Installation Complete ✔");
-      }, 300);
-    });
-  });
-});
-
-/* INIT */
-loadFirmwareList();
-</script>
-
-</body>
+      /* INIT */
+      loadFirmwareList();
+    </script>
+  </body>
 </html>
