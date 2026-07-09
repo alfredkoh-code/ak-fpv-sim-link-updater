@@ -1,12 +1,12 @@
 {
   "name": "AK SIMLINK PRO",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "akfpv-sim-link-v2.1.3.bin",
+          "path": "akfpv-sim-link-v2.1.4.bin",
           "offset": 0
         }
       ]
