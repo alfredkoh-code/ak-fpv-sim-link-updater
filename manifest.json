@@ -1,6 +1,13 @@
 {
-  "latest": "2.1.4",
+  "latest": "2.1.5",
   "firmwares": [
+
+{
+      "version": "2.1.5",
+      "file": "Pro/akfpv-sim-link-v2.1.5.json",
+      "notes": "Release note: Add Frsky connection detection mode in setting menu "
+    },
+
 {
       "version": "2.1.4",
       "file": "Pro/akfpv-sim-link-v2.1.4.json",
