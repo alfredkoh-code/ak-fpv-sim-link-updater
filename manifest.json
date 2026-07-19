@@ -1,6 +1,14 @@
 {
-  "latest": "2.1.5",
+  "latest": "2.1.12",
   "firmwares": [
+
+{
+      "version": "2.1.12",
+      "file": "Pro/akfpv-sim-link-v2.1.12.json",
+      "notes": "Release note: Add Auto Protocol Mode "
+    },
+
+
 
 {
       "version": "2.1.5",
