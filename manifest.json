@@ -1,6 +1,13 @@
 {
-  "latest": "2.1.12",
+  "latest": "2.1.13",
   "firmwares": [
+
+{
+      "version": "2.1.13",
+      "file": "Pro/akfpv-sim-link-v2.1.13.json",
+      "notes": "Release note: Add Purple LED for Auto Searching mode "
+    },
+
 
 {
       "version": "2.1.12",
