@@ -1,11 +1,11 @@
 {
-  "latest": "2.2.2",
+  "latest": "2.2.3",
   "firmwares": [
 
 {
-      "version": "2.2.2",
-      "file": "Pro/akfpv-sim-link-v2.2.2.json",
-      "notes": "Release note: Add CH Mapping Function "
+      "version": "2.2.3",
+      "file": "Pro/akfpv-sim-link-v2.2.3.json",
+      "notes": "Release note: Improve CH Mapping UI and add CH Switch Test "
     },
 
 {
