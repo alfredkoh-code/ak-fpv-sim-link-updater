@@ -2177,13 +2177,20 @@
 
         <div class="product-card">
           <h3 class="pro">AK SimLink Pro</h3>
-          <p>Multi-protocol simulator adapter with onboard screen.</p>
+          <p>
+            Fully automatic multi-protocol simulator adapter with onboard
+            screen.
+          </p>
+
           <ul>
-            <li>ELRS, Crossfire and FrSky support</li>
-            <li>OLED screen interface</li>
-            <li>Onboard menu system</li>
-            <li>Advanced receiver configuration</li>
-            <li>Future ready firmware updates</li>
+            <li>Automatic ELRS, Crossfire and FrSky radio detection</li>
+            <li>Connects to the active radio automatically</li>
+            <li>Universal switch mapping across different radios</li>
+            <li>
+              Keep Arm, Reset and other controls on the same simulator buttons
+            </li>
+            <li>Onboard screen, menu and channel calibration</li>
+            <li>Free browser-based firmware updates</li>
           </ul>
           <div class="buttons">
             <a class="btn yellow" href="pro.html">Pro Firmware</a>
@@ -2313,35 +2320,44 @@
           </p>
         </div>
 
+        <!-- //des AUTOMATIC RADIO DETECTION FEATURE CARD -->
         <div class="why-card">
           <div class="icon-line">
             <svg viewBox="0 0 24 24">
-              <rect x="5" y="4" width="14" height="16" rx="2" />
-              <path d="M9 8h6" />
-              <path d="M9 12h6" />
-              <path d="M9 16h3" />
+              <path d="M5 12a7 7 0 0 1 14 0" />
+              <path d="M8 12a4 4 0 0 1 8 0" />
+              <circle cx="12" cy="12" r="1" />
+              <path d="M12 13v7" />
             </svg>
           </div>
-          <h3>Pro OLED Interface</h3>
+
+          <h3>Automatic Radio Detection</h3>
+
           <p>
-            AK SimLink Pro adds screen feedback, menu navigation, receiver
-            status, and future diagnostic features.
+            Power on your radio and AK SimLink Pro automatically searches ELRS,
+            Crossfire, and FrSky, then connects to the active receiver.
           </p>
         </div>
 
+        <!-- //des UNIVERSAL SWITCH MAPPING FEATURE CARD -->
         <div class="why-card">
           <div class="icon-line">
             <svg viewBox="0 0 24 24">
-              <path d="M4 4v6h6" />
-              <path d="M20 20v-6h-6" />
-              <path d="M5 19a8 8 0 0 0 13-3" />
-              <path d="M19 5a8 8 0 0 0-13 3" />
+              <path d="M6 5v14" />
+              <path d="M18 5v14" />
+              <circle cx="6" cy="9" r="2" />
+              <circle cx="18" cy="15" r="2" />
+              <path d="M8 9h5a5 5 0 0 1 5 5" />
+              <path d="M16 15h-5a5 5 0 0 1-5-5" />
             </svg>
           </div>
-          <h3>Free Firmware Updates</h3>
+
+          <h3>Universal Switch Mapping</h3>
+
           <p>
-            Update through the browser and keep improving the device as new
-            features are released.
+            Map Arm, Reset, and other functions for each radio. AK SimLink keeps
+            them assigned to the same simulator buttons when switching
+            protocols.
           </p>
         </div>
       </div>
@@ -3294,10 +3310,12 @@
           </p>
 
           <ul>
-            <li>ELRS, Crossfire and FrSky support</li>
-            <li>OLED screen interface</li>
-            <li>Onboard menu system</li>
-            <li>Future-ready firmware updates</li>
+            <li>Fully automatic ELRS, Crossfire and FrSky detection</li>
+            <li>Automatically connects to the active radio</li>
+            <li>Universal Arm, Reset and switch mapping</li>
+            <li>Consistent simulator buttons across different radios</li>
+            <li>Onboard screen and menu system</li>
+            <li>Free browser-based firmware updates</li>
           </ul>
 
           <div class="buttons">
@@ -3914,11 +3932,11 @@
       const checkoutProducts = {
         lite: {
           name: "AK SimLink Lite",
-          price: 299.90,
+          price: 299.9,
         },
         pro: {
           name: "AK SimLink Pro",
-          price: 449.90,
+          price: 449.9,
         },
       };
 
@@ -3927,15 +3945,15 @@
       const checkoutShipping = {
         malaysia: {
           label: "Malaysia",
-          price: 20.00,
+          price: 20.0,
         },
         singapore: {
           label: "Singapore / Brunei",
-          price: 65.00,
+          price: 65.0,
         },
         sea: {
           label: "Thailand / Indonesia / Vietnam / Philippines",
-          price: 90.00,
+          price: 90.0,
         },
         asia: {
           label: "Japan / Korea / Taiwan / Hong Kong",
@@ -3943,15 +3961,15 @@
         },
         oceania: {
           label: "Australia / New Zealand",
-          price: 200.00,
+          price: 200.0,
         },
         usa: {
           label: "United States / Canada",
-          price: 270.00,
+          price: 270.0,
         },
         europe: {
           label: "United Kingdom / Europe",
-          price: 280.00,
+          price: 280.0,
         },
       };
 
